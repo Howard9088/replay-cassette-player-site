@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://howard9088.github.io/replay-cassette-player-site/sitemap.xml

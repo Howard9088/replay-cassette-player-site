@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0e0e">
+  <meta name="description" content="Re:Play — Slow Listening, Reimagined. Ten songs. One tape. One evening.">
+  <title>Re:Play · Slow Listening, Reimagined</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body data-page="home">
+  <a class="skip-link" href="#main" data-i18n="skip">跳到内容</a>
+  <header class="site-header" id="top">
+    <a class="brand" href="index.html" aria-label="Re:Play home" data-i18n-aria-label="homeLabel"><strong>Re:Play</strong><span>MUSIC LIVES LONGER</span></a>
+    <nav class="main-nav" aria-label="Main navigation" data-i18n-aria-label="mainNavLabel">
+      <a href="experience.html" data-i18n="navExperience">Experience</a>
+      <a href="shop.html" data-i18n="navShop">Shop</a>
+      <a href="gallery.html" data-i18n="navGallery">Gallery</a>
+      <a href="points.html" data-i18n="navPoints">Points</a>
+    </nav>
+    <div class="header-actions">
+      <label class="language-control" for="langSelect"><span aria-hidden="true">◎</span><select id="langSelect" aria-label="Website language" data-i18n-aria-label="languageLabel"><option value="en">English</option><option value="zh">简体中文</option></select></label>
+      <button id="cartButton" class="cart-button" type="button"><span data-i18n="cart">Cart</span><b id="cartCount">0</b></button>
+      <a class="header-download" href="https://github.com/Howard9088/replay-cassette-player-releases/releases" target="_blank" rel="noopener noreferrer" data-i18n="downloadReplay">Get Re:Play</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="hero-photo" id="heroScene" aria-hidden="true"></div>
+      <div class="hero-photo hero-photo-next" id="heroSceneNext" aria-hidden="true"></div>
+      <div class="hero-shade" aria-hidden="true"></div>
+      <div class="hero-inner page-width hero-layout">
+        <div class="hero-copy">
+          <p class="eyebrow" data-i18n="heroKicker">SLOW LISTENING, REIMAGINED</p>
+          <h1 id="heroTitle" data-i18n="heroTitle">Music did not<br>get faster.<br>We did.</h1>
+          <p class="hero-tagline" data-i18n="heroTagline">Ten songs. One tape. One evening.</p>
+          <p class="hero-description" data-i18n="heroDescription">Choose the songs that matter. Make a tape of your own. Press PLAY, watch the reels turn, and give the music your full attention.</p>
+          <div class="hero-buttons">
+            <a class="pill-button light" href="https://github.com/Howard9088/replay-cassette-player-releases/releases" target="_blank" rel="noopener noreferrer" data-i18n="freeDownload">↓&nbsp; Windows preview</a>
+            <a class="pill-button outline" href="experience.html" data-i18n="seeExperience">▷&nbsp; Explore Re:Play</a>
+          </div>
+          <p class="platform-note" data-i18n="platformNote">Windows preview · Your music stays yours · Download access may be limited</p>
+        </div>
+        <div class="player-showcase">
+          <div class="showcase-heading"><span data-i18n="showcaseLabel">THE REAL RE:PLAY PLAYER</span><div class="skin-switch" role="group" aria-label="Player appearance" data-i18n-aria-label="skinLabel"><button id="skinGold" type="button" aria-pressed="true" data-i18n="skinGold">Gold</button><button id="skinRetro" type="button" aria-pressed="false" data-i18n="skinRetro">Retro</button></div></div>
+          <div id="playerShell" class="player-shell skin-gold"><img id="playerImage" src="media/real-player-gold.png" alt="Real Re:Play Gold player interface with a Metal C90 in the cassette bay"><canvas id="demoTape" width="1440" height="876" aria-label="Metal C90 mounted inside the player with rotating reels" data-i18n-aria-label="tapeCanvasLabel"></canvas><img class="player-cover-art" src="media/blue-hour-cover.svg" alt="Original Blue Hour sample cassette cover" data-i18n-alt="demoCoverAlt"></div>
+          <div class="showcase-controls"><button id="demoPlay" type="button" aria-pressed="true" data-i18n="demoPause">Ⅱ Pause visual demo</button><span data-i18n="demoDisclaimer">Visual motion demo · no audio or personal tapes</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-shelf" id="demoCollection" aria-labelledby="demoShelfTitle"><div class="page-width"><div class="demo-shelf-head"><div><p class="eyebrow" data-i18n="demoShelfKicker">DEMO COLLECTION</p><h2 id="demoShelfTitle" data-i18n="demoShelfTitle">A shelf waiting for your songs.</h2></div><span data-i18n="demoShelfNotice">Fictional display tapes · no user works</span></div><div class="demo-tapes" aria-hidden="true"><div><b>01</b><span>BLUE HOUR</span><small>C60</small></div><div><b>02</b><span>NIGHT DRIVE</span><small>C90</small></div><div><b>03</b><span>STAY AWHILE</span><small>C60</small></div><div><b>04</b><span>RAIN NOTES</span><small>C90</small></div><div><b>05</b><span>HOME AGAIN</span><small>C60</small></div><div><b>06</b><span>SLOW SUNDAY</span><small>C90</small></div><div><b>07</b><span>AFTERGLOW</span><small>C60</small></div><div><b>08</b><span>ONE MORE SONG</span><small>C90</small></div></div></div></section>
+
+  </main>
+
+  <footer class="site-footer"><div class="page-width footer-inner"><a class="brand" href="index.html"><strong>Re:Play</strong><span>MUSIC LIVES LONGER</span></a><nav aria-label="Footer navigation" data-i18n-aria-label="footerNavLabel"><a href="experience.html" data-i18n="navExperience">Experience</a><a href="shop.html" data-i18n="navShop">Shop</a><a href="gallery.html" data-i18n="navGallery">Gallery</a><a href="points.html" data-i18n="navPoints">Points</a></nav><p data-i18n="footerLine">Slow down and listen again.</p></div></footer>
+
+  <div id="cartBackdrop" class="cart-backdrop" hidden></div>
+  <aside id="cartDrawer" class="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle" hidden>
+    <div class="drawer-head"><div><small>RE:PLAY / SHOP</small><h2 id="cartTitle" data-i18n="cart">Cart</h2></div><button id="cartClose" type="button" aria-label="Close cart" data-i18n-aria-label="closeCart">×</button></div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="drawer-bottom"><div class="subtotal"><span data-i18n="subtotal">计划售价小计</span><strong id="cartSubtotal">$0.00</strong></div><p data-i18n="cartDisclaimer">当前仅保存本机选购清单。正式金额、积分及磁带资产将在安全结算服务接入后由服务器确认。</p><button class="checkout-button" type="button" disabled data-i18n="checkoutPending">结算服务建设中</button></div>
+  </aside>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <script src="tape-demo.js" defer></script>
+</body>
+</html>

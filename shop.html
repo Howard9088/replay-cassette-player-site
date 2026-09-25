@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0e0e">
+  <meta name="description" content="Preview Re:Play's cassette collection and proposed purchase rewards. Checkout is not open yet.">
+  <title>Re:Play · Shop</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body class="inner-page" data-page="shop">
+  <a class="skip-link" href="#main" data-i18n="skip">跳到内容</a>
+  <header class="site-header" id="top">
+    <a class="brand" href="index.html" aria-label="Re:Play home" data-i18n-aria-label="homeLabel"><strong>Re:Play</strong><span>MUSIC LIVES LONGER</span></a>
+    <nav class="main-nav" aria-label="Main navigation" data-i18n-aria-label="mainNavLabel">
+      <a href="experience.html" data-i18n="navExperience">Experience</a>
+      <a href="shop.html" data-i18n="navShop">Shop</a>
+      <a href="gallery.html" data-i18n="navGallery">Gallery</a>
+      <a href="points.html" data-i18n="navPoints">Points</a>
+    </nav>
+    <div class="header-actions">
+      <label class="language-control" for="langSelect"><span aria-hidden="true">◎</span><select id="langSelect" aria-label="Website language" data-i18n-aria-label="languageLabel"><option value="en">English</option><option value="zh">简体中文</option></select></label>
+      <button id="cartButton" class="cart-button" type="button"><span data-i18n="cart">Cart</span><b id="cartCount">0</b></button>
+      <a class="header-download" href="https://github.com/Howard9088/replay-cassette-player-releases/releases" target="_blank" rel="noopener noreferrer" data-i18n="downloadReplay">Get Re:Play</a>
+    </div>
+  </header>
+
+  <main id="main" class="inner-main">
+    <section class="shop-section section" id="shop" aria-labelledby="shopTitle">
+      <div class="page-width">
+        <div class="shop-heading">
+          <div><p class="eyebrow" data-i18n="shopKicker">CASSETTE STORE</p><h2 id="shopTitle" data-i18n="shopTitle">收藏属于你的<br>磁带时光。</h2><p data-i18n="shopDescription">从经典 C60 到金属 Metal，每一盒磁带，都是一段独特的音乐旅程。</p></div>
+          <span class="notice-chip" data-i18n="previewShop">预览商城 · 尚未开放收款</span>
+        </div>
+        <div class="products" id="products">
+          <article class="product-card" data-product="classic-c60"><div class="product-image"><img src="assets/cassettes/classic-c60-v1.png" alt="Classic C60" loading="lazy"></div><div class="product-name"><div><h3>Classic C60</h3><strong data-price="classic-c60">—</strong></div><button type="button" data-add="classic-c60" aria-label="添加 Classic C60 到购物车">＋</button></div><p data-i18n="c60Description">经典 60 分钟，简单纯粹。</p><small data-reward="classic-c60">—</small></article>
+          <article class="product-card" data-product="classic-c90"><div class="product-image"><img src="assets/cassettes/classic-c90-v1.png" alt="Classic C90" loading="lazy"></div><div class="product-name"><div><h3>Classic C90</h3><strong data-price="classic-c90">—</strong></div><button type="button" data-add="classic-c90" aria-label="添加 Classic C90 到购物车">＋</button></div><p data-i18n="c90Description">更长的陪伴，更多的故事。</p><small data-reward="classic-c90">—</small></article>
+          <article class="product-card" data-product="metal-c90"><div class="product-image"><img src="assets/cassettes/metal-c90-v1.png" alt="Metal C90" loading="lazy"></div><div class="product-name"><div><h3>Metal Edition</h3><strong data-price="metal-c90">—</strong></div><button type="button" data-add="metal-c90" aria-label="添加 Metal C90 到购物车">＋</button></div><p data-i18n="metalDescription">更丰富的音色；金属带不贴纸。</p><small data-reward="metal-c90">—</small></article>
+        </div>
+        <p class="section-fineprint" data-i18n="shopFineprint">商品价格与返积分为试算展示。购物车只保存在本机；正式付款、磁带资产和积分以未来服务端确认为准。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="page-width footer-inner"><a class="brand" href="index.html"><strong>Re:Play</strong><span>MUSIC LIVES LONGER</span></a><nav aria-label="Footer navigation" data-i18n-aria-label="footerNavLabel"><a href="experience.html" data-i18n="navExperience">Experience</a><a href="shop.html" data-i18n="navShop">Shop</a><a href="gallery.html" data-i18n="navGallery">Gallery</a><a href="points.html" data-i18n="navPoints">Points</a></nav><p data-i18n="footerLine">Slow down and listen again.</p></div></footer>
+
+  <div id="cartBackdrop" class="cart-backdrop" hidden></div>
+  <aside id="cartDrawer" class="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle" hidden>
+    <div class="drawer-head"><div><small>RE:PLAY / SHOP</small><h2 id="cartTitle" data-i18n="cart">Cart</h2></div><button id="cartClose" type="button" aria-label="Close cart" data-i18n-aria-label="closeCart">×</button></div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="drawer-bottom"><div class="subtotal"><span data-i18n="subtotal">计划售价小计</span><strong id="cartSubtotal">$0.00</strong></div><p data-i18n="cartDisclaimer">当前仅保存本机选购清单。正式金额、积分及磁带资产将在安全结算服务接入后由服务器确认。</p><button class="checkout-button" type="button" disabled data-i18n="checkoutPending">结算服务建设中</button></div>
+  </aside>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
