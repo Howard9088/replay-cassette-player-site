@@ -21,7 +21,7 @@
     </nav>
     <div class="header-actions">
       <label class="language-control" for="langSelect"><span aria-hidden="true">◎</span><select id="langSelect" aria-label="Website language" data-i18n-aria-label="languageLabel"><option value="en">English</option><option value="zh">简体中文</option></select></label>
-      <button id="cartButton" class="cart-button" type="button"><span data-i18n="cart">Cart</span><b id="cartCount">0</b></button>
+      <a class="cart-button beta-header-link" href="points.html" data-i18n="cart">Global Beta</a>
       <a class="header-download" href="https://github.com/Howard9088/replay-cassette-player-releases/releases" target="_blank" rel="noopener noreferrer" data-i18n="downloadReplay">Get Re:Play</a>
     </div>
   </header>
@@ -42,6 +42,7 @@
             <a class="pill-button outline" href="experience.html" data-i18n="seeExperience">▷&nbsp; Explore Re:Play</a>
           </div>
           <p class="platform-note" data-i18n="platformNote">Windows preview · Your music stays yours · Download access may be limited</p>
+          <a class="beta-home-link" href="points.html" data-i18n="betaHome">Global beta: 1,200 RP welcome reward →</a>
         </div>
         <div class="player-showcase">
           <div class="showcase-heading"><span data-i18n="showcaseLabel">THE REAL RE:PLAY PLAYER</span><div class="skin-switch" role="group" aria-label="Player appearance" data-i18n-aria-label="skinLabel"><button id="skinGold" type="button" aria-pressed="true" data-i18n="skinGold">Gold</button><button id="skinRetro" type="button" aria-pressed="false" data-i18n="skinRetro">Retro</button></div></div>
@@ -57,13 +58,6 @@
 
   <footer class="site-footer"><div class="page-width footer-inner"><a class="brand" href="index.html"><strong>Re:Play</strong><span>MUSIC LIVES LONGER</span></a><nav aria-label="Footer navigation" data-i18n-aria-label="footerNavLabel"><a href="experience.html" data-i18n="navExperience">Experience</a><a href="shop.html" data-i18n="navShop">Shop</a><a href="gallery.html" data-i18n="navGallery">Gallery</a><a href="points.html" data-i18n="navPoints">Points</a></nav><p data-i18n="footerLine">Slow down and listen again.</p></div></footer>
 
-  <div id="cartBackdrop" class="cart-backdrop" hidden></div>
-  <aside id="cartDrawer" class="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle" hidden>
-    <div class="drawer-head"><div><small>RE:PLAY / SHOP</small><h2 id="cartTitle" data-i18n="cart">Cart</h2></div><button id="cartClose" type="button" aria-label="Close cart" data-i18n-aria-label="closeCart">×</button></div>
-    <div id="cartItems" class="cart-items"></div>
-    <div class="drawer-bottom"><div class="subtotal"><span data-i18n="subtotal">计划售价小计</span><strong id="cartSubtotal">$0.00</strong></div><p data-i18n="cartDisclaimer">当前仅保存本机选购清单。正式金额、积分及磁带资产将在安全结算服务接入后由服务器确认。</p><button class="checkout-button" type="button" disabled data-i18n="checkoutPending">结算服务建设中</button></div>
-  </aside>
-  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
   <script src="tape-demo.js" defer></script>
 </body>
 </html>

@@ -95,3 +95,13 @@ body[data-page="experience"] .main-nav a[href="experience.html"],body[data-page=
 .night-case>div{background-position:33.333% 0%}
 .rain-case>div{background-position:100% 0%}
 @media(max-width:660px){.demo-tapes>div:nth-child(n){height:186px}.feature-cards .creator-preview-media{width:115px;height:90px;aspect-ratio:auto}.feature-cards .creator-preview-media>img{height:100%;object-fit:cover}.creator-preview-art{display:none}}
+
+/* Global Beta site state; account balances are never simulated in the browser. */
+.beta-header-link{padding:8px 12px;border:1px solid #cba67b80;border-radius:999px;color:#eed7bd;background:#b7782a1c;font-weight:650;text-decoration:none}
+.beta-home-link{display:inline-block;margin-top:12px;color:#f6d9b7;font-size:13px;font-weight:650;text-decoration:underline;text-underline-offset:4px}
+.beta-welcome{display:flex;align-items:center;justify-content:space-between;gap:22px;margin:0 0 24px;padding:22px 25px;border:1px solid #8f6743;border-radius:12px;background:linear-gradient(110deg,#4c3121,#222019 65%,#161817)}
+.beta-welcome>div{display:grid;gap:4px}.beta-welcome span{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#e2b987}.beta-welcome strong{font:42px/1.15 Georgia,serif;color:#fff3e4}.beta-welcome small{font-size:11px;line-height:1.5;color:#c8b6a0}.beta-welcome a{border:1px solid #e3c09a;border-radius:999px;padding:10px 18px;color:#fbe8d0;white-space:nowrap;font-size:12px}
+.products{grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.products .product-image{height:170px}.products .product-image img{max-height:155px}.product-card.blank-card{border-color:#a6835b;background:linear-gradient(160deg,#2b221b,#1a1b1a 55%)}.product-card.blank-card .product-image{background:radial-gradient(circle,#6b5139,#211b17 70%)}.product-card .product-name strong{color:#f2d6a6}.product-card>small{line-height:1.5}
+.feature-cards article:nth-child(-n+2)>img{object-fit:contain;background:#151515}
+@media(max-width:1100px){.products{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:660px){.products{grid-template-columns:1fr}.beta-welcome{display:block}.beta-welcome a{display:inline-block;margin-top:15px}.feature-cards article:nth-child(-n+2)>img{object-fit:contain}}

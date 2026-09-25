@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b0e0e">
-  <meta name="description" content="See the proposed Re:Play Points rules for cassette purchases and artwork redemption.">
+  <meta name="description" content="Re:Play global beta Rewards rules: 1,200 RP welcome reward, 400 RP blank cassettes and creator designs.">
   <title>Re:Play · Points</title>
   <link rel="stylesheet" href="styles.css">
   <script src="app.js" defer></script>
@@ -21,7 +21,7 @@
     </nav>
     <div class="header-actions">
       <label class="language-control" for="langSelect"><span aria-hidden="true">◎</span><select id="langSelect" aria-label="Website language" data-i18n-aria-label="languageLabel"><option value="en">English</option><option value="zh">简体中文</option></select></label>
-      <button id="cartButton" class="cart-button" type="button"><span data-i18n="cart">Cart</span><b id="cartCount">0</b></button>
+      <a class="cart-button beta-header-link" href="points.html" data-i18n="cart">Global Beta</a>
       <a class="header-download" href="https://github.com/Howard9088/replay-cassette-player-releases/releases" target="_blank" rel="noopener noreferrer" data-i18n="downloadReplay">Get Re:Play</a>
     </div>
   </header>
@@ -29,8 +29,8 @@
   <main id="main" class="inner-main">
     <section class="points-section section" id="points" aria-labelledby="pointsTitle">
       <div class="page-width points-layout">
-        <div class="section-copy"><p class="eyebrow" data-i18n="pointsKicker">RE:PLAY POINTS / PILOT</p><h2 id="pointsTitle" data-i18n="pointsTitle">买一盒磁带，<br>开启下一次创作。</h2><p data-i18n="pointsDescription">购买磁带获得积分；积分可以兑换 Gallery 设计的使用许可，也可以兑换新的空白磁带。创作者的设计被兑换后，也会获得积分。</p><span class="notice-chip" data-i18n="pilotNotice">建议测试规则 · 尚未开放积分交易</span></div>
-        <div class="points-board"><div class="points-board-title"><strong data-i18n="pointsBoardTitle">积分兑换规则</strong><small data-i18n="pointsBoardTag">PILOT / CONFIGURABLE</small></div><div class="points-rule"><span data-i18n="pointsPurchase">购买返积分</span><strong id="earnRule">—</strong></div><div class="points-rule"><span data-i18n="pointsBlank">空白磁带兑换</span><strong id="blankRule">—</strong></div><div class="points-rule"><span data-i18n="pointsDesign">Gallery 设计使用权</span><strong id="designRule">—</strong></div><div class="points-rule"><span data-i18n="pointsCreator">创作者获得</span><strong id="creatorRule">—</strong></div><div class="points-rule"><span data-i18n="pointsPending">积分待结算</span><strong id="pendingRule">—</strong></div><p data-i18n="pointsLimit">兑换不再返积分；积分不能提现，暂不承诺固定现金价值。具体参数在收款上线前复核并公布。</p></div>
+        <div class="section-copy"><p class="eyebrow" data-i18n="pointsKicker">RE:PLAY REWARDS / GLOBAL BETA</p><h2 id="pointsTitle" data-i18n="pointsTitle">Create. Collect.<br>Create again.</h2><p data-i18n="pointsDescription">Every global beta account starts with 1,200 RP.</p><span class="notice-chip" data-i18n="pilotNotice">One global beta policy · account service in progress</span><p><a class="pill-button light" href="shop.html" data-i18n="navShop">Rewards Store</a></p></div>
+        <div class="points-board"><div class="points-board-title"><strong data-i18n="pointsBoardTitle">Global beta rules</strong><small data-i18n="pointsBoardTag">BETA V1 / GLOBAL</small></div><div class="points-rule"><span data-i18n="pointsPurchase">Welcome reward</span><strong id="earnRule">—</strong></div><div class="points-rule"><span data-i18n="pointsBlank">Blank cassette</span><strong id="blankRule">—</strong></div><div class="points-rule"><span data-i18n="pointsDesign">Creator design tiers</span><strong id="designRule">—</strong></div><div class="points-rule"><span data-i18n="pointsCreator">Creator reward after valid redemption</span><strong id="creatorRule">—</strong></div><div class="points-rule"><span data-i18n="pointsPending">First tape / first approved work</span><strong id="pendingRule">—</strong></div><p data-i18n="pointsLimit">RP cannot be purchased, cashed out or transferred. Cash purchases are closed during beta. The server ledger will own balances and entitlements.</p></div>
       </div>
       <div class="page-width points-example"><label for="pointsProduct" data-i18n="pointsExampleLabel">试算：选择一盒磁带</label><select id="pointsProduct" aria-label="Choose a cassette" data-i18n-aria-label="chooseTape"><option value="classic-c60">Classic C60</option><option value="classic-c90">Classic C90</option><option value="metal-c90">Metal C90</option></select><output id="pointsExample" aria-live="polite">—</output></div>
     </section>
@@ -38,12 +38,5 @@
 
   <footer class="site-footer"><div class="page-width footer-inner"><a class="brand" href="index.html"><strong>Re:Play</strong><span>MUSIC LIVES LONGER</span></a><nav aria-label="Footer navigation" data-i18n-aria-label="footerNavLabel"><a href="experience.html" data-i18n="navExperience">Experience</a><a href="shop.html" data-i18n="navShop">Shop</a><a href="gallery.html" data-i18n="navGallery">Gallery</a><a href="points.html" data-i18n="navPoints">Points</a></nav><p data-i18n="footerLine">Slow down and listen again.</p></div></footer>
 
-  <div id="cartBackdrop" class="cart-backdrop" hidden></div>
-  <aside id="cartDrawer" class="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle" hidden>
-    <div class="drawer-head"><div><small>RE:PLAY / SHOP</small><h2 id="cartTitle" data-i18n="cart">Cart</h2></div><button id="cartClose" type="button" aria-label="Close cart" data-i18n-aria-label="closeCart">×</button></div>
-    <div id="cartItems" class="cart-items"></div>
-    <div class="drawer-bottom"><div class="subtotal"><span data-i18n="subtotal">计划售价小计</span><strong id="cartSubtotal">$0.00</strong></div><p data-i18n="cartDisclaimer">当前仅保存本机选购清单。正式金额、积分及磁带资产将在安全结算服务接入后由服务器确认。</p><button class="checkout-button" type="button" disabled data-i18n="checkoutPending">结算服务建设中</button></div>
-  </aside>
-  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 </body>
 </html>

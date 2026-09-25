@@ -1,37 +1,25 @@
 {
-  "schemaVersion": 1,
-  "mode": "preview",
-  "currency": "USD",
-  "pricesAreFinal": false,
-  "checkoutEnabled": false,
-  "pointsPolicy": {
-    "status": "proposal",
-    "enabled": false,
-    "redemptionEnabled": false,
-    "policyVersion": "pilot-2026-09",
-    "purchaseReward": {
-      "classic-c60": 30,
-      "classic-c90": 60,
-      "metal-c90": 90
-    },
-    "blankCassetteCost": {
-      "classic-c60": 300,
-      "classic-c90": 600,
-      "metal-c90": 900
-    },
-    "designPriceRange": { "min": 80, "max": 600 },
-    "sampleGalleryPrices": [120, 180, 260],
-    "creatorSharePercent": 70,
-    "pendingDays": 14,
-    "cashValue": null
+  "schemaVersion": 2,
+  "mode": "global-beta",
+  "policyVersion": "global-beta-v1",
+  "features": {
+    "cashPurchaseEnabled": false,
+    "purchaseRewardEnabled": false,
+    "rewardsEnabled": true,
+    "redemptionPolicyEnabled": true,
+    "liveAccountServiceEnabled": false
   },
-  "welcomeGift": [
-    { "productId": "classic-c60", "quantity": 1 },
-    { "productId": "metal-c90", "quantity": 1 }
-  ],
+  "welcomeRewardRp": 1200,
+  "blankCassetteCostRp": 400,
+  "firstCassetteCompletedRewardRp": 100,
+  "firstCreatorPublishRewardRp": 100,
+  "creatorPriceTiersRp": [100, 200, 300, 400],
+  "creatorRewardPercent": 100,
+  "betaContributionTiersRp": [50, 100, 200, 300],
   "products": [
-    { "id": "classic-c60", "name": "Classic C60", "cents": 99, "image": "classic-c60-v1.png" },
-    { "id": "classic-c90", "name": "Classic C90", "cents": 199, "image": "classic-c90-v1.png" },
-    { "id": "metal-c90", "name": "Metal C90", "cents": 299, "image": "metal-c90-v1.png" }
-  ]
+    { "id": "classic-c60", "name": "Classic C60", "rewardPriceRp": 400, "image": "classic-c60-v1.png" },
+    { "id": "classic-c90", "name": "Classic C90", "rewardPriceRp": 800, "image": "classic-c90-v1.png" },
+    { "id": "metal-c90", "name": "Metal C90", "rewardPriceRp": 1200, "image": "metal-c90-v1.png" }
+  ],
+  "gallerySamplePricesRp": [100, 200, 300]
 }
