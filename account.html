@@ -9,6 +9,8 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="styles.css">
   <script src="app.js" defer></script>
+  <script src="replay-api.js" defer></script>
+  <script src="site-live.js" defer></script>
 </head>
 <body class="inner-page" data-page="account">
   <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
@@ -34,13 +36,13 @@
           <p class="eyebrow" data-i18n="accountKicker">RE:PLAY ACCOUNT / GLOBAL BETA</p>
           <h2 data-i18n="accountTitle">One account for the website and desktop app.</h2>
           <p data-i18n="accountDescription">When the Beta account service goes live, this page will unify RP, blank cassettes, digital assets, Creator works and reward history.</p>
-          <span class="notice-chip" data-i18n="accountPending">Account service in progress · this page shows the target structure</span>
+          <span class="notice-chip" id="accountLiveStatus" data-i18n="accountPending">Account service in progress · this page shows the target structure</span>
         </div>
         <div class="account-grid">
-          <article class="account-card"><span>RP</span><strong>2,000 RP</strong><p data-i18n="accountWelcome">Welcome reward</p><small data-i18n="accountNoFake">No simulated balance is shown. Real rewards and assets will come from the server Reward Ledger and Entitlements.</small></article>
-          <article class="account-card"><span>BLANK</span><strong>400 RP</strong><p data-i18n="accountBlank">Blank Cassette</p><small>Initial entitlement: 0 · redeem after account service connects.</small></article>
-          <article class="account-card"><span>ASSETS</span><strong>Entitlements</strong><p data-i18n="accountAssets">My Assets</p><small>Official cassettes, blank cassettes and Creator designs will live here.</small></article>
-          <article class="account-card"><span>LEDGER</span><strong>Reward Ledger</strong><p data-i18n="accountHistory">Reward History</p><small>Welcome, redemption burns, Creator rewards and Beta contributions remain auditable.</small></article>
+          <article class="account-card"><span>RP</span><strong id="accountRpValue">2,000 RP</strong><p data-i18n="accountWelcome">Welcome reward</p><small data-i18n="accountNoFake">No simulated balance is shown. Real rewards and assets will come from the server Reward Ledger and Entitlements.</small></article>
+          <article class="account-card"><span>BLANK</span><strong id="accountBlankValue">—</strong><p data-i18n="accountBlank">Blank Cassette</p><small>Starting entitlement: 0 · redemption policy: 400 RP.</small></article>
+          <article class="account-card"><span>ASSETS</span><strong id="accountAssetValue">—</strong><p data-i18n="accountAssets">My Assets</p><small>Official cassettes, blank cassettes and Creator designs will live here.</small></article>
+          <article class="account-card"><span>LEDGER</span><strong id="accountHistoryValue">—</strong><p data-i18n="accountHistory">Reward History</p><small>Welcome, redemption burns, Creator rewards and Beta contributions remain auditable.</small></article>
         </div>
         <div class="sync-panel"><strong data-i18n="accountSync">Website ↔ Desktop sync</strong><p>Website → Re:Play Backend → Desktop App</p><div class="architecture-actions"><a class="pill-button light" href="shop.html" data-i18n="navShop">Rewards Store</a><a class="pill-button outline" href="activities.html" data-i18n="navActivities">Activities</a><a class="pill-button outline" href="support.html" data-i18n="navSupport">Support</a><a class="pill-button outline" href="policies.html" data-i18n="navPolicies">Policies</a></div></div>
       </div>
