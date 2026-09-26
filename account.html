@@ -44,6 +44,18 @@
           <article class="account-card"><span>ASSETS</span><strong id="accountAssetValue">—</strong><p data-i18n="accountAssets">My Assets</p><small>Official cassettes, blank cassettes and Creator designs will live here.</small></article>
           <article class="account-card"><span>LEDGER</span><strong id="accountHistoryValue">—</strong><p data-i18n="accountHistory">Reward History</p><small>Welcome, redemption burns, Creator rewards and Beta contributions remain auditable.</small></article>
         </div>
+        <section id="desktopLinkPanel" class="desktop-link-panel">
+          <div>
+            <p class="eyebrow">WEBSITE ↔ DESKTOP</p>
+            <h3 data-i18n="desktopLinkTitle">Link Re:Play Desktop</h3>
+            <p data-i18n="desktopLinkDetail">Generate a one-time code here, then enter it in the desktop cassette cabinet. The code expires after 10 minutes.</p>
+          </div>
+          <div class="desktop-link-actions">
+            <button id="desktopLinkCreate" class="pill-button light" type="button" disabled data-i18n="desktopLinkAction">Generate link code</button>
+            <output id="desktopLinkCode" aria-live="polite" hidden></output>
+            <small id="desktopLinkStatus" data-i18n="desktopLinkPending">Account/API connection required.</small>
+          </div>
+        </section>
         <div class="sync-panel"><strong data-i18n="accountSync">Website ↔ Desktop sync</strong><p>Website → Re:Play Backend → Desktop App</p><div class="architecture-actions"><a class="pill-button light" href="shop.html" data-i18n="navShop">Rewards Store</a><a class="pill-button outline" href="activities.html" data-i18n="navActivities">Activities</a><a class="pill-button outline" href="support.html" data-i18n="navSupport">Support</a><a class="pill-button outline" href="policies.html" data-i18n="navPolicies">Policies</a></div></div>
       </div>
     </section>
