@@ -38,7 +38,25 @@
       $('#accountLiveStatus')?.replaceChildren(document.createTextNode(data.user?.display_name||'Re:Play'));
       if($('#accountRpValue')) $('#accountRpValue').textContent=fmt(data.rewards?.balance||0)+' RP';
       if($('#accountBlankValue')) $('#accountBlankValue').textContent=String(data.entitlements?.blank_cassette||0);
-      if($('#accountAssetValue')) $('#accountAssetValue').textContent=String(Object.keys(data.entitlements?.assets||{}).length);
+      const assetRows=Object.values(data.entitlements?.assets||{});
+      const assetTotal=assetRows.reduce((sum,asset)=>sum+Math.max(1,Number(asset?.quantity||1)),0);
+      if($('#accountAssetValue')) $('#accountAssetValue').textContent=String(assetTotal);
+      const assetList=$('#accountAssetList');
+      if(assetList){
+        assetList.replaceChildren();
+        if(!assetRows.length){
+          const empty=document.createElement('p');empty.textContent=document.documentElement.lang.startsWith('zh')?'还没有在线资产。':'No online assets yet.';assetList.append(empty);
+        }else{
+          for(const asset of assetRows){
+            const row=document.createElement('div');
+            const label=document.createElement('span');
+            const amount=document.createElement('b');
+            label.textContent=asset.kind==='creator-design'?'Creator · '+String(asset.asset_id||''):String(asset.asset_id||'').replace(/-/g,' ');
+            amount.textContent='×'+Math.max(1,Number(asset.quantity||1));
+            row.append(label,amount);assetList.append(row);
+          }
+        }
+      }
       const history=await api.rewardHistory();
       if($('#accountHistoryValue')) $('#accountHistoryValue').textContent=String(history.events?.length||0);
       const linkButton=$('#desktopLinkCreate'), linkCode=$('#desktopLinkCode'), linkStatus=$('#desktopLinkStatus');
