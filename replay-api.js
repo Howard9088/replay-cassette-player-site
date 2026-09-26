@@ -8,6 +8,31 @@
     .catch(()=>({enabled:false,baseUrl:'',credentials:'include'}));
 
   const operationId=()=>crypto.randomUUID();
+  async function activeConfig(){
+    const cfg=await ready;
+    if(!cfg.enabled||!cfg.baseUrl) throw Object.assign(new Error('API_DISABLED'),{code:'API_DISABLED'});
+    return cfg;
+  }
+  async function uploadCreatorArtwork(file){
+    const cfg=await activeConfig();
+    if(!(file instanceof Blob)) throw Object.assign(new Error('INVALID_ARTWORK'),{code:'INVALID_ARTWORK'});
+    if(!['image/png','image/jpeg','image/webp'].includes(file.type)||file.size<100||file.size>5_000_000){
+      throw Object.assign(new Error('INVALID_ARTWORK'),{code:'INVALID_ARTWORK'});
+    }
+    const response=await fetch(new URL('/api/creator/assets',cfg.baseUrl),{
+      method:'POST',
+      credentials:cfg.credentials||'include',
+      headers:{
+        'accept':'application/json',
+        'content-type':file.type,
+        'x-replay-filename':encodeURIComponent(file.name||'artwork')
+      },
+      body:file
+    });
+    const data=await response.json().catch(()=>({}));
+    if(!response.ok) throw Object.assign(new Error(data?.error?.code||'API_ERROR'),{code:data?.error?.code||'API_ERROR',status:response.status});
+    return data;
+  }
   async function request(path,{method='GET',body,operation=false}={}){
     const cfg=await ready;
     if(!cfg.enabled||!cfg.baseUrl) throw Object.assign(new Error('API_DISABLED'),{code:'API_DISABLED'});
@@ -36,9 +61,15 @@
     claimCampaign:campaignId=>request('/api/campaigns/'+encodeURIComponent(campaignId)+'/claim',{method:'POST',body:{},operation:true}),
     tickets:()=>request('/api/support/tickets'),
     createTicket:data=>request('/api/support/tickets',{method:'POST',body:data}),
+    creatorAssets:()=>request('/api/creator/assets'),
+    uploadCreatorArtwork,
     publishCreator:data=>request('/api/creator/publish',{method:'POST',body:data,operation:true}),
     redeemCreator:workId=>request('/api/gallery/'+encodeURIComponent(workId)+'/redeem',{method:'POST',body:{},operation:true}),
     like:(workId,liked)=>request('/api/gallery/'+encodeURIComponent(workId)+'/like',{method:liked?'POST':'DELETE'}),
+    adminPolicy:()=>request('/api/admin/policy'),
+    adminUpdatePolicy:data=>request('/api/admin/policy',{method:'PATCH',body:data}),
+    adminInvites:()=>request('/api/admin/invites'),
+    adminCreateInvite:data=>request('/api/admin/invites',{method:'POST',body:data}),
     adminUsers:()=>request('/api/admin/users'),
     adminUser:userId=>request('/api/admin/users/'+encodeURIComponent(userId)),
     adminSetUserStatus:(userId,data)=>request('/api/admin/users/'+encodeURIComponent(userId)+'/status',{method:'PATCH',body:data}),
