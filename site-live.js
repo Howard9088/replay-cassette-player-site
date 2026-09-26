@@ -5,6 +5,32 @@
   const $=s=>document.querySelector(s);
   const fmt=n=>new Intl.NumberFormat(document.documentElement.lang.startsWith('zh')?'zh-CN':'en-US').format(n);
 
+
+  async function rewardsPolicy(){
+    if(!['points','creator'].includes(document.body.dataset.page)||!await api.isEnabled())return;
+    try{
+      const catalog=await api.catalog();
+      document.body.dataset.policyRevision=String(catalog.policy_revision||'');
+      if(document.body.dataset.page==='points'){
+        if($('#earnRule')) $('#earnRule').textContent=fmt(catalog.welcome_reward_rp)+' RP';
+        if($('#blankRule')) $('#blankRule').textContent=fmt(catalog.blank_cassette_rp)+' RP';
+        const creatorTiers=[...new Set((catalog.creator_asset_policy||[]).map(x=>Number(x.reward_price_rp)))].sort((a,b)=>a-b);
+        if($('#designRule')) $('#designRule').textContent=creatorTiers.map(fmt).join(' / ')+' RP';
+        if($('#creatorRule')) $('#creatorRule').textContent=fmt(catalog.creator_reward_percent)+'%';
+        if($('#pendingRule')) $('#pendingRule').textContent='+'+fmt(catalog.first_cassette_completed_reward_rp)+' RP';
+      }
+      if(document.body.dataset.page==='creator'){
+        for(const row of catalog.creator_asset_policy||[]){
+          document.querySelectorAll('[data-creator-price-type="'+row.type+'"]').forEach(node=>{
+            node.textContent=fmt(row.reward_price_rp)+' RP';
+          });
+        }
+      }
+    }catch(error){
+      document.body.dataset.policyApiError=error.code||'API_ERROR';
+    }
+  }
+
   async function account(){
     if(document.body.dataset.page!=='account'||!await api.isEnabled())return;
     try{
@@ -146,5 +172,5 @@
     });
   }
 
-  Promise.all([account(),activities(),shop(),creator(),support()]).catch(()=>{});
+  Promise.all([rewardsPolicy(),account(),activities(),shop(),creator(),support()]).catch(()=>{});
 })();
