@@ -42,6 +42,21 @@
           <article><strong data-i18n="creatorLikes">♡ Like / Heart</strong><p data-i18n="creatorLikesDetail">Likes are community feedback, popularity and a future Creator Level signal. They do not generate RP or change redemption cost today.</p></article>
           <article><strong data-i18n="creatorLevel">Creator Level (future)</strong><p data-i18n="creatorLevelDetail">Disabled in Beta V1.1. Future levels may increase platform Creator Bonus without raising the user redemption price.</p></article>
         </div>
+        <section class="creator-upload-panel" aria-labelledby="creatorUploadTitle">
+          <div>
+            <p class="eyebrow" data-i18n="creatorUploadKicker">CREATOR ASSET / BETA</p>
+            <h3 id="creatorUploadTitle" data-i18n="creatorUploadTitle">Upload original artwork</h3>
+            <p data-i18n="creatorUploadDetail">PNG, JPEG or WebP · 100 bytes–5 MB. Uploading creates no RP reward.</p>
+          </div>
+          <div class="creator-upload-controls">
+            <input id="creatorArtworkInput" type="file" accept="image/png,image/jpeg,image/webp" disabled>
+            <button id="creatorArtworkUpload" type="button" class="pill-button light" disabled data-i18n="creatorUploadAction">Upload artwork</button>
+          </div>
+          <div class="creator-upload-result">
+            <img id="creatorArtworkPreview" alt="" hidden>
+            <output id="creatorArtworkStatus" aria-live="polite" data-i18n="creatorUploadPending">Account/API connection required.</output>
+          </div>
+        </section>
         <div class="creator-flow"><span>REDEEM</span><b>User RP → Burn</b><i>+</i><b>System → Creator Reward</b><small>Two independent Reward Ledger events. No user-to-user RP transfer.</small></div>
         <div class="architecture-actions"><a class="pill-button light" href="gallery.html" data-i18n="navGallery">Gallery</a><a class="pill-button outline" href="https://github.com/Howard9088/replay-cassette-player-releases/releases/latest/download/RePlay-Setup.exe" data-i18n="creatorOpenApp">Creator editing happens in the Re:Play desktop app.</a></div>
       </div>
