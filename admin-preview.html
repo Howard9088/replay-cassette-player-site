@@ -9,9 +9,7 @@
   <title>Re:Play · Admin Preview</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="styles.css">
-  <script src="replay-api.js" defer></script>
   <script src="admin-preview.js" defer></script>
-  <script src="admin-live.js" defer></script>
 </head>
 <body class="admin-preview-page">
   <main class="admin-shell">
@@ -36,11 +34,11 @@
     <section class="admin-content">
       <header class="admin-topbar">
         <div><span class="admin-kicker">GLOBAL BETA V1.1</span><h1>Re:Play Admin</h1></div>
-        <span class="notice-chip" id="adminConnectionStatus">Backend not connected</span><span id="adminWriteStatus" class="admin-write-status" aria-live="polite"></span>
+        <span class="notice-chip" id="adminConnectionStatus">Architecture preview · no live admin connection</span><span id="adminWriteStatus" class="admin-write-status" aria-live="polite"></span>
       </header>
 
       <section id="dashboard" class="admin-section">
-        <div class="admin-section-head"><div><span>DASHBOARD</span><h2>Operations overview</h2></div><small>Real metrics appear only after authenticated backend connection.</small></div>
+        <div class="admin-section-head"><div><span>DASHBOARD</span><h2>Operations overview</h2></div><small>Architecture preview only. Production Admin must run behind authenticated API/RBAC.</small></div>
         <div class="admin-kpis">
           <article><span>USERS</span><strong id="adminUsersKpi">—</strong><small>Backend required</small></article>
           <article><span>RP OUTSTANDING</span><strong id="adminRpKpi">—</strong><small>Reward Ledger required</small></article>
