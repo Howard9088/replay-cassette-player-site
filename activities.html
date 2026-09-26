@@ -9,6 +9,8 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="styles.css">
   <script src="app.js" defer></script>
+  <script src="replay-api.js" defer></script>
+  <script src="site-live.js" defer></script>
 </head>
 <body class="inner-page" data-page="activities">
   <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
@@ -31,7 +33,7 @@
           <article class="activity-card"><span>FIRST MILESTONE</span><strong data-i18n="activityFirstCreator">First Approved Creator Work</strong><b>+100 RP</b><p data-i18n="activityFirstCreatorDetail">One-time milestone reward after approval.</p></article>
           <article class="activity-card"><span>CONTRIBUTION</span><strong data-i18n="activityContribution">Beta Contribution</strong><b>50 / 100 / 200 / 300 RP</b><p data-i18n="activityContributionDetail">Manual audited reward for useful testing contributions.</p></article>
         </div>
-        <div class="activity-empty"><strong data-i18n="activityNoCampaign">No special campaign is currently active.</strong><p data-i18n="activityNoCampaignDetail">Future campaigns can be scheduled from Admin with audience, reward tier, start/end time and per-account limits.</p></div>
+        <div id="liveCampaigns" class="activity-grid live-campaigns"></div><div id="campaignEmpty" class="activity-empty"><strong data-i18n="activityNoCampaign">No special campaign is currently active.</strong><p data-i18n="activityNoCampaignDetail">Future campaigns can be scheduled from Admin with audience, reward tier, start/end time and per-account limits.</p></div>
       </div>
     </section>
   </main>
