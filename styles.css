@@ -105,3 +105,24 @@ body[data-page="experience"] .main-nav a[href="experience.html"],body[data-page=
 .feature-cards article:nth-child(-n+2)>img{object-fit:contain;background:#151515}
 @media(max-width:1100px){.products{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:660px){.products{grid-template-columns:1fr}.beta-welcome{display:block}.beta-welcome a{display:inline-block;margin-top:15px}.feature-cards article:nth-child(-n+2)>img{object-fit:contain}}
+
+
+/* 2026-09 typography/layout audit: keep EN/ZH headings intentional and prevent accidental wraps. */
+.hero-layout{grid-template-columns:minmax(650px,1.16fr) minmax(400px,.84fr);gap:clamp(32px,4vw,68px)}
+.hero-copy{max-width:720px;min-width:0}
+.hero h1,.section h2{text-wrap:balance;overflow-wrap:normal;word-break:normal}
+html[lang="en"] .hero h1{font-size:clamp(56px,5vw,84px);white-space:nowrap}
+html[lang="zh-CN"] body{font-family:"Microsoft YaHei UI","Microsoft YaHei","PingFang SC","Noto Sans CJK SC",system-ui,sans-serif}
+html[lang="zh-CN"] .hero h1,html[lang="zh-CN"] .section h2{font-family:"Microsoft YaHei UI","Microsoft YaHei","PingFang SC","Noto Sans CJK SC",system-ui,sans-serif;font-weight:700;letter-spacing:-.055em;line-break:strict}
+html[lang="zh-CN"] .hero h1{font-size:clamp(46px,3.7vw,60px);line-height:1.18;white-space:nowrap}
+html[lang="zh-CN"] .hero-tagline{font-family:"Microsoft YaHei UI","Microsoft YaHei","PingFang SC",sans-serif;font-style:normal;font-weight:600;letter-spacing:.02em}
+.section h2{font-size:clamp(40px,3.45vw,56px);line-height:1.16;max-width:100%}
+html[lang="zh-CN"] .section h2{font-size:clamp(39px,3.15vw,52px);line-height:1.24}
+.section-copy>p:not(.eyebrow),.section-heading p:not(.eyebrow),.shop-heading p:not(.eyebrow){text-wrap:pretty}
+.features-layout{grid-template-columns:minmax(360px,.82fr) minmax(0,1.18fr);gap:clamp(36px,5vw,72px)}
+.features-intro,.points-layout .section-copy,.shop-heading>div,.section-heading>div{min-width:0}
+.shop-heading>div,.section-heading>div{flex:1;max-width:860px}
+@media(min-width:1101px){.shop-heading h2,.gallery-section .section-heading h2{white-space:nowrap}html[lang="zh-CN"] .features-intro h2,html[lang="zh-CN"] .points-layout .section-copy h2{font-size:44px;white-space:nowrap}}
+@media(max-width:1180px){.hero-layout{grid-template-columns:1fr}.hero-copy{max-width:760px}.player-showcase{justify-self:center;margin-top:44px;transform:none}.features-layout{grid-template-columns:minmax(320px,.76fr) minmax(0,1.24fr)}}
+@media(max-width:950px){.features-layout,.points-layout{grid-template-columns:1fr}.inner-main>.section{padding-top:150px}.section h2,html[lang="zh-CN"] .section h2{font-size:clamp(38px,6.2vw,52px)}}
+@media(max-width:700px){.hero-copy{max-width:100%}html[lang="en"] .hero h1{font-size:clamp(46px,12vw,64px);white-space:normal}html[lang="zh-CN"] .hero h1{font-size:clamp(27px,8.7vw,42px);line-height:1.22;letter-spacing:-.07em;white-space:nowrap}html[lang="zh-CN"] .hero-tagline{font-size:clamp(15px,4vw,17px);white-space:nowrap;letter-spacing:0}.section h2,html[lang="zh-CN"] .section h2{font-size:clamp(34px,9vw,45px);line-height:1.22}.shop-heading h2,.gallery-section .section-heading h2{white-space:normal}}
