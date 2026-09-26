@@ -68,6 +68,53 @@
     });
   }
 
+
+  async function creator(){
+    if(document.body.dataset.page!=='creator')return;
+    const input=$('#creatorArtworkInput'), button=$('#creatorArtworkUpload'), status=$('#creatorArtworkStatus'), preview=$('#creatorArtworkPreview');
+    if(!input||!button||!status)return;
+    if(!await api.isEnabled())return;
+
+    input.disabled=false;
+    button.disabled=false;
+    status.textContent=window.RePlaySiteText?.('creatorUploadReady')||'Choose an image.';
+
+    input.addEventListener('change',()=>{
+      const file=input.files?.[0];
+      if(!file)return;
+      if(!['image/png','image/jpeg','image/webp'].includes(file.type)||file.size<100||file.size>5_000_000){
+        input.value='';
+        status.textContent=window.RePlaySiteText?.('creatorUploadInvalid')||'Invalid artwork.';
+        if(preview){preview.hidden=true;preview.removeAttribute('src')}
+        return;
+      }
+      if(preview){
+        preview.src=URL.createObjectURL(file);
+        preview.hidden=false;
+        preview.onload=()=>URL.revokeObjectURL(preview.src);
+      }
+      status.textContent=file.name+' · '+fmt(file.size)+' bytes';
+    });
+
+    button.addEventListener('click',async()=>{
+      const file=input.files?.[0];
+      if(!file){status.textContent=window.RePlaySiteText?.('creatorUploadReady')||'Choose an image.';return}
+      button.disabled=true;
+      status.textContent=window.RePlaySiteText?.('creatorUploadWorking')||'Uploading…';
+      try{
+        const result=await api.uploadCreatorArtwork(file);
+        status.textContent=(window.RePlaySiteText?.('creatorUploadSuccess')||'Uploaded · Asset ID')+': '+result.artwork_asset_id;
+        status.dataset.assetId=result.artwork_asset_id;
+      }catch(error){
+        status.textContent=error.code==='UNAUTHORIZED'
+          ?(window.RePlaySiteText?.('redeemSignIn')||'Sign in required')
+          :(error.code||window.RePlaySiteText?.('creatorUploadInvalid')||'Upload failed');
+      }finally{
+        button.disabled=false;
+      }
+    });
+  }
+
   async function support(){
     if(document.body.dataset.page!=='support'||!await api.isEnabled())return;
     const form=$('.support-form'); if(!form)return;
@@ -87,5 +134,5 @@
     });
   }
 
-  Promise.all([account(),activities(),shop(),support()]).catch(()=>{});
+  Promise.all([account(),activities(),shop(),creator(),support()]).catch(()=>{});
 })();
