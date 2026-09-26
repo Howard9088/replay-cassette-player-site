@@ -126,3 +126,5 @@ html[lang="zh-CN"] .section h2{font-size:clamp(39px,3.15vw,52px);line-height:1.2
 @media(max-width:1180px){.hero-layout{grid-template-columns:1fr}.hero-copy{max-width:760px}.player-showcase{justify-self:center;margin-top:44px;transform:none}.features-layout{grid-template-columns:minmax(320px,.76fr) minmax(0,1.24fr)}}
 @media(max-width:950px){.features-layout,.points-layout{grid-template-columns:1fr}.inner-main>.section{padding-top:150px}.section h2,html[lang="zh-CN"] .section h2{font-size:clamp(38px,6.2vw,52px)}}
 @media(max-width:700px){.hero-copy{max-width:100%}html[lang="en"] .hero h1{font-size:clamp(46px,12vw,64px);white-space:normal}html[lang="zh-CN"] .hero h1{font-size:clamp(27px,8.7vw,42px);line-height:1.22;letter-spacing:-.07em;white-space:nowrap}html[lang="zh-CN"] .hero-tagline{font-size:clamp(15px,4vw,17px);white-space:nowrap;letter-spacing:0}.section h2,html[lang="zh-CN"] .section h2{font-size:clamp(34px,9vw,45px);line-height:1.22}.shop-heading h2,.gallery-section .section-heading h2{white-space:normal}}
+
+@media(min-width:1181px){.features-layout{grid-template-columns:minmax(390px,.9fr) minmax(0,1.1fr)}}
