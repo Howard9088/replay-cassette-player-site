@@ -33,19 +33,22 @@
       "id": "classic-c60",
       "name": "Classic C60",
       "rewardPriceRp": 400,
-      "image": "classic-c60-v1.png"
+      "image": "classic-c60-v1.png",
+      "cashPriceCents": 99
     },
     {
       "id": "classic-c90",
       "name": "Classic C90",
       "rewardPriceRp": 800,
-      "image": "classic-c90-v1.png"
+      "image": "classic-c90-v1.png",
+      "cashPriceCents": 199
     },
     {
       "id": "metal-c90",
       "name": "Metal C90",
       "rewardPriceRp": 1200,
-      "image": "metal-c90-v1.png"
+      "image": "metal-c90-v1.png",
+      "cashPriceCents": 299
     }
   ],
   "gallerySamplePricesRp": [
