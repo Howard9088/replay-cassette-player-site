@@ -1,0 +1,29 @@
+name: Verify RePlay Beta Site
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify-site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check JavaScript syntax
+        run: |
+          node --check app.js
+          node --check replay-api.js
+          node --check site-live.js
+          node --check admin-preview.js
+          node --check admin-live.js
+          node --check tape-demo.js
+      - name: Verify Beta site contract
+        run: node tools/verify-site.mjs
