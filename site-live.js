@@ -131,6 +131,89 @@
   }
 
 
+
+  async function gallery(){
+    if(document.body.dataset.page!=='gallery'||!await api.isEnabled())return;
+    const grid=$('#galleryGrid'), notice=$('#galleryNotice');
+    if(!grid)return;
+    try{
+      const data=await api.gallery();
+      const works=Array.isArray(data.works)?data.works:[];
+      if(!works.length)return;
+      grid.replaceChildren();
+      grid.dataset.galleryMode='live';
+      if(notice) notice.textContent=document.documentElement.lang.startsWith('zh')?'社区作品 · RP 固定兑换':'Community works · fixed RP redemption';
+
+      for(const work of works){
+        const card=document.createElement('article'); card.className='gallery-card gallery-live-card';
+        const art=document.createElement('div'); art.className='gallery-live-art';
+        if(work.artwork_asset_id){
+          const img=document.createElement('img');
+          img.alt=String(work.title||'Creator artwork');
+          img.loading='lazy';
+          try{img.src=await api.creatorArtworkUrl(work.artwork_asset_id)}catch{}
+          art.append(img);
+        }else{
+          const placeholder=document.createElement('span');
+          placeholder.textContent='Re:Play Creator';
+          art.append(placeholder);
+        }
+
+        const meta=document.createElement('div'); meta.className='gallery-meta';
+        const info=document.createElement('div');
+        const title=document.createElement('h3'); title.textContent=String(work.title||'Untitled');
+        const by=document.createElement('span'); by.textContent='by '+String(work.creator?.display_name||'Re:Play Creator')+' · '+String(work.asset_type||'design');
+        info.append(title,by);
+        const price=document.createElement('b'); price.textContent=fmt(work.reward_price_rp)+' RP';
+        meta.append(info,price);
+
+        const metrics=document.createElement('div'); metrics.className='gallery-live-metrics';
+        const like=document.createElement('button'); like.type='button'; like.className='gallery-like';
+        like.textContent='♡ '+fmt(work.like_count||0);
+        const redeems=document.createElement('span'); redeems.textContent=fmt(work.redeem_count||0)+' Redeems';
+        metrics.append(like,redeems);
+
+        const policy=document.createElement('small'); policy.className='gallery-policy-note';
+        policy.textContent=document.documentElement.lang.startsWith('zh')?'固定分类兑换价 · 点心数不改变 RP':'Fixed category price · likes do not change RP';
+
+        const redeem=document.createElement('button'); redeem.type='button'; redeem.className='gallery-redeem gallery-live-redeem';
+        redeem.textContent=(window.RePlaySiteText?.('redeemAction')||'Redeem')+' · '+fmt(work.reward_price_rp)+' RP';
+
+        like.addEventListener('click',async()=>{
+          like.disabled=true;
+          try{
+            const result=await api.like(work.work_id,true);
+            like.textContent='♡ '+fmt(result.like_count||0);
+          }catch(error){
+            if(error.code==='UNAUTHORIZED') like.textContent=document.documentElement.lang.startsWith('zh')?'登录后点赞':'Sign in to like';
+          }finally{setTimeout(()=>{like.disabled=false},500)}
+        });
+
+        redeem.addEventListener('click',async()=>{
+          redeem.disabled=true;
+          try{
+            const result=await api.redeemCreator(work.work_id);
+            redeem.textContent=window.RePlaySiteText?.('redeemSuccess')||'Redeemed';
+            work.redeem_count=Number(work.redeem_count||0)+1;
+            redeems.textContent=fmt(work.redeem_count)+' Redeems';
+            window.dispatchEvent(new CustomEvent('replay:entitlements-updated',{detail:result}));
+          }catch(error){
+            redeem.textContent=error.code==='UNAUTHORIZED'
+              ?(window.RePlaySiteText?.('redeemSignIn')||'Sign in required')
+              : error.code==='INSUFFICIENT_RP'
+                ?(document.documentElement.lang.startsWith('zh')?'RP 不足':'Not enough RP')
+                :(window.RePlaySiteText?.('redeemFailed')||'Redeem failed');
+          }finally{setTimeout(()=>{redeem.disabled=false},900)}
+        });
+
+        card.append(art,meta,metrics,policy,redeem);
+        grid.append(card);
+      }
+    }catch(error){
+      document.body.dataset.galleryApiError=error.code||'API_ERROR';
+    }
+  }
+
   async function creator(){
     if(document.body.dataset.page!=='creator')return;
     const input=$('#creatorArtworkInput'), button=$('#creatorArtworkUpload'), status=$('#creatorArtworkStatus'), preview=$('#creatorArtworkPreview');
@@ -196,5 +279,5 @@
     });
   }
 
-  Promise.all([rewardsPolicy(),account(),activities(),shop(),creator(),support()]).catch(()=>{});
+  Promise.all([rewardsPolicy(),account(),activities(),shop(),gallery(),creator(),support()]).catch(()=>{});
 })();
