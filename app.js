@@ -119,9 +119,11 @@
   $('#pointsProduct')?.addEventListener('change',renderCatalog);
   translate();
   loadCatalog().catch(() => {
-    const message = t('catalogUnavailable');
-    $$('[data-price],[data-gallery-price]').forEach(node => node.textContent = '—');
+    // Keep published RP tiers visible even if the catalogue/API is temporarily unavailable.
+    document.body.dataset.catalogStatus = 'unavailable';
     const notice = $('.section-fineprint');
-    if (notice) notice.textContent = message;
+    if (notice) notice.textContent = state.language === 'zh'
+      ? '兑换服务暂时不可用；页面显示的 RP 档位仍按当前 Beta 规则保留。'
+      : 'Redemption service is temporarily unavailable. Published Beta RP tiers remain visible.';
   });
 })();
