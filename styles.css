@@ -301,3 +301,6 @@ html[lang="zh-CN"] .section h2{font-size:clamp(39px,3.15vw,52px);line-height:1.2
 .gallery-live-metrics{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:9px 0 7px}.gallery-live-metrics span{color:#9e9389;font-size:10px}
 .gallery-like{border:1px solid #725d4b;border-radius:999px;background:#24211d;color:#e4c19b;padding:6px 10px;font-size:10px}.gallery-like:hover:not(:disabled){background:#3a3027}
 .gallery-live-redeem{cursor:pointer;color:#23170f;background:#e0c09b;border-color:#c89b6c}.gallery-live-redeem:hover:not(:disabled){background:#ecd2b5}.gallery-live-redeem:disabled,.gallery-like:disabled{opacity:.55;cursor:not-allowed}
+
+.account-assets-panel{margin:18px 0;padding:20px;border:1px solid #5d5043;border-radius:11px;background:#171918}.account-assets-panel h3{margin:0;font:25px Georgia,"Songti SC",serif;color:#efcfaa}.account-asset-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:15px}.account-asset-list>div{display:flex;justify-content:space-between;gap:12px;padding:10px 12px;border:1px solid #494139;border-radius:8px;background:#101312;color:#b9aa9a;font-size:11px;text-transform:capitalize}.account-asset-list b{color:#e6c39d}.account-asset-list p{color:#91867c;font-size:11px}
+@media(max-width:720px){.account-asset-list{grid-template-columns:1fr}}
