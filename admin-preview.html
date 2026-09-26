@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0e0e">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Re:Play Admin architecture preview. No production user data or write operations are exposed here.">
+  <title>Re:Play · Admin Preview</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="styles.css">
+  <script src="admin-preview.js" defer></script>
+</head>
+<body class="admin-preview-page">
+  <main class="admin-shell">
+    <aside class="admin-sidebar">
+      <a class="brand admin-brand" href="index.html"><strong>Re:Play</strong><span>ADMIN PREVIEW</span></a>
+      <nav class="admin-nav" aria-label="Admin preview modules">
+        <a href="#dashboard">Dashboard</a>
+        <a href="#users">Users</a>
+        <a href="#rewards">Rewards</a>
+        <a href="#products">Products</a>
+        <a href="#creator-admin">Creator</a>
+        <a href="#campaigns">Campaigns</a>
+        <a href="#support-admin">Support</a>
+        <a href="#announcements">Announcements</a>
+        <a href="#policies-admin">Policies</a>
+        <a href="#flags">Feature Flags</a>
+        <a href="#audit">Audit Log</a>
+        <a href="#roles">Admin Users</a>
+      </nav>
+      <p class="admin-security-note">Preview only. No production credentials, user records, RP writes or admin actions are exposed on GitHub Pages.</p>
+    </aside>
+    <section class="admin-content">
+      <header class="admin-topbar">
+        <div><span class="admin-kicker">GLOBAL BETA V1.1</span><h1>Re:Play Admin</h1></div>
+        <span class="notice-chip">Backend not connected</span>
+      </header>
+
+      <section id="dashboard" class="admin-section">
+        <div class="admin-section-head"><div><span>DASHBOARD</span><h2>Operations overview</h2></div><small>Real metrics appear only after authenticated backend connection.</small></div>
+        <div class="admin-kpis">
+          <article><span>USERS</span><strong>—</strong><small>Backend required</small></article>
+          <article><span>RP OUTSTANDING</span><strong>—</strong><small>Reward Ledger required</small></article>
+          <article><span>CREATOR WORKS</span><strong>—</strong><small>Creator DB required</small></article>
+          <article><span>OPEN TICKETS</span><strong>—</strong><small>Support service required</small></article>
+        </div>
+      </section>
+
+      <section id="users" class="admin-section">
+        <div class="admin-section-head"><div><span>USERS</span><h2>Account management</h2></div><small>Search, status, assets, RP ledger, Creator works and support history.</small></div>
+        <div class="admin-empty-state"><b>User management requires authenticated backend access.</b><p>No sample email addresses, balances or personal records are embedded in this public preview.</p></div>
+      </section>
+
+      <section id="rewards" class="admin-section">
+        <div class="admin-section-head"><div><span>REWARDS</span><h2>Reward Policy</h2></div><small id="policyVersion">global-beta-v1.1</small></div>
+        <div class="admin-policy-grid">
+          <article><span>Welcome Reward</span><strong id="adminWelcome">2,000 RP</strong></article>
+          <article><span>Blank Cassette</span><strong id="adminBlank">400 RP</strong></article>
+          <article><span>First Cassette</span><strong id="adminFirstTape">+100 RP</strong></article>
+          <article><span>First Creator Publish</span><strong id="adminFirstPublish">+100 RP</strong></article>
+          <article><span>Creator Reward</span><strong id="adminCreatorReward">100%</strong></article>
+          <article><span>Beta Contribution</span><strong id="adminContribution">50 / 100 / 200 / 300 RP</strong></article>
+        </div>
+        <div class="admin-callout"><b>Write policy:</b> administrators must create Reward Ledger events such as ADMIN_REWARD or CUSTOMER_SUPPORT_REWARD. Never edit a user's balance directly.</div>
+      </section>
+
+      <section id="products" class="admin-section">
+        <div class="admin-section-head"><div><span>PRODUCTS</span><h2>Product & redemption catalogue</h2></div><small>Cash purchase stays OFF during Global Beta.</small></div>
+        <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Asset</th><th>RP</th><th>Purchase</th><th>Redeem</th></tr></thead><tbody>
+          <tr><td>Blank Cassette</td><td>400</td><td>OFF</td><td>Policy ready</td></tr>
+          <tr><td>Classic C60</td><td>400</td><td>OFF</td><td>Policy ready</td></tr>
+          <tr><td>Classic C90</td><td>800</td><td>OFF</td><td>Policy ready</td></tr>
+          <tr><td>Metal C90</td><td>1,200</td><td>OFF</td><td>Policy ready</td></tr>
+        </tbody></table></div>
+      </section>
+
+      <section id="creator-admin" class="admin-section">
+        <div class="admin-section-head"><div><span>CREATOR</span><h2>Review & fixed RP policy</h2></div><small>Creators never set their own RP price in Beta V1.1.</small></div>
+        <div class="admin-policy-grid">
+          <article><span>Sticker / Tape Label</span><strong>100 RP</strong></article>
+          <article><span>Cover / Lyrics / Case</span><strong>200 RP</strong></article>
+          <article><span>Full Cassette Design</span><strong>300 RP</strong></article>
+          <article><span>Complete Design Pack</span><strong>400 RP</strong></article>
+        </div>
+        <div class="admin-callout">Review states: PENDING → PUBLISHED / REJECTED / REMOVED. ♡ Likes do not generate RP and do not change redemption price.</div>
+      </section>
+
+      <section id="campaigns" class="admin-section">
+        <div class="admin-section-head"><div><span>CAMPAIGNS</span><h2>Activity management</h2></div><small>DRAFT · SCHEDULED · ACTIVE · ENDED</small></div>
+        <div class="admin-form-preview">
+          <label>Campaign name<input value="New Beta Campaign" disabled></label>
+          <label>Audience<select disabled><option>All Beta Users</option></select></label>
+          <label>Reward tier<select disabled><option>50 / 100 / 200 / 300 RP</option></select></label>
+          <label>Per-account limit<input value="1" disabled></label>
+        </div>
+        <p class="admin-muted">Authenticated Admin will create campaigns server-side. The public site only displays campaigns returned by the API.</p>
+      </section>
+
+      <section id="support-admin" class="admin-section">
+        <div class="admin-section-head"><div><span>SUPPORT</span><h2>Customer support</h2></div><small>Ticket + account context + auditable compensation.</small></div>
+        <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Category</th><th>Status</th><th>Admin capability</th></tr></thead><tbody>
+          <tr><td>Account / Rewards / Assets</td><td>NEW → CLOSED</td><td>Read account context</td></tr>
+          <tr><td>Creator / Gallery</td><td>NEW → CLOSED</td><td>Review moderation context</td></tr>
+          <tr><td>Bug / Download</td><td>NEW → CLOSED</td><td>Link build/version data</td></tr>
+          <tr><td>Compensation</td><td>Audited</td><td>CUSTOMER_SUPPORT_REWARD</td></tr>
+        </tbody></table></div>
+      </section>
+
+      <section id="announcements" class="admin-section">
+        <div class="admin-section-head"><div><span>ANNOUNCEMENTS</span><h2>Website & desktop notices</h2></div><small>Target: Website / Desktop / Both</small></div>
+        <div class="admin-empty-state"><b>No live announcement service yet.</b><p>The backend schema should include title, body, locale, target, start/end time and status.</p></div>
+      </section>
+
+      <section id="policies-admin" class="admin-section">
+        <div class="admin-section-head"><div><span>POLICIES</span><h2>Versioned policy centre</h2></div><small>Every effective change needs a version and date.</small></div>
+        <div class="admin-policy-grid">
+          <article><span>Rewards</span><strong>V1.1</strong></article>
+          <article><span>Creator</span><strong>Beta</strong></article>
+          <article><span>Privacy</span><strong>Draft</strong></article>
+          <article><span>Copyright</span><strong>Draft</strong></article>
+        </div>
+      </section>
+
+      <section id="flags" class="admin-section">
+        <div class="admin-section-head"><div><span>FEATURE FLAGS</span><h2>Kill switches & staged rollout</h2></div><small>Rendered from admin-config.json</small></div>
+        <div id="flagGrid" class="flag-grid"></div>
+      </section>
+
+      <section id="audit" class="admin-section">
+        <div class="admin-section-head"><div><span>AUDIT LOG</span><h2>Every admin write is traceable</h2></div><small>Backend required</small></div>
+        <div class="admin-empty-state"><b>No public audit events.</b><p>Production records must store operator, action, target, before/after, reason and timestamp.</p></div>
+      </section>
+
+      <section id="roles" class="admin-section">
+        <div class="admin-section-head"><div><span>ADMIN USERS</span><h2>Role-based access</h2></div><small>Admin login should require 2FA.</small></div>
+        <div id="roleGrid" class="admin-policy-grid"></div>
+      </section>
+    </section>
+  </main>
+</body>
+</html>
