@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "enabled": false,
+  "baseUrl": "",
+  "authMode": "cookie-session",
+  "credentials": "include",
+  "note": "Set enabled=true and baseUrl to the authenticated Re:Play API origin after backend deployment. Never put secrets or admin tokens here."
+}
