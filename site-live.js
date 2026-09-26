@@ -110,12 +110,15 @@
         });
         document.querySelectorAll('[data-cash-price="'+product.product_id+'"]').forEach(node=>{
           const cents=Number(product.future_cash_price_cents||0);
-          if(cents>0) node.textContent='
+          if(cents>0) node.textContent='$'+(cents/100).toFixed(2);
+        });
+      }
       document.body.dataset.policyRevision=String(catalog.policy_revision||'');
     }catch(error){
-      // Static RP values in HTML are the safe fallback. Never replace them with placeholders.
+      // Static RP/USD values in HTML are the safe fallback. Never replace them with placeholders.
       document.body.dataset.catalogApiError=error.code||'API_ERROR';
     }
+
     const buttons=[...document.querySelectorAll('.reward-redeem')];
     if(!buttons.length)return;
     buttons.forEach(button=>{
@@ -149,7 +152,6 @@
       });
     });
   }
-
 
 
   async function gallery(){
