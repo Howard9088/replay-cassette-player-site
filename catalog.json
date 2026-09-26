@@ -1,25 +1,99 @@
 {
   "schemaVersion": 2,
   "mode": "global-beta",
-  "policyVersion": "global-beta-v1",
+  "policyVersion": "global-beta-v1.1",
   "features": {
     "cashPurchaseEnabled": false,
     "purchaseRewardEnabled": false,
     "rewardsEnabled": true,
     "redemptionPolicyEnabled": true,
-    "liveAccountServiceEnabled": false
+    "liveAccountServiceEnabled": false,
+    "creatorLikesEnabled": true,
+    "creatorLevelEnabled": false,
+    "creatorBonusEnabled": false
   },
-  "welcomeRewardRp": 1200,
+  "welcomeRewardRp": 2000,
   "blankCassetteCostRp": 400,
   "firstCassetteCompletedRewardRp": 100,
   "firstCreatorPublishRewardRp": 100,
-  "creatorPriceTiersRp": [100, 200, 300, 400],
-  "creatorRewardPercent": 100,
-  "betaContributionTiersRp": [50, 100, 200, 300],
-  "products": [
-    { "id": "classic-c60", "name": "Classic C60", "rewardPriceRp": 400, "image": "classic-c60-v1.png" },
-    { "id": "classic-c90", "name": "Classic C90", "rewardPriceRp": 800, "image": "classic-c90-v1.png" },
-    { "id": "metal-c90", "name": "Metal C90", "rewardPriceRp": 1200, "image": "metal-c90-v1.png" }
+  "creatorPriceTiersRp": [
+    100,
+    200,
+    300,
+    400
   ],
-  "gallerySamplePricesRp": [100, 200, 300]
+  "creatorRewardPercent": 100,
+  "betaContributionTiersRp": [
+    50,
+    100,
+    200,
+    300
+  ],
+  "products": [
+    {
+      "id": "classic-c60",
+      "name": "Classic C60",
+      "rewardPriceRp": 400,
+      "image": "classic-c60-v1.png"
+    },
+    {
+      "id": "classic-c90",
+      "name": "Classic C90",
+      "rewardPriceRp": 800,
+      "image": "classic-c90-v1.png"
+    },
+    {
+      "id": "metal-c90",
+      "name": "Metal C90",
+      "rewardPriceRp": 1200,
+      "image": "metal-c90-v1.png"
+    }
+  ],
+  "gallerySamplePricesRp": [
+    200,
+    200,
+    300
+  ],
+  "creatorAssetPolicy": [
+    {
+      "type": "sticker",
+      "label": "Sticker / Small Asset",
+      "rewardPriceRp": 100
+    },
+    {
+      "type": "tape-label",
+      "label": "Tape Label",
+      "rewardPriceRp": 100
+    },
+    {
+      "type": "cover",
+      "label": "Cover Design",
+      "rewardPriceRp": 200
+    },
+    {
+      "type": "lyrics",
+      "label": "Lyrics Paper",
+      "rewardPriceRp": 200
+    },
+    {
+      "type": "case",
+      "label": "Cassette Case",
+      "rewardPriceRp": 200
+    },
+    {
+      "type": "full-design",
+      "label": "Full Cassette Design",
+      "rewardPriceRp": 300
+    },
+    {
+      "type": "premium-pack",
+      "label": "Complete Design Pack",
+      "rewardPriceRp": 400
+    }
+  ],
+  "creatorLikePolicy": {
+    "rewardRp": 0,
+    "affectsRedemptionPrice": false,
+    "futureLevelSignal": true
+  }
 }
