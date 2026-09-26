@@ -9,7 +9,9 @@
   <title>Re:Play · Admin Preview</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="styles.css">
+  <script src="replay-api.js" defer></script>
   <script src="admin-preview.js" defer></script>
+  <script src="admin-live.js" defer></script>
 </head>
 <body class="admin-preview-page">
   <main class="admin-shell">
@@ -40,15 +42,16 @@
       <section id="dashboard" class="admin-section">
         <div class="admin-section-head"><div><span>DASHBOARD</span><h2>Operations overview</h2></div><small>Real metrics appear only after authenticated backend connection.</small></div>
         <div class="admin-kpis">
-          <article><span>USERS</span><strong>—</strong><small>Backend required</small></article>
-          <article><span>RP OUTSTANDING</span><strong>—</strong><small>Reward Ledger required</small></article>
-          <article><span>CREATOR WORKS</span><strong>—</strong><small>Creator DB required</small></article>
-          <article><span>OPEN TICKETS</span><strong>—</strong><small>Support service required</small></article>
+          <article><span>USERS</span><strong id="adminUsersKpi">—</strong><small>Backend required</small></article>
+          <article><span>RP OUTSTANDING</span><strong id="adminRpKpi">—</strong><small>Reward Ledger required</small></article>
+          <article><span>CREATOR WORKS</span><strong id="adminCreatorKpi">—</strong><small>Creator DB required</small></article>
+          <article><span>OPEN TICKETS</span><strong id="adminTicketsKpi">—</strong><small>Support service required</small></article>
         </div>
       </section>
 
       <section id="users" class="admin-section">
         <div class="admin-section-head"><div><span>USERS</span><h2>Account management</h2></div><small>Search, status, assets, RP ledger, Creator works and support history.</small></div>
+        <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>User</th><th>Status</th><th>RP</th><th>Blank</th><th>Works</th><th>Tickets</th></tr></thead><tbody id="adminUsersBody"></tbody></table></div>
         <div class="admin-empty-state"><b>User management requires authenticated backend access.</b><p>No sample email addresses, balances or personal records are embedded in this public preview.</p></div>
       </section>
 
@@ -62,6 +65,7 @@
           <article><span>Creator Reward</span><strong id="adminCreatorReward">100%</strong></article>
           <article><span>Beta Contribution</span><strong id="adminContribution">50 / 100 / 200 / 300 RP</strong></article>
         </div>
+        <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Event</th><th>User</th><th>Amount</th><th>Source</th><th>Time</th></tr></thead><tbody id="adminLedgerBody"></tbody></table></div>
         <div class="admin-callout"><b>Write policy:</b> administrators must create Reward Ledger events such as ADMIN_REWARD or CUSTOMER_SUPPORT_REWARD. Never edit a user's balance directly.</div>
       </section>
 
@@ -83,6 +87,7 @@
           <article><span>Full Cassette Design</span><strong>300 RP</strong></article>
           <article><span>Complete Design Pack</span><strong>400 RP</strong></article>
         </div>
+        <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Work</th><th>Type</th><th>RP</th><th>Likes</th><th>Redeems</th></tr></thead><tbody id="adminWorksBody"></tbody></table></div>
         <div class="admin-callout">Review states: PENDING → PUBLISHED / REJECTED / REMOVED. ♡ Likes do not generate RP and do not change redemption price.</div>
       </section>
 
@@ -94,6 +99,7 @@
           <label>Reward tier<select disabled><option>50 / 100 / 200 / 300 RP</option></select></label>
           <label>Per-account limit<input value="1" disabled></label>
         </div>
+        <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Campaign</th><th>Reward</th><th>Claim mode</th><th>Status</th></tr></thead><tbody id="adminCampaignBody"></tbody></table></div>
         <p class="admin-muted">Authenticated Admin will create campaigns server-side. The public site only displays campaigns returned by the API.</p>
       </section>
 
@@ -105,6 +111,7 @@
           <tr><td>Bug / Download</td><td>NEW → CLOSED</td><td>Link build/version data</td></tr>
           <tr><td>Compensation</td><td>Audited</td><td>CUSTOMER_SUPPORT_REWARD</td></tr>
         </tbody></table></div>
+        <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Category</th><th>Subject</th><th>Status</th><th>User</th></tr></thead><tbody id="adminTicketsBody"></tbody></table></div>
       </section>
 
       <section id="announcements" class="admin-section">
@@ -129,6 +136,7 @@
 
       <section id="audit" class="admin-section">
         <div class="admin-section-head"><div><span>AUDIT LOG</span><h2>Every admin write is traceable</h2></div><small>Backend required</small></div>
+        <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Action</th><th>Operator</th><th>Target</th><th>Time</th></tr></thead><tbody id="adminAuditBody"></tbody></table></div>
         <div class="admin-empty-state"><b>No public audit events.</b><p>Production records must store operator, action, target, before/after, reason and timestamp.</p></div>
       </section>
 
