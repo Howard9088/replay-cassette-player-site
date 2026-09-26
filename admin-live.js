@@ -3,18 +3,35 @@
   const api = window.RePlayApi;
   if (!api) return;
   const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
   const set = (selector, value) => { const el = $(selector); if (el) el.textContent = value; };
   const fmt = n => new Intl.NumberFormat('en-US').format(Number(n || 0));
   const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({
     '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
   }[ch]));
+  let writable = false;
+
+  function writeStatus(message, ok = true) {
+    const el = $('#adminWriteStatus');
+    if (!el) return;
+    el.textContent = message || '';
+    el.dataset.ok = ok ? 'true' : 'false';
+  }
+  function setWritable(value) {
+    writable = !!value;
+    $$('[data-admin-write]').forEach(el => { el.disabled = !writable; });
+  }
+  function formData(form) { return Object.fromEntries(new FormData(form).entries()); }
 
   async function load() {
-    if (!await api.isEnabled()) return;
+    if (!await api.isEnabled()) {
+      setWritable(false);
+      return;
+    }
     try {
-      const [users, ledger, tickets, works, flags, campaigns, audit] = await Promise.all([
+      const [users, ledger, tickets, works, flags, campaigns, audit, announcements] = await Promise.all([
         api.adminUsers(), api.adminLedger(), api.adminTickets(), api.adminWorks(),
-        api.adminFlags(), api.adminCampaigns(), api.adminAudit()
+        api.adminFlags(), api.adminCampaigns(), api.adminAudit(), api.adminAnnouncements()
       ]);
       const userRows = users.users || [];
       const ledgerRows = ledger.events || [];
@@ -43,7 +60,7 @@
 
       const worksBody = $('#adminWorksBody');
       if (worksBody) worksBody.innerHTML = workRows.slice(0,100).map(x =>
-        '<tr><td>'+esc(x.title)+'</td><td>'+esc(x.asset_type)+'</td><td>'+fmt(x.reward_price_rp)+' RP</td><td>♡ '+fmt(x.like_count)+'</td><td>'+fmt(x.redeem_count)+'</td></tr>'
+        '<tr><td>'+esc(x.title)+'</td><td>'+esc(x.asset_type)+'</td><td>'+fmt(x.reward_price_rp)+' RP</td><td>♡ '+fmt(x.like_count)+'</td><td>'+fmt(x.redeem_count)+'</td><td>'+esc(x.status)+'</td></tr>'
       ).join('');
 
       const flagGrid = $('#flagGrid');
@@ -56,19 +73,74 @@
         '<tr><td>'+esc(x.name)+'</td><td>'+fmt(x.reward_rp)+' RP</td><td>'+esc(x.claim_mode)+'</td><td>'+esc(x.status)+'</td></tr>'
       ).join('');
 
+      const announcementBody = $('#adminAnnouncementsBody');
+      if (announcementBody) announcementBody.innerHTML = (announcements.announcements || []).map(x =>
+        '<tr><td>'+esc(x.title)+'</td><td>'+esc(x.target)+'</td><td>'+esc(x.locale)+'</td><td>'+esc(x.status)+'</td></tr>'
+      ).join('');
+
       const auditBody = $('#adminAuditBody');
       if (auditBody) auditBody.innerHTML = (audit.events || []).slice(-100).reverse().map(x =>
         '<tr><td>'+esc(x.action)+'</td><td>'+esc(x.operator_id)+'</td><td>'+esc(x.target)+'</td><td>'+esc(x.created_at)+'</td></tr>'
       ).join('');
 
       document.body.classList.add('api-live');
-      const chip = $('.admin-topbar .notice-chip');
-      if (chip) chip.textContent = 'Backend connected';
+      set('#adminConnectionStatus','Backend connected · Admin session verified');
+      setWritable(true);
     } catch (error) {
+      setWritable(false);
       document.body.dataset.apiError = error.code || 'ADMIN_API_ERROR';
-      const chip = $('.admin-topbar .notice-chip');
-      if (chip) chip.textContent = error.code === 'UNAUTHORIZED' ? 'Admin sign-in required' : 'Backend unavailable';
+      set('#adminConnectionStatus', error.code === 'UNAUTHORIZED' ? 'Admin sign-in required' : 'Backend unavailable');
     }
   }
+
+  async function runWrite(label, action) {
+    if (!writable) return;
+    writeStatus(label + '…');
+    setWritable(false);
+    try {
+      await action();
+      writeStatus(label + ' ✓', true);
+      await load();
+    } catch (error) {
+      writeStatus((error.code || 'ADMIN_WRITE_FAILED') + ' ✕', false);
+      setWritable(true);
+    }
+  }
+
+  $('#adminUserStatusForm')?.addEventListener('submit', event => {
+    event.preventDefault(); const d=formData(event.currentTarget);
+    runWrite('Account updated',()=>api.adminSetUserStatus(d.user_id,{status:d.status,reason:d.reason}));
+  });
+  $('#adminRewardForm')?.addEventListener('submit', event => {
+    event.preventDefault(); const d=formData(event.currentTarget);
+    runWrite('Reward granted',()=>api.adminGrant({user_id:d.user_id,amount:Number(d.amount),source:d.source,reason:d.reason}));
+  });
+  $('#adminCreatorReviewForm')?.addEventListener('submit', event => {
+    event.preventDefault(); const d=formData(event.currentTarget);
+    runWrite('Creator review saved',()=>api.adminReviewCreator(d.work_id,{status:d.status,reason:d.reason}));
+  });
+  $('#adminCampaignForm')?.addEventListener('submit', event => {
+    event.preventDefault(); const d=formData(event.currentTarget);
+    runWrite('Campaign created',()=>api.adminCreateCampaign({
+      campaign_id:'campaign-'+crypto.randomUUID(),name:d.name,reward_rp:Number(d.reward_rp),
+      claim_mode:d.claim_mode,status:d.status,per_account_limit:Number(d.per_account_limit)
+    }));
+  });
+  $('#adminTicketForm')?.addEventListener('submit', event => {
+    event.preventDefault(); const d=formData(event.currentTarget);
+    runWrite('Ticket updated',()=>api.adminUpdateTicket(d.ticket_id,{status:d.status,note:d.note}));
+  });
+  $('#adminAnnouncementForm')?.addEventListener('submit', event => {
+    event.preventDefault(); const d=formData(event.currentTarget);
+    runWrite('Announcement created',()=>api.adminCreateAnnouncement({
+      title:d.title,body:d.body,target:d.target,locale:d.locale||'all',status:d.status
+    }));
+  });
+  $('#adminFlagForm')?.addEventListener('submit', event => {
+    event.preventDefault(); const d=formData(event.currentTarget);
+    runWrite('Feature flag updated',()=>api.adminSetFlag({name:d.name,enabled:d.enabled==='true',reason:d.reason}));
+  });
+
+  setWritable(false);
   load();
 })();
