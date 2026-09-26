@@ -35,6 +35,9 @@ for(const page of ['account.html','creator.html','activities.html','support.html
 }
 assert.match(read('admin-preview.html'),/noindex,nofollow/);
 assert.match(read('admin-preview.html'),/admin-live\.js/);
+assert.match(read('admin-preview.html'),/data-admin-write disabled/);
+assert.match(read('admin-preview.html'),/Creator Publish<\/span><strong id="adminFirstPublish">0 RP/);
+assert.doesNotMatch(read('admin-preview.html'),/api[_-]?key|secret|bearer\s+[A-Za-z0-9_-]{10,}/i);
 assert.doesNotMatch(read('app.js'),/cartDisclaimer|checkoutPending|Planned subtotal|计划售价小计/);
 assert.match(read('shop.html'),/data-redeem-kind="blank-cassette"/);
 assert.match(read('points.html'),/id="publishRule"[^>]*data-i18n="pointsPublishValue"/);
