@@ -63,6 +63,7 @@
     tickets:()=>request('/api/support/tickets'),
     createTicket:data=>request('/api/support/tickets',{method:'POST',body:data}),
     creatorAssets:()=>request('/api/creator/assets'),
+    creatorWorks:()=>request('/api/creator/works'),
     uploadCreatorArtwork,
     publishCreator:data=>request('/api/creator/publish',{method:'POST',body:data,operation:true}),
     gallery:()=>request('/api/gallery'),
