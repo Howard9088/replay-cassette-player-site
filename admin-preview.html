@@ -18,6 +18,7 @@
       <nav class="admin-nav" aria-label="Admin preview modules">
         <a href="#dashboard">Dashboard</a>
         <a href="#users">Users</a>
+        <a href="#invites">Beta Invites</a>
         <a href="#rewards">Rewards</a>
         <a href="#products">Products</a>
         <a href="#creator-admin">Creator</a>
@@ -57,6 +58,16 @@
           <button type="submit" data-admin-write disabled>Update account</button>
         </form>
         <div class="admin-empty-state"><b>User management requires authenticated backend access.</b><p>No sample email addresses, balances or personal records are embedded in this public preview.</p></div>
+      </section>
+
+      <section id="invites" class="admin-section">
+        <div class="admin-section-head"><div><span>BETA INVITES</span><h2>Controlled Beta access</h2></div><small>Architecture preview only · no live invite codes are exposed here.</small></div>
+        <div class="admin-policy-grid">
+          <article><span>Invite-only mode</span><strong>OFF by default</strong></article>
+          <article><span>Invite lifetime</span><strong>7 days</strong></article>
+          <article><span>Reuse</span><strong>Single use</strong></article>
+          <article><span>Storage</span><strong>SHA-256 hash only</strong></article>
+        </div>
       </section>
 
       <section id="rewards" class="admin-section">
@@ -154,7 +165,7 @@
       <section id="policies-admin" class="admin-section">
         <div class="admin-section-head"><div><span>POLICIES</span><h2>Versioned policy centre</h2></div><small>Every effective change needs a version and date.</small></div>
         <div class="admin-policy-grid">
-          <article><span>Rewards</span><strong>V1.1</strong></article>
+          <article><span>Rewards</span><strong>V1.1 · revisioned</strong></article>
           <article><span>Creator</span><strong>Beta</strong></article>
           <article><span>Privacy</span><strong>Draft</strong></article>
           <article><span>Copyright</span><strong>Draft</strong></article>
