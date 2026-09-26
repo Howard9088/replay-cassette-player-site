@@ -31,6 +31,43 @@
     }catch(error){document.body.dataset.apiError=error.code||'API_ERROR'}
   }
 
+
+  async function shop(){
+    if(document.body.dataset.page!=='shop'||!await api.isEnabled())return;
+    const buttons=[...document.querySelectorAll('.reward-redeem')];
+    if(!buttons.length)return;
+    buttons.forEach(button=>{
+      button.disabled=false;
+      button.textContent=window.RePlaySiteText?.('redeemAction')||'Redeem';
+      button.addEventListener('click',async()=>{
+        if(button.disabled)return;
+        button.disabled=true;
+        button.textContent=window.RePlaySiteText?.('redeemWorking')||'Redeeming…';
+        const status=document.querySelector('#redeemStatus');
+        try{
+          const result=await api.redeem(button.dataset.redeemKind,button.dataset.redeemAsset);
+          button.textContent=window.RePlaySiteText?.('redeemSuccess')||'Redeemed';
+          if(status){
+            const balance=fmt(result.rewards?.balance||0);
+            status.textContent=(window.RePlaySiteText?.('redeemBalance')||'RP remaining')+': '+balance+' RP';
+            status.hidden=false;
+          }
+          window.dispatchEvent(new CustomEvent('replay:entitlements-updated',{detail:result}));
+        }catch(error){
+          button.textContent=error.code==='UNAUTHORIZED'
+            ?(window.RePlaySiteText?.('redeemSignIn')||'Sign in required')
+            :(window.RePlaySiteText?.('redeemFailed')||'Redeem failed');
+          if(status){status.textContent=error.code||'API_ERROR';status.hidden=false}
+        }finally{
+          setTimeout(()=>{
+            button.disabled=false;
+            if(!button.textContent.includes('成功')&&!button.textContent.includes('Redeemed')) button.textContent=window.RePlaySiteText?.('redeemAction')||'Redeem';
+          },1200);
+        }
+      });
+    });
+  }
+
   async function support(){
     if(document.body.dataset.page!=='support'||!await api.isEnabled())return;
     const form=$('.support-form'); if(!form)return;
@@ -50,5 +87,5 @@
     });
   }
 
-  Promise.all([account(),activities(),support()]).catch(()=>{});
+  Promise.all([account(),activities(),shop(),support()]).catch(()=>{});
 })();
