@@ -265,3 +265,15 @@ html[lang="zh-CN"] .section h2{font-size:clamp(39px,3.15vw,52px);line-height:1.2
 .redeem-status{margin:20px 0 0;padding:12px 15px;border:1px solid #665443;border-radius:8px;background:#1e1a16;color:#e5c59e;font-size:11px}
 .live-campaigns:empty{display:none}
 .api-live .notice-chip{border-color:#78936f;color:#b7d2ad}
+
+.admin-write-form{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px;padding:15px;border:1px solid #4b433a;border-radius:9px;background:#121413}
+.admin-write-form label{display:grid;gap:6px;color:#998e84;font-size:9px;letter-spacing:.04em}
+.admin-write-form input,.admin-write-form select,.admin-write-form textarea{width:100%;padding:9px 10px;border:1px solid #49423b;border-radius:6px;background:#0e1110;color:#ded6cd;font-size:11px}
+.admin-write-form button{align-self:end;min-height:35px;border:1px solid #9e7d5b;border-radius:7px;background:#e2c6a4;color:#201711;font-size:10px;font-weight:700}
+.admin-write-form :disabled{opacity:.48;cursor:not-allowed}
+.admin-write-form .admin-wide{grid-column:1/-1}
+.admin-write-status{font-size:10px;color:#9ec89c;margin-left:auto}
+.admin-write-status[data-ok="false"]{color:#dda08e}
+.admin-section .admin-table-wrap+.admin-write-form{margin-top:14px}
+@media(max-width:1050px){.admin-write-form{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:720px){.admin-write-form{grid-template-columns:1fr}.admin-write-form .admin-wide{grid-column:auto}.admin-write-status{display:block;margin:8px 0 0}}
