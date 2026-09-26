@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0e0e">
+  <meta name="description" content="Re:Play Global Beta support centre.">
+  <title>Re:Play · Support</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body class="inner-page" data-page="support">
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+  <header class="site-header" id="top">
+    <a class="brand" href="index.html"><strong>Re:Play</strong><span>MUSIC LIVES LONGER</span></a>
+    <nav class="main-nav"><a href="experience.html" data-i18n="navExperience">Experience</a><a href="shop.html" data-i18n="navShop">Rewards Store</a><a href="gallery.html" data-i18n="navGallery">Gallery</a><a href="points.html" data-i18n="navPoints">Rewards</a><a href="creator.html" data-i18n="navCreator">Creator</a></nav>
+    <div class="header-actions"><label class="language-control" for="langSelect"><span aria-hidden="true">◎</span><select id="langSelect"><option value="en">English</option><option value="zh">简体中文</option></select></label><a class="cart-button beta-header-link" href="account.html" data-i18n="navAccount">Beta Account</a><a class="header-download" href="https://github.com/Howard9088/replay-cassette-player-releases/releases/latest/download/RePlay-Setup.exe" target="_blank" rel="noopener noreferrer" data-i18n="downloadReplay">Get Re:Play</a></div>
+  </header>
+  <main id="main" class="inner-main">
+    <section class="utility-section section">
+      <div class="page-width">
+        <div class="utility-hero">
+          <p class="eyebrow" data-i18n="supportKicker">RE:PLAY SUPPORT / GLOBAL BETA</p>
+          <h2 data-i18n="supportTitle">Support should understand your account, rewards and assets.</h2>
+          <p data-i18n="supportDescription">When the ticket service connects, support cases will carry account context such as RP ledger events, cassette entitlements, app version and Creator moderation history.</p>
+          <span class="notice-chip" data-i18n="supportPending">Ticket backend is not connected yet.</span>
+        </div>
+        <div class="support-grid">
+          <article><strong>Account</strong><p>Login, account status, Beta access.</p></article>
+          <article><strong>Rewards</strong><p>RP balance, missing reward, redemption issue.</p></article>
+          <article><strong>Blank Cassette</strong><p>Redeemed asset did not appear or sync.</p></article>
+          <article><strong>Creator / Gallery</strong><p>Publishing, review, design redemption and reports.</p></article>
+          <article><strong>Download / Bug</strong><p>Installer, version, crash and playback issues.</p></article>
+          <article><strong>Other</strong><p>Anything that does not fit the categories above.</p></article>
+        </div>
+        <form class="support-form" aria-describedby="supportDisabled">
+          <label data-i18n="supportCategory">Category<select disabled><option>Account</option><option>Rewards</option><option>Blank Cassette</option><option>Creator</option><option>Gallery</option><option>Download</option><option>Bug</option><option>Other</option></select></label>
+          <label data-i18n="supportSubject">Subject<input disabled placeholder="Describe the issue briefly"></label>
+          <label class="support-message" data-i18n="supportMessage">Details<textarea disabled rows="6" placeholder="What happened?"></textarea></label>
+          <button class="pill-button light" type="button" disabled data-i18n="supportSubmit">Submit ticket</button>
+          <p id="supportDisabled" class="admin-muted" data-i18n="supportDisabled">Submission will open after authenticated account and ticket services are connected.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="page-width footer-inner"><a class="brand" href="index.html"><strong>Re:Play</strong><span>MUSIC LIVES LONGER</span></a><nav><a href="account.html" data-i18n="navAccount">Beta Account</a><a href="activities.html" data-i18n="navActivities">Activities</a><a href="support.html" data-i18n="navSupport">Support</a><a href="policies.html" data-i18n="navPolicies">Policies</a></nav><p data-i18n="footerLine">Slow down and listen again.</p></div></footer>
+</body>
+</html>
