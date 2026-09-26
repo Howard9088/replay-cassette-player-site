@@ -2,3 +2,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://howard9088.github.io/replay-cassette-player-site/sitemap.xml
+
+Disallow: /replay-cassette-player-site/admin-preview.html
