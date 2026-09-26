@@ -39,6 +39,18 @@
     publishCreator:data=>request('/api/creator/publish',{method:'POST',body:data,operation:true}),
     redeemCreator:workId=>request('/api/gallery/'+encodeURIComponent(workId)+'/redeem',{method:'POST',body:{},operation:true}),
     like:(workId,liked)=>request('/api/gallery/'+encodeURIComponent(workId)+'/like',{method:liked?'POST':'DELETE'}),
+    adminUsers:()=>request('/api/admin/users'),
+    adminUser:userId=>request('/api/admin/users/'+encodeURIComponent(userId)),
+    adminLedger:()=>request('/api/admin/rewards/ledger'),
+    adminTickets:()=>request('/api/admin/support/tickets'),
+    adminWorks:()=>request('/api/admin/creator/works'),
+    adminFlags:()=>request('/api/admin/feature-flags'),
+    adminCampaigns:()=>request('/api/admin/campaigns'),
+    adminAudit:()=>request('/api/admin/audit'),
+    adminGrant:data=>request('/api/admin/rewards/grant',{method:'POST',body:data}),
+    adminSetFlag:data=>request('/api/admin/feature-flags',{method:'PATCH',body:data}),
+    adminCreateCampaign:data=>request('/api/admin/campaigns',{method:'POST',body:data}),
+    adminUpdateTicket:(ticketId,data)=>request('/api/admin/support/tickets/'+encodeURIComponent(ticketId),{method:'PATCH',body:data}),
   };
   window.RePlayApi=Object.freeze(api);
   ready.then(c=>window.dispatchEvent(new CustomEvent('replay:api-ready',{detail:{enabled:!!(c.enabled&&c.baseUrl)}})));
