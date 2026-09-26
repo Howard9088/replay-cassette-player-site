@@ -39,7 +39,7 @@ assert.match(read('admin-preview.html'),/data-admin-write disabled/);
 assert.doesNotMatch(read('admin-preview.html'),/Creator Publish|adminFirstPublish/);
 assert.doesNotMatch(read('admin-preview.html'),/api[_-]?key|secret|bearer\s+[A-Za-z0-9_-]{10,}/i);
 assert.doesNotMatch(read('app.js'),/cartDisclaimer|checkoutPending|Planned subtotal|计划售价小计/);
-assert.match(read('shop.html'),/data-redeem-kind="blank-cassette"/);
+assert.doesNotMatch(read('shop.html'),/blank-card|data-redeem-kind="blank-cassette"|data-blank-price/);
 assert.doesNotMatch(read('points.html'),/publishRule|pointsPublish/);
 assert.match(read('activities.html'),/Valid Creator Redemption/);
 assert.match(read('activities.html'),/Uploading or publishing earns no RP/);
