@@ -258,3 +258,10 @@ html[lang="zh-CN"] .section h2{font-size:clamp(39px,3.15vw,52px);line-height:1.2
   .admin-section-head small{display:block;text-align:left;margin-top:8px}
   .admin-kpis,.admin-policy-grid,.flag-grid,.admin-form-preview{grid-template-columns:1fr}
 }
+
+.reward-redeem{width:100%;min-height:38px;margin-top:12px;border:1px solid #9a7958;border-radius:999px;background:#ead2b7;color:#211812;font-size:11px;font-weight:700}
+.reward-redeem:hover:not(:disabled){transform:translateY(-1px);background:#f4dfc7}
+.reward-redeem:disabled{opacity:.55;cursor:not-allowed}
+.redeem-status{margin:20px 0 0;padding:12px 15px;border:1px solid #665443;border-radius:8px;background:#1e1a16;color:#e5c59e;font-size:11px}
+.live-campaigns:empty{display:none}
+.api-live .notice-chip{border-color:#78936f;color:#b7d2ad}
