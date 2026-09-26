@@ -84,7 +84,7 @@
     "welcomeRewardRp": 2000,
     "blankCassetteCostRp": 400,
     "firstCassetteCompletedRewardRp": 100,
-    "firstCreatorPublishRewardRp": 100,
+    "firstCreatorPublishRewardRp": 0,
     "creatorRewardPercent": 100,
     "betaContributionTiersRp": [
       50,
