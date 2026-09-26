@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "mode": "global-beta",
+  "adminMode": "preview-only",
+  "backendConnected": false,
+  "policyVersion": "global-beta-v1.1",
+  "modules": [
+    {
+      "id": "dashboard",
+      "label": "Dashboard",
+      "status": "planned"
+    },
+    {
+      "id": "users",
+      "label": "Users",
+      "status": "backend-required"
+    },
+    {
+      "id": "rewards",
+      "label": "Rewards",
+      "status": "policy-ready"
+    },
+    {
+      "id": "products",
+      "label": "Products",
+      "status": "policy-ready"
+    },
+    {
+      "id": "creator",
+      "label": "Creator",
+      "status": "review-ui-ready"
+    },
+    {
+      "id": "campaigns",
+      "label": "Campaigns",
+      "status": "structure-ready"
+    },
+    {
+      "id": "support",
+      "label": "Support",
+      "status": "structure-ready"
+    },
+    {
+      "id": "announcements",
+      "label": "Announcements",
+      "status": "structure-ready"
+    },
+    {
+      "id": "policies",
+      "label": "Policies",
+      "status": "structure-ready"
+    },
+    {
+      "id": "feature-flags",
+      "label": "Feature Flags",
+      "status": "policy-ready"
+    },
+    {
+      "id": "audit-log",
+      "label": "Audit Log",
+      "status": "backend-required"
+    },
+    {
+      "id": "admin-users",
+      "label": "Admin Users",
+      "status": "backend-required"
+    }
+  ],
+  "featureFlags": {
+    "GLOBAL_BETA_ENABLED": true,
+    "PURCHASE_ENABLED": false,
+    "REWARDS_ENABLED": true,
+    "REDEMPTION_ENABLED": false,
+    "GALLERY_ENABLED": true,
+    "CREATOR_ENABLED": true,
+    "CREATOR_REWARD_ENABLED": false,
+    "CREATOR_LEVEL_ENABLED": false,
+    "CREATOR_BONUS_ENABLED": false,
+    "SUPPORT_TICKETS_ENABLED": false,
+    "CAMPAIGNS_ENABLED": true,
+    "ANNOUNCEMENTS_ENABLED": true
+  },
+  "rewardPolicy": {
+    "welcomeRewardRp": 2000,
+    "blankCassetteCostRp": 400,
+    "firstCassetteCompletedRewardRp": 100,
+    "firstCreatorPublishRewardRp": 100,
+    "creatorRewardPercent": 100,
+    "betaContributionTiersRp": [
+      50,
+      100,
+      200,
+      300
+    ]
+  },
+  "supportCategories": [
+    "Account",
+    "Rewards",
+    "Blank Cassette",
+    "Creator",
+    "Gallery",
+    "Download",
+    "Bug",
+    "Other"
+  ],
+  "ticketStatuses": [
+    "NEW",
+    "IN_PROGRESS",
+    "WAITING_USER",
+    "RESOLVED",
+    "CLOSED"
+  ],
+  "campaignStatuses": [
+    "DRAFT",
+    "SCHEDULED",
+    "ACTIVE",
+    "ENDED"
+  ],
+  "adminRoles": {
+    "OWNER": [
+      "*"
+    ],
+    "ADMIN": [
+      "users.read",
+      "rewards.manage",
+      "products.manage",
+      "creator.review",
+      "campaigns.manage",
+      "support.manage",
+      "announcements.manage",
+      "policies.manage",
+      "featureFlags.manage",
+      "audit.read"
+    ],
+    "SUPPORT": [
+      "users.read",
+      "rewards.read",
+      "support.manage",
+      "support.compensation.limited"
+    ],
+    "MODERATOR": [
+      "creator.review",
+      "gallery.moderate",
+      "support.read"
+    ]
+  }
+}
