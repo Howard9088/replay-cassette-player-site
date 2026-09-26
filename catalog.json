@@ -15,7 +15,6 @@
   "welcomeRewardRp": 2000,
   "blankCassetteCostRp": 400,
   "firstCassetteCompletedRewardRp": 100,
-  "firstCreatorPublishRewardRp": 0,
   "creatorPriceTiersRp": [
     100,
     200,
