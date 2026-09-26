@@ -9,6 +9,8 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="styles.css">
   <script src="app.js" defer></script>
+  <script src="replay-api.js" defer></script>
+  <script src="site-live.js" defer></script>
 </head>
 <body class="inner-page" data-page="support">
   <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
@@ -38,7 +40,7 @@
           <label data-i18n="supportCategory">Category<select disabled><option>Account</option><option>Rewards</option><option>Blank Cassette</option><option>Creator</option><option>Gallery</option><option>Download</option><option>Bug</option><option>Other</option></select></label>
           <label data-i18n="supportSubject">Subject<input disabled placeholder="Describe the issue briefly"></label>
           <label class="support-message" data-i18n="supportMessage">Details<textarea disabled rows="6" placeholder="What happened?"></textarea></label>
-          <button class="pill-button light" type="button" disabled data-i18n="supportSubmit">Submit ticket</button>
+          <button class="pill-button light" type="submit" disabled data-i18n="supportSubmit">Submit ticket</button>
           <p id="supportDisabled" class="admin-muted" data-i18n="supportDisabled">Submission will open after authenticated account and ticket services are connected.</p>
         </form>
       </div>
