@@ -34,6 +34,18 @@
 
   async function shop(){
     if(document.body.dataset.page!=='shop'||!await api.isEnabled())return;
+    try{
+      const catalog=await api.catalog();
+      for(const product of catalog.official_cassettes||[]){
+        document.querySelectorAll('[data-price="'+product.product_id+'"]').forEach(node=>{
+          node.textContent=fmt(product.reward_price_rp)+' RP';
+        });
+      }
+      document.body.dataset.policyRevision=String(catalog.policy_revision||'');
+    }catch(error){
+      // Static RP values in HTML are the safe fallback. Never replace them with placeholders.
+      document.body.dataset.catalogApiError=error.code||'API_ERROR';
+    }
     const buttons=[...document.querySelectorAll('.reward-redeem')];
     if(!buttons.length)return;
     buttons.forEach(button=>{
