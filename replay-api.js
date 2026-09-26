@@ -56,6 +56,7 @@
     rewardHistory:()=>request('/api/me/rewards/history'),
     entitlements:()=>request('/api/me/entitlements'),
     catalog:()=>request('/api/rewards/catalog'),
+    createDesktopLink:()=>request('/api/desktop-links',{method:'POST',body:{}}),
     redeem:(kind,asset_id)=>request('/api/rewards/redeem',{method:'POST',body:{kind,asset_id},operation:true}),
     campaigns:()=>request('/api/campaigns'),
     claimCampaign:campaignId=>request('/api/campaigns/'+encodeURIComponent(campaignId)+'/claim',{method:'POST',body:{},operation:true}),
