@@ -36,7 +36,7 @@
     <section class="admin-content">
       <header class="admin-topbar">
         <div><span class="admin-kicker">GLOBAL BETA V1.1</span><h1>Re:Play Admin</h1></div>
-        <span class="notice-chip">Backend not connected</span>
+        <span class="notice-chip" id="adminConnectionStatus">Backend not connected</span><span id="adminWriteStatus" class="admin-write-status" aria-live="polite"></span>
       </header>
 
       <section id="dashboard" class="admin-section">
@@ -52,6 +52,12 @@
       <section id="users" class="admin-section">
         <div class="admin-section-head"><div><span>USERS</span><h2>Account management</h2></div><small>Search, status, assets, RP ledger, Creator works and support history.</small></div>
         <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>User</th><th>Status</th><th>RP</th><th>Blank</th><th>Works</th><th>Tickets</th></tr></thead><tbody id="adminUsersBody"></tbody></table></div>
+        <form id="adminUserStatusForm" class="admin-write-form">
+          <label>User ID<input name="user_id" data-admin-write disabled required></label>
+          <label>Status<select name="status" data-admin-write disabled><option>ACTIVE</option><option>FROZEN</option></select></label>
+          <label>Reason<input name="reason" data-admin-write disabled required maxlength="500"></label>
+          <button type="submit" data-admin-write disabled>Update account</button>
+        </form>
         <div class="admin-empty-state"><b>User management requires authenticated backend access.</b><p>No sample email addresses, balances or personal records are embedded in this public preview.</p></div>
       </section>
 
@@ -66,6 +72,13 @@
           <article><span>Beta Contribution</span><strong id="adminContribution">50 / 100 / 200 / 300 RP</strong></article>
         </div>
         <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Event</th><th>User</th><th>Amount</th><th>Source</th><th>Time</th></tr></thead><tbody id="adminLedgerBody"></tbody></table></div>
+        <form id="adminRewardForm" class="admin-write-form">
+          <label>User ID<input name="user_id" data-admin-write disabled required></label>
+          <label>Reward<select name="amount" data-admin-write disabled><option value="50">50 RP</option><option value="100">100 RP</option><option value="200">200 RP</option><option value="300">300 RP</option></select></label>
+          <label>Source<select name="source" data-admin-write disabled><option value="BETA_CONTRIBUTION_REWARD">Beta Contribution</option><option value="CUSTOMER_SUPPORT_REWARD">Support Compensation</option><option value="ADMIN_REWARD">Admin Reward</option></select></label>
+          <label>Reason<input name="reason" data-admin-write disabled required maxlength="500"></label>
+          <button type="submit" data-admin-write disabled>Grant reward</button>
+        </form>
         <div class="admin-callout"><b>Write policy:</b> administrators must create Reward Ledger events such as ADMIN_REWARD or CUSTOMER_SUPPORT_REWARD. Never edit a user's balance directly.</div>
       </section>
 
@@ -87,18 +100,26 @@
           <article><span>Full Cassette Design</span><strong>300 RP</strong></article>
           <article><span>Complete Design Pack</span><strong>400 RP</strong></article>
         </div>
-        <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Work</th><th>Type</th><th>RP</th><th>Likes</th><th>Redeems</th></tr></thead><tbody id="adminWorksBody"></tbody></table></div>
+        <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Work</th><th>Type</th><th>RP</th><th>Likes</th><th>Redeems</th><th>Status</th></tr></thead><tbody id="adminWorksBody"></tbody></table></div>
+        <form id="adminCreatorReviewForm" class="admin-write-form">
+          <label>Work ID<input name="work_id" data-admin-write disabled required></label>
+          <label>Decision<select name="status" data-admin-write disabled><option value="PUBLISHED">PUBLISH</option><option value="REJECTED">REJECT</option><option value="REMOVED">REMOVE</option></select></label>
+          <label>Reason<input name="reason" data-admin-write disabled required maxlength="500"></label>
+          <button type="submit" data-admin-write disabled>Apply review</button>
+        </form>
         <div class="admin-callout">Review states: PENDING → PUBLISHED / REJECTED / REMOVED. ♡ Likes do not generate RP and do not change redemption price.</div>
       </section>
 
       <section id="campaigns" class="admin-section">
         <div class="admin-section-head"><div><span>CAMPAIGNS</span><h2>Activity management</h2></div><small>DRAFT · SCHEDULED · ACTIVE · ENDED</small></div>
-        <div class="admin-form-preview">
-          <label>Campaign name<input value="New Beta Campaign" disabled></label>
-          <label>Audience<select disabled><option>All Beta Users</option></select></label>
-          <label>Reward tier<select disabled><option>50 / 100 / 200 / 300 RP</option></select></label>
-          <label>Per-account limit<input value="1" disabled></label>
-        </div>
+        <form id="adminCampaignForm" class="admin-write-form">
+          <label>Campaign name<input name="name" data-admin-write disabled required maxlength="200"></label>
+          <label>Reward<select name="reward_rp" data-admin-write disabled><option value="50">50 RP</option><option value="100">100 RP</option><option value="200">200 RP</option><option value="300">300 RP</option></select></label>
+          <label>Claim mode<select name="claim_mode" data-admin-write disabled><option value="SYSTEM_EVENT">System event</option><option value="ADMIN_REVIEW">Admin review</option><option value="OPEN_CLAIM">Open claim</option></select></label>
+          <label>Status<select name="status" data-admin-write disabled><option value="DRAFT">DRAFT</option><option value="SCHEDULED">SCHEDULED</option><option value="ACTIVE">ACTIVE</option></select></label>
+          <label>Per-account limit<input name="per_account_limit" type="number" min="1" max="20" value="1" data-admin-write disabled></label>
+          <button type="submit" data-admin-write disabled>Create campaign</button>
+        </form>
         <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Campaign</th><th>Reward</th><th>Claim mode</th><th>Status</th></tr></thead><tbody id="adminCampaignBody"></tbody></table></div>
         <p class="admin-muted">Authenticated Admin will create campaigns server-side. The public site only displays campaigns returned by the API.</p>
       </section>
@@ -112,11 +133,25 @@
           <tr><td>Compensation</td><td>Audited</td><td>CUSTOMER_SUPPORT_REWARD</td></tr>
         </tbody></table></div>
         <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Category</th><th>Subject</th><th>Status</th><th>User</th></tr></thead><tbody id="adminTicketsBody"></tbody></table></div>
+        <form id="adminTicketForm" class="admin-write-form">
+          <label>Ticket ID<input name="ticket_id" data-admin-write disabled required></label>
+          <label>Status<select name="status" data-admin-write disabled><option>IN_PROGRESS</option><option>WAITING_USER</option><option>RESOLVED</option><option>CLOSED</option></select></label>
+          <label>Internal note<input name="note" data-admin-write disabled maxlength="500"></label>
+          <button type="submit" data-admin-write disabled>Update ticket</button>
+        </form>
       </section>
 
       <section id="announcements" class="admin-section">
         <div class="admin-section-head"><div><span>ANNOUNCEMENTS</span><h2>Website & desktop notices</h2></div><small>Target: Website / Desktop / Both</small></div>
-        <div class="admin-empty-state"><b>No live announcement service yet.</b><p>The backend schema should include title, body, locale, target, start/end time and status.</p></div>
+        <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Title</th><th>Target</th><th>Locale</th><th>Status</th></tr></thead><tbody id="adminAnnouncementsBody"></tbody></table></div>
+        <form id="adminAnnouncementForm" class="admin-write-form">
+          <label>Title<input name="title" data-admin-write disabled required maxlength="200"></label>
+          <label>Target<select name="target" data-admin-write disabled><option value="BOTH">Website + Desktop</option><option value="WEBSITE">Website</option><option value="DESKTOP">Desktop</option></select></label>
+          <label>Locale<input name="locale" value="all" data-admin-write disabled maxlength="30"></label>
+          <label>Status<select name="status" data-admin-write disabled><option value="DRAFT">DRAFT</option><option value="ACTIVE">ACTIVE</option></select></label>
+          <label class="admin-wide">Message<textarea name="body" rows="4" data-admin-write disabled required maxlength="5000"></textarea></label>
+          <button type="submit" data-admin-write disabled>Create announcement</button>
+        </form>
       </section>
 
       <section id="policies-admin" class="admin-section">
@@ -132,6 +167,12 @@
       <section id="flags" class="admin-section">
         <div class="admin-section-head"><div><span>FEATURE FLAGS</span><h2>Kill switches & staged rollout</h2></div><small>Rendered from admin-config.json</small></div>
         <div id="flagGrid" class="flag-grid"></div>
+        <form id="adminFlagForm" class="admin-write-form">
+          <label>Flag<input name="name" data-admin-write disabled required></label>
+          <label>Value<select name="enabled" data-admin-write disabled><option value="true">ON</option><option value="false">OFF</option></select></label>
+          <label>Reason<input name="reason" data-admin-write disabled required maxlength="500"></label>
+          <button type="submit" data-admin-write disabled>Update flag</button>
+        </form>
       </section>
 
       <section id="audit" class="admin-section">
