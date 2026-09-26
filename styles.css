@@ -143,6 +143,7 @@ html[lang="zh-CN"] .section h2{font-size:clamp(39px,3.15vw,52px);line-height:1.2
 .account-section,.creator-policy-section{padding:116px 0 96px;background:linear-gradient(135deg,#181510,#0b0f0f 62%)}
 .account-hero,.creator-policy-hero{max-width:820px;margin-bottom:36px}
 .account-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.account-auth-panel{margin:0 0 22px;padding:24px;border:1px solid #6d5844;border-radius:12px;background:linear-gradient(135deg,#211b16,#121615);display:grid;grid-template-columns:.8fr 1.2fr;gap:24px}.account-auth-panel h3{margin:0 0 8px;font:28px Georgia,"Songti SC",serif;color:#efd0aa}.account-auth-panel p{color:#a99d91;font-size:12px;line-height:1.7}.account-auth-forms{display:grid;grid-template-columns:1fr 1fr;gap:12px}.account-auth-forms form{display:grid;align-content:start;gap:9px;padding:16px;border:1px solid #4f453c;border-radius:9px;background:#101312}.account-auth-forms strong{color:#efd0aa}.account-auth-forms label{display:grid;gap:5px;color:#9f9489;font-size:10px;letter-spacing:.08em;text-transform:uppercase}.account-auth-forms input{min-width:0;padding:10px;border:1px solid #5d5043;border-radius:6px;background:#090c0b;color:#eee0cf}.account-auth-panel.api-authenticated{display:none}
 .account-card{min-width:0;padding:20px;border:1px solid #655342;border-radius:11px;background:#181a19;box-shadow:0 18px 40px #0004}
 .account-card>span{display:block;font-size:9px;letter-spacing:.22em;color:#a89179;margin-bottom:14px}
 .account-card>strong{display:block;font:22px Georgia,"Songti SC",serif;color:#f0d2ae;margin-bottom:9px}
@@ -293,6 +294,7 @@ html[lang="zh-CN"] .section h2{font-size:clamp(39px,3.15vw,52px);line-height:1.2
 .desktop-link-actions{display:grid;gap:10px}.desktop-link-actions output{display:block;padding:13px 16px;border:1px solid #8e6d4d;border-radius:9px;background:#0d1110;color:#f2d0a7;font:700 21px/1.2 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.14em;text-align:center;overflow-wrap:anywhere}
 .desktop-link-actions small{color:#9f9489;font-size:10px;line-height:1.6}
 @media(max-width:720px){.desktop-link-panel{grid-template-columns:1fr}}
+@media(max-width:820px){.account-auth-panel,.account-auth-forms{grid-template-columns:1fr}}
 
 .product-price-stack{display:grid;justify-items:end;gap:2px;text-align:right}.product-price-stack small{font-size:8px;letter-spacing:.06em;color:#8f857c;text-transform:uppercase}.product-price-stack span{font-size:11px;color:#a89b8f;text-decoration:none}.product-price-stack strong{font-size:17px;color:#f0c79a}
 

@@ -32,9 +32,30 @@
   }
 
   async function account(){
-    if(document.body.dataset.page!=='account'||!await api.isEnabled())return;
+    if(document.body.dataset.page!=='account')return;
+    if(!await api.isEnabled()){
+      const status=$('#accountAuthStatus');
+      if(status)status.textContent='Online account service is not available yet.';
+      return;
+    }
+    document.querySelectorAll('#accountLoginForm button[type="submit"],#accountRegisterForm button[type="submit"]').forEach(button=>{button.disabled=false});
+    const authPanel=$('#accountAuthPanel'),authStatus=$('#accountAuthStatus');
+    const setAuthStatus=(message,ok=false)=>{if(authStatus){authStatus.textContent=message||'';authStatus.dataset.ok=ok?'true':'false'}};
+    const bindAuthForm=(selector,method)=>{
+      const form=$(selector);if(!form||form.dataset.bound)return;form.dataset.bound='true';
+      form.addEventListener('submit',async event=>{
+        event.preventDefault();const button=form.querySelector('button');button.disabled=true;setAuthStatus('Connecting…');
+        try{
+          await api[method](Object.fromEntries(new FormData(form).entries()));setAuthStatus('Signed in',true);await account();
+        }catch(error){setAuthStatus(error.code==='INVALID_CREDENTIALS'?'Email or password is incorrect.':error.code||'Sign in failed.');}
+        finally{button.disabled=false}
+      });
+    };
+    bindAuthForm('#accountLoginForm','loginAccount');bindAuthForm('#accountRegisterForm','registerAccount');
     try{
       const data=await api.me();
+      authPanel?.classList.add('api-authenticated');
+      const signOut=$('#accountSignOut');if(signOut){signOut.hidden=false;if(!signOut.dataset.bound){signOut.dataset.bound='true';signOut.onclick=async()=>{await api.signOut();location.reload()}}}
       $('#accountLiveStatus')?.replaceChildren(document.createTextNode(data.user?.display_name||'Re:Play'));
       if($('#accountRpValue')) $('#accountRpValue').textContent=fmt(data.rewards?.balance||0)+' RP';
       if($('#accountBlankValue')) $('#accountBlankValue').textContent=String(data.entitlements?.blank_cassette||0);
@@ -59,32 +80,41 @@
       }
       const history=await api.rewardHistory();
       if($('#accountHistoryValue')) $('#accountHistoryValue').textContent=String(history.events?.length||0);
-      const linkButton=$('#desktopLinkCreate'), linkCode=$('#desktopLinkCode'), linkStatus=$('#desktopLinkStatus');
-      if(linkButton&&linkCode&&linkStatus){
-        linkButton.disabled=false;
-        linkStatus.textContent=window.RePlaySiteText?.('desktopLinkExpires')||'Valid for 10 minutes · single use';
-        if(!linkButton.dataset.bound){
-          linkButton.dataset.bound='true';
-          linkButton.addEventListener('click',async()=>{
-            linkButton.disabled=true;
-            linkButton.textContent=window.RePlaySiteText?.('desktopLinkWorking')||'Generating…';
-            linkCode.hidden=true;
-            try{
-              const link=await api.createDesktopLink();
-              linkCode.textContent=link.link_code;
-              linkCode.hidden=false;
-              linkStatus.textContent=(window.RePlaySiteText?.('desktopLinkExpires')||'Valid for 10 minutes · single use')+' · '+new Date(link.expires_at).toLocaleTimeString();
-            }catch(error){
-              linkStatus.textContent=window.RePlaySiteText?.('desktopLinkFailed')||'Could not generate code.';
-            }finally{
-              linkButton.disabled=false;
-              linkButton.textContent=window.RePlaySiteText?.('desktopLinkAction')||'Generate desktop link code';
-            }
-          });
-        }
+      const [deviceData,cassetteData,creatorData]=await Promise.all([api.devices(),api.cassettes(),api.creatorWorks()]);
+      const devices=deviceData.devices||[],projects=cassetteData.projects||[],works=creatorData.works||[];
+      $('#accountDeviceValue').textContent=String(devices.filter(item=>item.status==='ACTIVE').length);
+      $('#accountCassetteValue').textContent=String(projects.length);$('#accountCreatorValue').textContent=String(works.length);
+      const missing=projects.flatMap(project=>project.local_audio_status||[]).reduce((sum,row)=>sum+Number(row.missing_count||0),0);
+      $('#accountMissingValue').textContent=String(missing);
+      const cassetteList=$('#accountCassetteList');
+      if(cassetteList){cassetteList.replaceChildren(...(projects.length?projects.map(project=>{
+        const row=document.createElement('div'),label=document.createElement('span'),value=document.createElement('b');
+        const status=(project.local_audio_status||[]).map(item=>`${item.device_name}: ${item.missing_count} missing`).join(' · ');
+        label.textContent=`${project.title} · ${project.tape_length||''} · ${project.tracks?.length||0} tracks`;value.textContent=status||`Revision ${project.revision}`;row.append(label,value);return row;
+      }):[Object.assign(document.createElement('p'),{textContent:'No cloud cassette projects yet.'})]));}
+      const deviceList=$('#accountDeviceList');
+      if(deviceList){deviceList.replaceChildren(...(devices.length?devices.map(device=>{
+        const row=document.createElement('div'),label=document.createElement('span'),button=document.createElement('button');
+        label.textContent=`${device.name} · ${device.platform} · ${device.status}`;button.type='button';button.textContent=device.status==='ACTIVE'?'Revoke':'Revoked';button.disabled=device.status!=='ACTIVE';
+        button.onclick=async()=>{button.disabled=true;await api.revokeDevice(device.device_id);await account()};row.append(label,button);return row;
+      }):[Object.assign(document.createElement('p'),{textContent:'No authorized desktop devices.'})]));}
+
+      const params=new URLSearchParams(location.search),authorizePanel=$('#desktopAuthorizePanel'),authorizeButton=$('#desktopAuthorizeButton'),authorizeStatus=$('#desktopAuthorizeStatus');
+      if(params.get('desktop_authorize')==='1'&&authorizePanel&&authorizeButton){
+        authorizePanel.hidden=false;authorizeStatus.textContent=`Device: ${params.get('device_name')||'Re:Play Windows'}`;
+        authorizeButton.onclick=async()=>{
+          authorizeButton.disabled=true;authorizeStatus.textContent='Authorizing…';
+          try{
+            const result=await api.authorizeDesktop({
+              client_id:params.get('client_id'),redirect_uri:params.get('redirect_uri'),code_challenge:params.get('code_challenge'),
+              code_challenge_method:params.get('code_challenge_method'),state:params.get('state'),device_name:params.get('device_name')||'Re:Play Windows'
+            });
+            location.href=result.redirect_to;
+          }catch(error){authorizeStatus.textContent=error.code||'Authorization failed';authorizeButton.disabled=false}
+        };
       }
       document.body.classList.add('api-live');
-    }catch(error){document.body.dataset.apiError=error.code||'API_ERROR'}
+    }catch(error){document.body.dataset.apiError=error.code||'API_ERROR';if(error.code!=='UNAUTHORIZED')setAuthStatus(error.code||'API_ERROR')}
   }
 
   async function activities(){
