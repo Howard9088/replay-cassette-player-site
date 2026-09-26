@@ -78,7 +78,8 @@
     "CREATOR_BONUS_ENABLED": false,
     "SUPPORT_TICKETS_ENABLED": false,
     "CAMPAIGNS_ENABLED": true,
-    "ANNOUNCEMENTS_ENABLED": true
+    "ANNOUNCEMENTS_ENABLED": true,
+    "INVITE_ONLY_BETA_ENABLED": false
   },
   "rewardPolicy": {
     "welcomeRewardRp": 2000,
