@@ -50,7 +50,9 @@
       experience:['Experience','产品体验'],
       shop:['Rewards Store','兑换商店'],
       gallery:['Gallery','创意画廊'],
-      points:['Rewards','奖励规则']
+      points:['Rewards','奖励规则'],
+      creator:['Creator','Creator 创作'],
+      account:['Beta Account','Beta 账户']
     };
     const title = titles[document.body.dataset.page] || titles.home;
     document.title = `Re:Play · ${title[state.language === 'zh' ? 1 : 0]}`;
