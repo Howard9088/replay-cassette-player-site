@@ -277,3 +277,13 @@ html[lang="zh-CN"] .section h2{font-size:clamp(39px,3.15vw,52px);line-height:1.2
 .admin-section .admin-table-wrap+.admin-write-form{margin-top:14px}
 @media(max-width:1050px){.admin-write-form{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:720px){.admin-write-form{grid-template-columns:1fr}.admin-write-form .admin-wide{grid-column:auto}.admin-write-status{display:block;margin:8px 0 0}}
+
+.creator-upload-panel{margin:24px 0;padding:22px;border:1px solid #665442;border-radius:12px;background:linear-gradient(145deg,#211b17,#151817);display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
+.creator-upload-panel h3{margin:0 0 8px;font:28px Georgia,"Songti SC",serif;color:#f1d2ad}
+.creator-upload-panel p:not(.eyebrow){margin:0;color:#ac9f92;font-size:11px;line-height:1.7}
+.creator-upload-controls{display:grid;gap:10px}
+.creator-upload-controls input{width:100%;padding:10px;border:1px solid #5e5042;border-radius:8px;background:#111413;color:#cfc3b7;font-size:11px}
+.creator-upload-result{grid-column:1/-1;display:flex;align-items:center;gap:14px;min-height:44px}
+.creator-upload-result img{width:72px;height:72px;object-fit:cover;border-radius:8px;border:1px solid #6f5945}
+.creator-upload-result output{color:#d7b995;font-size:11px;overflow-wrap:anywhere}
+@media(max-width:720px){.creator-upload-panel{grid-template-columns:1fr}.creator-upload-result{grid-column:1}}
