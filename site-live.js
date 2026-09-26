@@ -41,6 +41,30 @@
       if($('#accountAssetValue')) $('#accountAssetValue').textContent=String(Object.keys(data.entitlements?.assets||{}).length);
       const history=await api.rewardHistory();
       if($('#accountHistoryValue')) $('#accountHistoryValue').textContent=String(history.events?.length||0);
+      const linkButton=$('#desktopLinkCreate'), linkCode=$('#desktopLinkCode'), linkStatus=$('#desktopLinkStatus');
+      if(linkButton&&linkCode&&linkStatus){
+        linkButton.disabled=false;
+        linkStatus.textContent=window.RePlaySiteText?.('desktopLinkExpires')||'Valid for 10 minutes · single use';
+        if(!linkButton.dataset.bound){
+          linkButton.dataset.bound='true';
+          linkButton.addEventListener('click',async()=>{
+            linkButton.disabled=true;
+            linkButton.textContent=window.RePlaySiteText?.('desktopLinkWorking')||'Generating…';
+            linkCode.hidden=true;
+            try{
+              const link=await api.createDesktopLink();
+              linkCode.textContent=link.link_code;
+              linkCode.hidden=false;
+              linkStatus.textContent=(window.RePlaySiteText?.('desktopLinkExpires')||'Valid for 10 minutes · single use')+' · '+new Date(link.expires_at).toLocaleTimeString();
+            }catch(error){
+              linkStatus.textContent=window.RePlaySiteText?.('desktopLinkFailed')||'Could not generate code.';
+            }finally{
+              linkButton.disabled=false;
+              linkButton.textContent=window.RePlaySiteText?.('desktopLinkAction')||'Generate desktop link code';
+            }
+          });
+        }
+      }
       document.body.classList.add('api-live');
     }catch(error){document.body.dataset.apiError=error.code||'API_ERROR'}
   }
