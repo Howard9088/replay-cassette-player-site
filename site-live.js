@@ -45,11 +45,11 @@
     }
     document.querySelectorAll('#accountLoginForm button[type="submit"],#accountRegisterForm button[type="submit"]').forEach(button=>{button.disabled=false});
     const authStatus=$('#accountAuthStatus');
-    const setAuthStatus=(message,ok=false)=>{if(authStatus){authStatus.textContent=message||'';authStatus.dataset.ok=ok?'true':'false'}};
+    const setAuthStatus=(message,ok=false)=>{if(authStatus){delete authStatus.dataset.i18n;authStatus.textContent=message||'';authStatus.dataset.ok=ok?'true':'false'}};
     const bindAuthForm=(selector,method)=>{
       const form=$(selector);if(!form||form.dataset.bound)return;form.dataset.bound='true';
       form.addEventListener('submit',async event=>{
-        event.preventDefault();const button=form.querySelector('button');button.disabled=true;setAuthStatus(at('连接中…','Connecting…'));
+        event.preventDefault();const button=form.querySelector('button[type="submit"]');button.disabled=true;setAuthStatus(at('连接中…','Connecting…'));
         try{
           await api[method](Object.fromEntries(new FormData(form).entries()));setAuthStatus(at('已登录','Signed in'),true);await account();
         }catch(error){setAuthStatus(error.code==='INVALID_CREDENTIALS'?at('邮箱或密码不正确。','Email or password is incorrect.'):error.code||at('登录失败。','Sign in failed.'));}
@@ -121,7 +121,10 @@
     }catch(error){
       document.body.dataset.apiError=error.code||'API_ERROR';
       if(error.code==='UNAUTHORIZED')showGuest();
-      else setAuthStatus(error.code||'API_ERROR');
+      else if(dashboard&&!dashboard.hidden&&$('#accountDashboardStatus')){
+        const status=$('#accountDashboardStatus');status.hidden=false;status.dataset.ok='false';
+        status.textContent=at('部分账户信息暂时无法加载，请刷新重试。','Some account details could not be loaded. Please refresh to try again.');
+      }else setAuthStatus(error.code||'API_ERROR');
     }
   }
 
