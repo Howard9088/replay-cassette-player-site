@@ -36,6 +36,7 @@
           <p class="eyebrow" data-i18n="accountKicker">RE:PLAY ACCOUNT / GLOBAL BETA</p>
           <h2 data-i18n="accountTitle">One account for the website and desktop app.</h2>
           <p data-i18n="accountDescription">When the Beta account service goes live, this page will unify RP, blank cassettes, digital assets, Creator works and reward history.</p>
+          <p data-i18n="accountIntroRp">New Beta accounts receive 2,000 RP once registration is complete. Your actual balance appears after sign-in.</p>
           <span class="notice-chip" id="accountLiveStatus" data-i18n="accountPending">Account service in progress · this page shows the target structure</span>
         </div>
         <section id="accountAuthPanel" class="account-auth-panel">
@@ -52,7 +53,7 @@
               <label><span data-i18n="accountDisplayName">Display name</span><input name="display_name" autocomplete="name" required maxlength="200"></label>
               <label><span data-i18n="accountEmail">Email</span><input name="email" type="email" autocomplete="email" required maxlength="320"></label>
               <label><span data-i18n="accountPassword">Password</span><input name="password" type="password" autocomplete="new-password" required minlength="10" maxlength="200"></label>
-              <button class="pill-button outline" type="submit" disabled data-i18n="accountRegisterButton">Create account · +2,000 RP</button>
+              <button class="pill-button outline" type="submit" disabled data-i18n="accountRegisterButton">Create account</button>
             </form>
           </div>
           <p id="accountAuthStatus" role="status" aria-live="polite"></p>
@@ -62,7 +63,7 @@
           <div class="desktop-link-actions"><button id="desktopAuthorizeButton" class="pill-button light" type="button" data-i18n="accountAuthorizeButton">Authorize this desktop</button><small id="desktopAuthorizeStatus" data-i18n="accountVerifyDevice">Verify the device name before continuing.</small></div>
         </section>
         <div class="account-grid">
-          <article class="account-card"><span>RP</span><strong id="accountRpValue">—</strong><p data-i18n="accountWelcome">Welcome reward</p><small data-i18n="accountNoFake">No simulated balance is shown. Real rewards and assets will come from the server Reward Ledger and Entitlements.</small></article>
+          <article class="account-card"><span>RP</span><strong id="accountRpValue">—</strong><p data-i18n="accountWelcome">Current balance</p><small data-i18n="accountNoFake">No simulated balance is shown. Real rewards and assets will come from the server Reward Ledger and Entitlements.</small></article>
           <article class="account-card"><span>BLANK</span><strong id="accountBlankValue">—</strong><p data-i18n="accountBlank">Blank Cassette</p><small data-i18n="accountBlankDetail">Starting entitlement: 0 · redemption policy: 400 RP.</small></article>
           <article class="account-card"><span>ASSETS</span><strong id="accountAssetValue">—</strong><p data-i18n="accountAssets">My Assets</p><small data-i18n="accountAssetsDetail">Official cassettes, blank cassettes and Creator designs will live here.</small></article>
           <article class="account-card"><span>LEDGER</span><strong id="accountHistoryValue">—</strong><p data-i18n="accountHistory">Reward History</p><small data-i18n="accountHistoryDetail">Welcome, redemption burns, Creator rewards and Beta contributions remain auditable.</small></article>
