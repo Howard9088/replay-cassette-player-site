@@ -1,5 +1,11 @@
 (() => {
   'use strict';
+  // Keep all account-dependent actions on the same origin as the Beta API.
+  const page=document.body.dataset.page;
+  if(location.hostname==='howard9088.github.io'&&['shop','points','gallery','creator'].includes(page)){
+    location.replace('https://167.179.117.244:8443/'+page+'.html'+location.search+location.hash);
+    return;
+  }
   const api=window.RePlayApi;
   if(!api)return;
   const $=s=>document.querySelector(s);
@@ -18,6 +24,7 @@
         if($('#designRule')) $('#designRule').textContent=creatorTiers.map(fmt).join(' / ')+' RP';
         if($('#creatorRule')) $('#creatorRule').textContent=fmt(catalog.creator_reward_percent)+'%';
         if($('#pendingRule')) $('#pendingRule').textContent='+'+fmt(catalog.first_cassette_completed_reward_rp)+' RP';
+        for(const product of catalog.official_cassettes||[])document.querySelectorAll('[data-purchase-reward="'+product.product_id+'"]').forEach(node=>node.textContent=fmt(product.purchase_reward_rp)+' RP');
       }
       if(document.body.dataset.page==='creator'){
         for(const row of catalog.creator_asset_policy||[]){
@@ -33,29 +40,51 @@
 
   async function account(){
     if(document.body.dataset.page!=='account')return;
+    const at=(zh,en)=>document.documentElement.lang.startsWith('zh')?zh:en;
+    const guestView=$('#accountGuestView'),dashboard=$('#accountDashboard');
+    const showGuest=()=>{if(guestView)guestView.hidden=false;if(dashboard)dashboard.hidden=true;document.body.classList.remove('api-live')};
+    const showDashboard=()=>{if(guestView)guestView.hidden=true;if(dashboard)dashboard.hidden=false;document.body.classList.add('api-live')};
     if(!await api.isEnabled()){
+      showGuest();
       const status=$('#accountAuthStatus');
-      if(status)status.textContent='Online account service is not available yet.';
+      if(status){status.dataset.i18n='accountUnavailable';status.textContent=window.RePlaySiteText?.('accountUnavailable')||at('线上账号服务尚未开放。','Online account service is not available yet.');}
+      return;
+    }
+    try {
+      const catalog=await api.catalog();
+      const inviteOnly=catalog.registration_invite_only===true;
+      const inviteField=$('#registerInviteField'),inviteInput=$('#registerInvite');
+      if(inviteField)inviteField.hidden=!inviteOnly;
+      if(inviteInput)inviteInput.required=inviteOnly;
+    } catch(error) {
+      const status=$('#accountAuthStatus');
+      if(status)status.textContent=at('账号服务暂时无法连接，请稍后再试。','Account service is temporarily unavailable. Please try again later.');
       return;
     }
     document.querySelectorAll('#accountLoginForm button[type="submit"],#accountRegisterForm button[type="submit"]').forEach(button=>{button.disabled=false});
-    const authPanel=$('#accountAuthPanel'),authStatus=$('#accountAuthStatus');
-    const setAuthStatus=(message,ok=false)=>{if(authStatus){authStatus.textContent=message||'';authStatus.dataset.ok=ok?'true':'false'}};
+    const authStatus=$('#accountAuthStatus');
+    const setAuthStatus=(message,ok=false)=>{if(authStatus){delete authStatus.dataset.i18n;authStatus.textContent=message||'';authStatus.dataset.ok=ok?'true':'false'}};
     const bindAuthForm=(selector,method)=>{
       const form=$(selector);if(!form||form.dataset.bound)return;form.dataset.bound='true';
       form.addEventListener('submit',async event=>{
-        event.preventDefault();const button=form.querySelector('button');button.disabled=true;setAuthStatus('Connecting…');
+        event.preventDefault();const button=form.querySelector('button[type="submit"]');button.disabled=true;setAuthStatus(at('连接中…','Connecting…'));
         try{
-          await api[method](Object.fromEntries(new FormData(form).entries()));setAuthStatus('Signed in',true);await account();
-        }catch(error){setAuthStatus(error.code==='INVALID_CREDENTIALS'?'Email or password is incorrect.':error.code||'Sign in failed.');}
+          await api[method](Object.fromEntries(new FormData(form).entries()));setAuthStatus(at('已登录','Signed in'),true);await account();
+        }catch(error){setAuthStatus(error.code==='INVALID_CREDENTIALS'?at('邮箱或密码不正确。','Email or password is incorrect.'):
+          error.code==='INVALID_INVITE'?at('邀请码无效或已过期。','Invitation code is invalid or expired.'):
+          error.code||at('登录失败。','Sign in failed.'));}
         finally{button.disabled=false}
       });
     };
     bindAuthForm('#accountLoginForm','loginAccount');bindAuthForm('#accountRegisterForm','registerAccount');
     try{
       const data=await api.me();
-      authPanel?.classList.add('api-authenticated');
-      const signOut=$('#accountSignOut');if(signOut){signOut.hidden=false;if(!signOut.dataset.bound){signOut.dataset.bound='true';signOut.onclick=async()=>{await api.signOut();location.reload()}}}
+      showDashboard();
+      const signOut=$('#accountSignOut');if(signOut){signOut.hidden=false;if(!signOut.dataset.bound){signOut.dataset.bound='true';signOut.onclick=async()=>{
+        signOut.disabled=true;
+        try{await api.signOut();location.replace('account.html')}
+        catch(error){signOut.disabled=false;const status=$('#accountDashboardStatus');if(status){status.hidden=false;status.textContent=at('退出失败，请重试。','Sign out failed. Please try again.')}}
+      }}}
       $('#accountLiveStatus')?.replaceChildren(document.createTextNode(data.user?.display_name||'Re:Play'));
       if($('#accountRpValue')) $('#accountRpValue').textContent=fmt(data.rewards?.balance||0)+' RP';
       if($('#accountBlankValue')) $('#accountBlankValue').textContent=String(data.entitlements?.blank_cassette||0);
@@ -80,8 +109,20 @@
       }
       const history=await api.rewardHistory();
       if($('#accountHistoryValue')) $('#accountHistoryValue').textContent=String(history.events?.length||0);
+      const renderDetails=(selector,items,format,empty)=>{
+        const list=$(selector);if(!list)return;
+        list.replaceChildren(...(items.length?items.map(item=>{
+          const row=document.createElement('div'),label=document.createElement('span'),value=document.createElement('b');
+          const details=format(item);label.textContent=details[0];value.textContent=details[1];row.append(label,value);return row;
+        }):[Object.assign(document.createElement('p'),{textContent:empty})]));
+      };
+      renderDetails('#accountHistoryList',[...(history.events||[])].reverse(),event=>[
+        event.event_type==='BETA_WELCOME_REWARD'?at('首次账号积分','Welcome balance'):String(event.event_type||'').replaceAll('_',' '),
+        (Number(event.amount)>0?'+':'')+fmt(Number(event.amount)||0)+' RP'
+      ],at('暂无积分记录。','No reward history yet.'));
       const [deviceData,cassetteData,creatorData]=await Promise.all([api.devices(),api.cassettes(),api.creatorWorks()]);
       const devices=deviceData.devices||[],projects=cassetteData.projects||[],works=creatorData.works||[];
+      renderDetails('#accountCreatorList',works,work=>[work.title||work.work_id,work.status],at('暂无作品。在桌面端完成设计后即可提交。','No works yet. Submit your design from the desktop app.'));
       $('#accountDeviceValue').textContent=String(devices.filter(item=>item.status==='ACTIVE').length);
       $('#accountCassetteValue').textContent=String(projects.length);$('#accountCreatorValue').textContent=String(works.length);
       const missing=projects.flatMap(project=>project.local_audio_status||[]).reduce((sum,row)=>sum+Number(row.missing_count||0),0);
@@ -89,32 +130,38 @@
       const cassetteList=$('#accountCassetteList');
       if(cassetteList){cassetteList.replaceChildren(...(projects.length?projects.map(project=>{
         const row=document.createElement('div'),label=document.createElement('span'),value=document.createElement('b');
-        const status=(project.local_audio_status||[]).map(item=>`${item.device_name}: ${item.missing_count} missing`).join(' · ');
-        label.textContent=`${project.title} · ${project.tape_length||''} · ${project.tracks?.length||0} tracks`;value.textContent=status||`Revision ${project.revision}`;row.append(label,value);return row;
-      }):[Object.assign(document.createElement('p'),{textContent:'No cloud cassette projects yet.'})]));}
+        const status=(project.local_audio_status||[]).map(item=>`${item.device_name}: ${item.missing_count} ${at('首缺失','missing')}`).join(' · ');
+        label.textContent=`${project.title} · ${project.tape_length||''} · ${project.tracks?.length||0} ${at('首曲目','tracks')}`;value.textContent=status||`${at('修订版','Revision')} ${project.revision}`;row.append(label,value);return row;
+      }):[Object.assign(document.createElement('p'),{textContent:at('还没有云端磁带项目。','No cloud cassette projects yet.')})]));}
       const deviceList=$('#accountDeviceList');
       if(deviceList){deviceList.replaceChildren(...(devices.length?devices.map(device=>{
         const row=document.createElement('div'),label=document.createElement('span'),button=document.createElement('button');
-        label.textContent=`${device.name} · ${device.platform} · ${device.status}`;button.type='button';button.textContent=device.status==='ACTIVE'?'Revoke':'Revoked';button.disabled=device.status!=='ACTIVE';
-        button.onclick=async()=>{button.disabled=true;await api.revokeDevice(device.device_id);await account()};row.append(label,button);return row;
-      }):[Object.assign(document.createElement('p'),{textContent:'No authorized desktop devices.'})]));}
+        label.textContent=`${device.name} · ${device.platform} · ${device.status}`;button.type='button';button.textContent=device.status==='ACTIVE'?at('撤销授权','Revoke'):at('已撤销','Revoked');button.disabled=device.status!=='ACTIVE';
+        button.onclick=async()=>{button.disabled=true;try{await api.revokeDevice(device.device_id);await account()}catch(error){button.disabled=false;const status=$('#accountDashboardStatus');if(status){status.hidden=false;status.textContent=at('撤销失败，请重试。','Unable to revoke device. Please try again.')}}};row.append(label,button);return row;
+      }):[Object.assign(document.createElement('p'),{textContent:at('还没有已授权的桌面设备。','No authorized desktop devices.')})]));}
 
       const params=new URLSearchParams(location.search),authorizePanel=$('#desktopAuthorizePanel'),authorizeButton=$('#desktopAuthorizeButton'),authorizeStatus=$('#desktopAuthorizeStatus');
       if(params.get('desktop_authorize')==='1'&&authorizePanel&&authorizeButton){
-        authorizePanel.hidden=false;authorizeStatus.textContent=`Device: ${params.get('device_name')||'Re:Play Windows'}`;
+        authorizePanel.hidden=false;authorizeStatus.textContent=`${at('设备','Device')}: ${params.get('device_name')||'Re:Play Windows'}`;
         authorizeButton.onclick=async()=>{
-          authorizeButton.disabled=true;authorizeStatus.textContent='Authorizing…';
+          authorizeButton.disabled=true;authorizeStatus.textContent=at('授权中…','Authorizing…');
           try{
             const result=await api.authorizeDesktop({
               client_id:params.get('client_id'),redirect_uri:params.get('redirect_uri'),code_challenge:params.get('code_challenge'),
               code_challenge_method:params.get('code_challenge_method'),state:params.get('state'),device_name:params.get('device_name')||'Re:Play Windows'
             });
             location.href=result.redirect_to;
-          }catch(error){authorizeStatus.textContent=error.code||'Authorization failed';authorizeButton.disabled=false}
+          }catch(error){authorizeStatus.textContent=error.code||at('授权失败','Authorization failed');authorizeButton.disabled=false}
         };
       }
-      document.body.classList.add('api-live');
-    }catch(error){document.body.dataset.apiError=error.code||'API_ERROR';if(error.code!=='UNAUTHORIZED')setAuthStatus(error.code||'API_ERROR')}
+    }catch(error){
+      document.body.dataset.apiError=error.code||'API_ERROR';
+      if(error.code==='UNAUTHORIZED')showGuest();
+      else if(dashboard&&!dashboard.hidden&&$('#accountDashboardStatus')){
+        const status=$('#accountDashboardStatus');status.hidden=false;status.dataset.ok='false';
+        status.textContent=at('部分账户信息暂时无法加载，请刷新重试。','Some account details could not be loaded. Please refresh to try again.');
+      }else setAuthStatus(error.code||'API_ERROR');
+    }
   }
 
   async function activities(){
@@ -258,7 +305,9 @@
           }finally{setTimeout(()=>{redeem.disabled=false},900)}
         });
 
-        card.append(art,meta,metrics,policy,redeem);
+        const report=document.createElement('a');report.href='support.html?category=Copyright&work_id='+encodeURIComponent(work.work_id);
+        report.textContent=document.documentElement.lang.startsWith('zh')?'举报版权问题':'Report a copyright concern';
+        card.append(art,meta,metrics,policy,redeem,report);
         grid.append(card);
       }
     }catch(error){
@@ -345,6 +394,12 @@
   async function support(){
     if(document.body.dataset.page!=='support'||!await api.isEnabled())return;
     const form=$('.support-form'); if(!form)return;
+    const category=form.querySelector('select');
+    if(!Array.from(category.options).some(option=>option.value==='Copyright'))category.add(new Option('Copyright / 版权','Copyright'));
+    const workLabel=document.createElement('label'),workInput=document.createElement('input');workInput.name='work_id';workInput.maxLength=200;
+    workLabel.textContent=document.documentElement.lang.startsWith('zh')?'作品 ID（版权举报 / 申诉必填）':'Work ID (required for copyright reports / appeals)';workLabel.append(workInput);form.append(workLabel);
+    const query=new URLSearchParams(location.search);if(query.get('category')==='Copyright')category.value='Copyright';workInput.value=query.get('work_id')||'';
+    const adjust=()=>{workInput.required=category.value==='Copyright';workLabel.hidden=!workInput.required};category.addEventListener('change',adjust);adjust();
     form.querySelectorAll('select,input,textarea,button').forEach(el=>el.disabled=false);
     $('#supportDisabled')?.setAttribute('hidden','');
     form.addEventListener('submit',async event=>{
@@ -352,7 +407,7 @@
       const select=form.querySelector('select'), input=form.querySelector('input'), textarea=form.querySelector('textarea'), button=form.querySelector('button');
       button.disabled=true;
       try{
-        await api.createTicket({category:select.value,subject:input.value,details:textarea.value});
+        await api.createTicket({category:select.value,subject:input.value,details:textarea.value,work_id:workInput.value});
         input.value='';textarea.value='';
         button.textContent=document.documentElement.lang.startsWith('zh')?'已提交':'Submitted';
       }catch(error){
@@ -361,5 +416,7 @@
     });
   }
 
+  $('#langSelect')?.addEventListener('change',()=>{account().catch(()=>{})});
   Promise.all([rewardsPolicy(),account(),activities(),shop(),gallery(),creator(),support()]).catch(()=>{});
 })()
+

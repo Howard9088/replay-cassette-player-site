@@ -4,89 +4,103 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b0e0e">
-  <meta name="description" content="Re:Play Global Beta account structure for rewards, assets and desktop sync.">
-  <title>Re:Play · Beta Account</title>
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Sign in to your Re:Play account.">
+  <title>Re:Play · Account</title>
+  <link rel="stylesheet" href="account.css">
   <script src="app.js" defer></script>
   <script src="replay-api.js" defer></script>
+  <script src="account-ui.js" defer></script>
   <script src="site-live.js" defer></script>
 </head>
-<body class="inner-page" data-page="account">
+<body data-page="account">
   <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
-  <header class="site-header" id="top">
-    <a class="brand" href="index.html" aria-label="Re:Play home" data-i18n-aria-label="homeLabel"><strong>Re:Play</strong><span>MUSIC LIVES LONGER</span></a>
-    <nav class="main-nav" aria-label="Main navigation" data-i18n-aria-label="mainNavLabel">
-      <a href="experience.html" data-i18n="navExperience">Experience</a>
-      <a href="shop.html" data-i18n="navShop">Rewards Store</a>
-      <a href="gallery.html" data-i18n="navGallery">Gallery</a>
-      <a href="points.html" data-i18n="navPoints">Rewards</a>
-      <a href="creator.html" data-i18n="navCreator">Creator</a>
-    </nav>
-    <div class="header-actions">
-      <label class="language-control" for="langSelect"><span aria-hidden="true">◎</span><select id="langSelect" aria-label="Website language" data-i18n-aria-label="languageLabel"><option value="en">English</option><option value="zh">简体中文</option></select></label>
-      <a class="cart-button beta-header-link active-account" href="account.html" data-i18n="navAccount">Beta Account</a>
-      <a class="header-download" href="https://github.com/Howard9088/replay-cassette-player-releases/releases/latest/download/RePlay-Setup.exe" target="_blank" rel="noopener noreferrer" data-i18n="downloadReplay">Get Re:Play</a>
-    </div>
+  <select id="langSelect" hidden aria-hidden="true" tabindex="-1"><option value="en">English</option><option value="zh">简体中文</option></select>
+  <header class="account-page-header">
+    <a class="account-brand" href="index.html" aria-label="Re:Play">Re:Play<span class="beta-label">BETA</span></a>
+    <a class="back-link" href="index.html"><span aria-hidden="true">↗</span> <span data-account-copy="backHome">Back to website</span></a>
   </header>
-  <main id="main" class="inner-main">
-    <section class="account-section section">
-      <div class="page-width">
-        <div class="account-hero">
-          <p class="eyebrow" data-i18n="accountKicker">RE:PLAY ACCOUNT / GLOBAL BETA</p>
-          <h2 data-i18n="accountTitle">One account for the website and desktop app.</h2>
-          <p data-i18n="accountDescription">When the Beta account service goes live, this page will unify RP, blank cassettes, digital assets, Creator works and reward history.</p>
-          <span class="notice-chip" id="accountLiveStatus" data-i18n="accountPending">Account service in progress · this page shows the target structure</span>
+  <main id="main" class="account-main">
+    <div id="accountGuestView" class="auth-layout">
+      <section id="accountAuthPanel" class="auth-card" aria-labelledby="accountFormTitle">
+        <div class="auth-heading">
+          <div class="auth-symbol" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><rect x="4" y="8" width="24" height="17" rx="4"/><circle cx="11" cy="15" r="3"/><circle cx="21" cy="15" r="3"/><path d="M11 18h10M11 25l2-5h6l2 5"/></svg></div>
+          <h1 id="accountFormTitle" data-account-copy="loginTitle">Welcome back</h1>
+          <p id="accountFormDescription" data-account-copy="loginDescription">Sign in to your Re:Play account.</p>
         </div>
-        <section id="accountAuthPanel" class="account-auth-panel">
-          <div><p class="eyebrow">RE:PLAY ACCOUNT</p><h3>Sign in or create your account</h3><p>Website, desktop and future mobile apps share the same Re:Play user ID. Private audio files stay on your own device.</p></div>
-          <div class="account-auth-forms">
-            <form id="accountLoginForm">
-              <strong>Sign in</strong>
-              <label>Email<input name="email" type="email" autocomplete="email" required maxlength="320"></label>
-              <label>Password<input name="password" type="password" autocomplete="current-password" required minlength="10" maxlength="200"></label>
-              <button class="pill-button light" type="submit" disabled>Sign in</button>
-            </form>
-            <form id="accountRegisterForm">
-              <strong>Register</strong>
-              <label>Display name<input name="display_name" autocomplete="name" required maxlength="200"></label>
-              <label>Email<input name="email" type="email" autocomplete="email" required maxlength="320"></label>
-              <label>Password<input name="password" type="password" autocomplete="new-password" required minlength="10" maxlength="200"></label>
-              <button class="pill-button outline" type="submit" disabled>Create account · +2,000 RP</button>
-            </form>
-          </div>
-          <p id="accountAuthStatus" role="status" aria-live="polite"></p>
-        </section>
+        <form id="accountLoginForm" class="auth-form" aria-labelledby="accountFormTitle">
+          <div class="field"><label for="loginEmail" data-i18n="accountEmail">Email</label><input id="loginEmail" name="email" type="email" autocomplete="username" inputmode="email" placeholder="you@example.com" required maxlength="320"></div>
+          <div class="field"><label for="loginPassword" data-i18n="accountPassword">Password</label><div class="password-field"><input id="loginPassword" name="password" type="password" autocomplete="current-password" required maxlength="200"><button type="button" class="password-toggle" data-password-target="loginPassword" aria-pressed="false" data-account-copy="showPassword">Show</button></div></div>
+          <button class="auth-submit" type="submit" disabled data-i18n="accountSignIn">Sign in</button>
+          <p class="auth-switch"><span data-account-copy="noAccount">New to Re:Play?</span> <button type="button" data-auth-mode="register" data-i18n="accountRegisterButton">Create account</button></p>
+        </form>
+        <form id="accountRegisterForm" class="auth-form" hidden aria-labelledby="accountFormTitle">
+          <div class="field"><label for="registerName" data-i18n="accountDisplayName">Display name</label><input id="registerName" name="display_name" autocomplete="nickname" required maxlength="200"></div>
+          <div class="field"><label for="registerEmail" data-i18n="accountEmail">Email</label><input id="registerEmail" name="email" type="email" autocomplete="username" inputmode="email" placeholder="you@example.com" required maxlength="320"></div>
+          <div class="field" id="registerInviteField" hidden><label for="registerInvite" data-account-copy="inviteLabel">Beta invitation code</label><input id="registerInvite" name="invite_code" autocomplete="off" maxlength="160"><small data-account-copy="inviteHint">Required for the invitation-only Beta.</small></div>
+          <div class="field"><label for="registerPassword" data-i18n="accountPassword">Password</label><div class="password-field"><input id="registerPassword" name="password" type="password" autocomplete="new-password" required minlength="10" maxlength="200" aria-describedby="passwordHint"><button type="button" class="password-toggle" data-password-target="registerPassword" aria-pressed="false" data-account-copy="showPassword">Show</button></div><small id="passwordHint" data-account-copy="passwordHint">Use at least 10 characters.</small></div>
+          <div class="field"><label for="registerConfirm" data-account-copy="confirmPassword">Confirm password</label><div class="password-field"><input id="registerConfirm" type="password" autocomplete="new-password" required maxlength="200" aria-describedby="passwordMatchError"><button type="button" class="password-toggle" data-password-target="registerConfirm" aria-pressed="false" data-account-copy="showPassword">Show</button></div><small id="passwordMatchError" class="field-error" hidden aria-live="polite"></small></div>
+          <button class="auth-submit" type="submit" disabled data-i18n="accountRegisterButton">Create account</button>
+          <p class="auth-switch"><span data-account-copy="haveAccount">Already have an account?</span> <button type="button" data-auth-mode="login" data-i18n="accountSignIn">Sign in</button></p>
+        </form>
+        <p id="accountAuthStatus" class="auth-status" role="status" aria-live="polite"></p>
+      </section>
+      <p class="auth-privacy"><span data-account-copy="privacyNote">Your music stays on your device.</span><br><a href="https://howard9088.github.io/replay-cassette-player-site/policies.html" data-account-copy="privacyLink">Account & privacy</a></p>
+    </div>
+    <div id="accountDashboard" class="dashboard" hidden>
+      <aside class="dashboard-nav" aria-label="Account navigation">
+        <p data-account-copy="workspace">YOUR WORKSPACE</p>
+        <a href="#accountOverview" data-account-copy="overview">Overview</a>
+        <a href="#accountAssetsSection" data-i18n="accountAssets">My assets</a>
+        <a href="#accountCassettesSection" data-i18n="accountCassetteLabel">My cassettes</a>
+        <a href="#accountDevicesSection" data-account-copy="devices">Devices</a>
+        <a href="#accountHistorySection">Reward History</a>
+        <a href="#accountCreatorSection">Creator Works</a>
+        <div class="dashboard-nav-divider"></div>
+        <a href="shop.html" data-i18n="navShop">Rewards Store</a>
+        <a href="gallery.html" data-i18n="navGallery">Gallery</a>
+      </aside>
+      <div class="dashboard-content">
+        <div class="dashboard-heading"><div><p id="accountLiveStatus" class="account-name">Re:Play</p><h1 data-i18n="accountDashboardTitle">My account</h1></div><button id="accountSignOut" class="secondary-button" type="button" hidden data-i18n="accountSignOut">Sign out</button></div>
+        <p id="accountDashboardStatus" class="auth-status" role="status" aria-live="polite" hidden></p>
         <section id="desktopAuthorizePanel" class="desktop-link-panel" hidden>
-          <div><p class="eyebrow">SECURE DESKTOP AUTHORIZATION</p><h3>Authorize Re:Play Desktop</h3><p>The desktop uses Authorization Code + PKCE. Your password is never sent to the desktop app.</p></div>
-          <div class="desktop-link-actions"><button id="desktopAuthorizeButton" class="pill-button light" type="button">Authorize this desktop</button><small id="desktopAuthorizeStatus">Verify the device name before continuing.</small></div>
+          <div><p class="eyebrow" data-i18n="accountDesktopKicker">SECURE DESKTOP AUTHORIZATION</p><h3 data-i18n="accountAuthorizeTitle">Authorize Re:Play Desktop</h3><p data-i18n="accountAuthorizeDescription">The desktop uses Authorization Code + PKCE. Your password is never sent to the desktop app.</p></div>
+          <div class="desktop-link-actions"><button id="desktopAuthorizeButton" class="pill-button light" type="button" data-i18n="accountAuthorizeButton">Authorize this desktop</button><small id="desktopAuthorizeStatus" data-i18n="accountVerifyDevice">Verify the device name before continuing.</small></div>
         </section>
-        <div class="account-grid">
-          <article class="account-card"><span>RP</span><strong id="accountRpValue">2,000 RP</strong><p data-i18n="accountWelcome">Welcome reward</p><small data-i18n="accountNoFake">No simulated balance is shown. Real rewards and assets will come from the server Reward Ledger and Entitlements.</small></article>
-          <article class="account-card"><span>BLANK</span><strong id="accountBlankValue">—</strong><p data-i18n="accountBlank">Blank Cassette</p><small>Starting entitlement: 0 · redemption policy: 400 RP.</small></article>
-          <article class="account-card"><span>ASSETS</span><strong id="accountAssetValue">—</strong><p data-i18n="accountAssets">My Assets</p><small>Official cassettes, blank cassettes and Creator designs will live here.</small></article>
-          <article class="account-card"><span>LEDGER</span><strong id="accountHistoryValue">—</strong><p data-i18n="accountHistory">Reward History</p><small>Welcome, redemption burns, Creator rewards and Beta contributions remain auditable.</small></article>
-          <article class="account-card"><span>CASSETTES</span><strong id="accountCassetteValue">—</strong><p>My Cassettes</p><small>Cloud project index, A/B order and revision history.</small></article>
-          <article class="account-card"><span>DEVICES</span><strong id="accountDeviceValue">—</strong><p>Authorized devices</p><small>Revoke a lost or retired device at any time.</small></article>
-          <article class="account-card"><span>CREATOR</span><strong id="accountCreatorValue">—</strong><p>Creator Works</p><small>PENDING / PUBLISHED / REJECTED / REMOVED status is shared with Desktop.</small></article>
-          <article class="account-card"><span>MISSING LOCAL</span><strong id="accountMissingValue">—</strong><p>Missing Local Audio</p><small>Only availability counts sync. Paths and music files never leave the device.</small></article>
+        <div class="account-grid" id="accountOverview">
+          <article class="account-card"><span>RP</span><strong id="accountRpValue">—</strong><p data-i18n="accountWelcome">Current balance</p><small data-account-copy="balanceHint">For cassettes and artwork.</small></article>
+          <article class="account-card"><span>BLANK</span><strong id="accountBlankValue">—</strong><p data-i18n="accountBlank">Blank Cassette</p><small data-i18n="accountBlankDetail">Unused cassette entitlements.</small></article>
+          <article class="account-card"><span>ASSETS</span><strong id="accountAssetValue">—</strong><p data-i18n="accountAssets">My Assets</p><small data-i18n="accountAssetsDetail">Official cassettes, blank cassettes and Creator designs will live here.</small></article>
+          <article class="account-card"><span>LEDGER</span><strong id="accountHistoryValue">—</strong><p data-i18n="accountHistory">Reward History</p><small data-i18n="accountHistoryDetail">Welcome, redemption burns, Creator rewards and Beta contributions remain auditable.</small></article>
+          <article class="account-card"><span>CASSETTES</span><strong id="accountCassetteValue">—</strong><p data-i18n="accountCassetteLabel">My Cassettes</p><small data-i18n="accountCassetteDetail">Cloud project index, A/B order and revision history.</small></article>
+          <article class="account-card"><span>DEVICES</span><strong id="accountDeviceValue">—</strong><p data-i18n="accountDevicesLabel">Authorized devices</p><small data-i18n="accountDevicesDetail">Revoke a lost or retired device at any time.</small></article>
+          <article class="account-card"><span>CREATOR</span><strong id="accountCreatorValue">—</strong><p data-i18n="accountCreatorWorksLabel">Creator Works</p><small data-i18n="accountCreatorWorksDetail">PENDING / PUBLISHED / REJECTED / REMOVED status is shared with Desktop.</small></article>
+          <article class="account-card"><span>MISSING LOCAL</span><strong id="accountMissingValue">—</strong><p data-i18n="accountMissingLabel">Missing Local Audio</p><small data-i18n="accountMissingDetail">Only availability counts sync. Paths and music files never leave the device.</small></article>
         </div>
-        <section class="account-assets-panel">
-          <div><p class="eyebrow">MY ASSETS</p><h3 data-i18n="accountAssetListTitle">Online assets</h3></div>
+        <section class="account-assets-panel" id="accountAssetsSection">
+          <div><p class="eyebrow" data-i18n="accountAssetsKicker">MY ASSETS</p><h3 data-i18n="accountAssetListTitle">Online assets</h3></div>
           <div id="accountAssetList" class="account-asset-list"><p data-i18n="accountAssetListPending">Connect your account to load assets.</p></div>
         </section>
-        <section class="account-assets-panel">
-          <div><p class="eyebrow">MY CASSETTES</p><h3>Cloud cassette projects</h3></div>
-          <div id="accountCassetteList" class="account-asset-list"><p>Sign in to load cassette projects.</p></div>
+        <section class="account-assets-panel" id="accountCassettesSection">
+          <div><p class="eyebrow" data-i18n="accountCassetteKicker">MY CASSETTES</p><h3 data-i18n="accountCassetteTitle">Cloud cassette projects</h3></div>
+          <div id="accountCassetteList" class="account-asset-list"><p data-i18n="accountCassettePending">Sign in to load cassette projects.</p></div>
         </section>
-        <section class="account-assets-panel">
-          <div><p class="eyebrow">DEVICES</p><h3>Authorized devices</h3></div>
-          <div id="accountDeviceList" class="account-asset-list"><p>Sign in to manage devices.</p></div>
+        <section class="account-assets-panel" id="accountDevicesSection">
+          <div><p class="eyebrow" data-i18n="accountDevicesKicker">DEVICES</p><h3 data-i18n="accountDevicesTitle">Authorized devices</h3></div>
+          <div id="accountDeviceList" class="account-asset-list"><p data-i18n="accountDevicesPending">Sign in to manage devices.</p></div>
         </section>
-        <div class="sync-panel"><strong data-i18n="accountSync">Website ↔ Desktop sync</strong><p>Website → Re:Play Backend → Desktop App</p><div class="architecture-actions"><button id="accountSignOut" class="pill-button outline" type="button" hidden>Sign out</button><a class="pill-button light" href="shop.html" data-i18n="navShop">Rewards Store</a><a class="pill-button outline" href="activities.html" data-i18n="navActivities">Activities</a><a class="pill-button outline" href="support.html" data-i18n="navSupport">Support</a><a class="pill-button outline" href="policies.html" data-i18n="navPolicies">Policies</a></div></div>
+
+        <section class="account-assets-panel" id="accountHistorySection">
+          <div><p class="eyebrow">REWARD HISTORY</p><h3>Reward History</h3></div>
+          <div id="accountHistoryList" class="account-asset-list"></div>
+        </section>
+        <section class="account-assets-panel" id="accountCreatorSection">
+          <div><p class="eyebrow">CREATOR WORKS</p><h3>Creator Works</h3></div>
+          <div id="accountCreatorList" class="account-asset-list"></div>
+        </section>
       </div>
-    </section>
+    </div>
   </main>
-  <footer class="site-footer"><div class="page-width footer-inner"><a class="brand" href="index.html"><strong>Re:Play</strong><span>MUSIC LIVES LONGER</span></a><nav aria-label="Footer navigation" data-i18n-aria-label="footerNavLabel"><a href="experience.html" data-i18n="navExperience">Experience</a><a href="shop.html" data-i18n="navShop">Rewards Store</a><a href="gallery.html" data-i18n="navGallery">Gallery</a><a href="points.html" data-i18n="navPoints">Rewards</a><a href="creator.html" data-i18n="navCreator">Creator</a><a href="support.html" data-i18n="navSupport">Support</a><a href="policies.html" data-i18n="navPolicies">Policies</a></nav><p data-i18n="footerLine">Slow down and listen again.</p></div></footer>
+  <footer class="account-footer"><span>© Re:Play</span><span data-account-copy="footerTagline">A little more time for music.</span></footer>
 </body>
 </html>
+

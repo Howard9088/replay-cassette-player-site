@@ -7,18 +7,18 @@ const catalog=json('catalog.json');
 const admin=json('admin-config.json');
 const api=json('api-config.json');
 
-assert.equal(catalog.policyVersion,'global-beta-v1.1');
+assert.equal(catalog.policyVersion,'global-beta-v1.2');
 assert.equal(catalog.welcomeRewardRp,2000);
 assert.equal(catalog.blankCassetteCostRp,400);
 assert.equal(Object.hasOwn(catalog,'firstCreatorPublishRewardRp'),false);
 assert.deepEqual(catalog.products.map(x=>x.rewardPriceRp),[400,800,1200]);
 assert.deepEqual(catalog.products.map(x=>x.cashPriceCents),[99,199,299]);
-assert.deepEqual(catalog.creatorPriceTiersRp,[100,200,300,400]);
+assert.deepEqual(catalog.creatorPriceTiersRp,[400]);
 assert.equal(catalog.creatorRewardPercent,100);
 assert.equal(catalog.creatorLikePolicy.rewardRp,0);
 assert.equal(catalog.creatorLikePolicy.affectsRedemptionPrice,false);
 
-assert.equal(admin.policyVersion,'global-beta-v1.1');
+assert.equal(admin.policyVersion,'global-beta-v1.2');
 assert.equal(admin.rewardPolicy.welcomeRewardRp,2000);
 assert.equal(admin.rewardPolicy.blankCassetteCostRp,400);
 assert.equal(Object.hasOwn(admin.rewardPolicy,'firstCreatorPublishRewardRp'),false);
@@ -70,4 +70,10 @@ assert.match(read('admin-preview.html'),/BETA INVITES/);
 assert.doesNotMatch(read('app.js'),/\$\$\('\[data-price\],\[data-gallery-price\]'\)\.forEach\(node => node\.textContent = '—'\)/);
 assert.match(read('site-live.js'),/future_cash_price_cents/);
 assert.match(read('site-live.js'),/code_challenge_method/);
-console.log('Re:Play site Global Beta V1.1 checks passed.');
+console.log('Re:Play site Global Beta V1.2 checks passed.');
+
+assert.deepEqual(catalog.products.map(x=>x.purchaseRewardRp),[200,400,600]);
+assert.doesNotMatch(read('points.html'),/id="blankRule"|100 \/ 200 \/ 300/);
+assert.match(read('site-live.js'),/Report a copyright concern/);
+
+

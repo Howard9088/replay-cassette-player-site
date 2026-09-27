@@ -37,7 +37,7 @@
     const cfg=await ready;
     if(!cfg.enabled||!cfg.baseUrl) throw Object.assign(new Error('API_DISABLED'),{code:'API_DISABLED'});
     const headers={'accept':'application/json'};
-    const payload=body?{...body}:undefined;
+    const payload=body?{...body}:(['POST','PUT','PATCH','DELETE'].includes(method)?{}:undefined);
     if(operation&&payload&&!payload.operation_id) payload.operation_id=operationId();
     if(payload) headers['content-type']='application/json';
     const response=await fetch(new URL(path,cfg.baseUrl),{
@@ -102,3 +102,5 @@
   window.RePlayApi=Object.freeze(api);
   ready.then(c=>window.dispatchEvent(new CustomEvent('replay:api-ready',{detail:{enabled:!!(c.enabled&&c.baseUrl)}})));
 })();
+
+

@@ -3,7 +3,7 @@
   "mode": "global-beta",
   "adminMode": "preview-only",
   "backendConnected": false,
-  "policyVersion": "global-beta-v1.1",
+  "policyVersion": "global-beta-v1.2",
   "modules": [
     {
       "id": "dashboard",
@@ -91,7 +91,11 @@
       100,
       200,
       300
-    ]
+    ],
+    "creatorPriceTiersRp": [
+      400
+    ],
+    "purchaseRewardPercent": 50
   },
   "supportCategories": [
     "Account",
@@ -145,3 +149,4 @@
     ]
   }
 }
+
