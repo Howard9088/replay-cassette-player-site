@@ -12,6 +12,7 @@ assert.ok(html.indexOf('id="accountGuestView"') < html.indexOf('id="accountDashb
 assert.match(html, /id="registerInvite"[^>]*name="invite_code"/);
 assert.match(accountUi, /location\.hostname === 'howard9088\.github\.io'/);
 assert.match(accountUi, /location\.replace\('https:\/\/167\.179\.117\.244:8443\/account\.html'/);
+assert.match(script, /\['shop','points','gallery','creator'\]\.includes\(page\)/);
 
 function element() {
   return {
