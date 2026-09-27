@@ -20,7 +20,12 @@
     <a class="back-link" href="index.html"><span aria-hidden="true">↗</span> <span data-account-copy="backHome">Back to website</span></a>
   </header>
   <main id="main" class="account-main">
-    <div id="accountGuestView" class="auth-layout">
+    <div id="accountCheckingView" class="auth-checking" role="status" aria-live="polite">
+      <span class="auth-checking-mark" aria-hidden="true">R</span>
+      <p id="accountCheckingStatus">Opening your account…</p>
+      <button id="accountCheckingRetry" class="secondary-button" type="button" hidden>Try again</button>
+    </div>
+    <div id="accountGuestView" class="auth-layout" hidden>
       <section id="accountAuthPanel" class="auth-card" aria-labelledby="accountFormTitle">
         <div class="auth-heading">
           <div class="auth-symbol" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><rect x="4" y="8" width="24" height="17" rx="4"/><circle cx="11" cy="15" r="3"/><circle cx="21" cy="15" r="3"/><path d="M11 18h10M11 25l2-5h6l2 5"/></svg></div>
