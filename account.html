@@ -16,8 +16,8 @@
   <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
   <select id="langSelect" hidden aria-hidden="true" tabindex="-1"><option value="en">English</option><option value="zh">简体中文</option></select>
   <header class="account-page-header">
-    <a class="account-brand" href="https://howard9088.github.io/replay-cassette-player-site/" aria-label="Re:Play">Re:Play<span class="beta-label">BETA</span></a>
-    <a class="back-link" href="https://howard9088.github.io/replay-cassette-player-site/"><span aria-hidden="true">↗</span> <span data-account-copy="backHome">Back to website</span></a>
+    <a class="account-brand" href="index.html" aria-label="Re:Play">Re:Play<span class="beta-label">BETA</span></a>
+    <a class="back-link" href="index.html"><span aria-hidden="true">↗</span> <span data-account-copy="backHome">Back to website</span></a>
   </header>
   <main id="main" class="account-main">
     <div id="accountGuestView" class="auth-layout">
@@ -52,6 +52,8 @@
         <a href="#accountAssetsSection" data-i18n="accountAssets">My assets</a>
         <a href="#accountCassettesSection" data-i18n="accountCassetteLabel">My cassettes</a>
         <a href="#accountDevicesSection" data-account-copy="devices">Devices</a>
+        <a href="#accountHistorySection">Reward History</a>
+        <a href="#accountCreatorSection">Creator Works</a>
         <div class="dashboard-nav-divider"></div>
         <a href="shop.html" data-i18n="navShop">Rewards Store</a>
         <a href="gallery.html" data-i18n="navGallery">Gallery</a>
@@ -86,9 +88,19 @@
           <div id="accountDeviceList" class="account-asset-list"><p data-i18n="accountDevicesPending">Sign in to manage devices.</p></div>
         </section>
 
+        <section class="account-assets-panel" id="accountHistorySection">
+          <div><p class="eyebrow">REWARD HISTORY</p><h3>Reward History</h3></div>
+          <div id="accountHistoryList" class="account-asset-list"></div>
+        </section>
+        <section class="account-assets-panel" id="accountCreatorSection">
+          <div><p class="eyebrow">CREATOR WORKS</p><h3>Creator Works</h3></div>
+          <div id="accountCreatorList" class="account-asset-list"></div>
+        </section>
       </div>
     </div>
   </main>
   <footer class="account-footer"><span>© Re:Play</span><span data-account-copy="footerTagline">A little more time for music.</span></footer>
 </body>
 </html>
+
+
