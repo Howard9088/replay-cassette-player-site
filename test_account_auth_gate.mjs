@@ -4,11 +4,14 @@ import { runInNewContext } from 'node:vm';
 
 const html = readFileSync(new URL('./account.html', import.meta.url), 'utf8');
 const script = readFileSync(new URL('./site-live.js', import.meta.url), 'utf8');
+const accountUi = readFileSync(new URL('./account-ui.js', import.meta.url), 'utf8');
 
 assert.match(html, /id="accountGuestView"/);
 assert.match(html, /id="accountDashboard"[^>]*\bhidden\b/);
 assert.ok(html.indexOf('id="accountGuestView"') < html.indexOf('id="accountDashboard"'));
 assert.match(html, /id="registerInvite"[^>]*name="invite_code"/);
+assert.match(accountUi, /location\.hostname === 'howard9088\.github\.io'/);
+assert.match(accountUi, /location\.replace\('https:\/\/167\.179\.117\.244:8443\/account\.html'/);
 
 function element() {
   return {
