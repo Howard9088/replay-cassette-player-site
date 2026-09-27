@@ -60,7 +60,11 @@
     try{
       const data=await api.me();
       showDashboard();
-      const signOut=$('#accountSignOut');if(signOut){signOut.hidden=false;if(!signOut.dataset.bound){signOut.dataset.bound='true';signOut.onclick=async()=>{await api.signOut();location.reload()}}}
+      const signOut=$('#accountSignOut');if(signOut){signOut.hidden=false;if(!signOut.dataset.bound){signOut.dataset.bound='true';signOut.onclick=async()=>{
+        signOut.disabled=true;
+        try{await api.signOut();location.replace('account.html')}
+        catch(error){signOut.disabled=false;const status=$('#accountDashboardStatus');if(status){status.hidden=false;status.textContent=at('退出失败，请重试。','Sign out failed. Please try again.')}}
+      }}}
       $('#accountLiveStatus')?.replaceChildren(document.createTextNode(data.user?.display_name||'Re:Play'));
       if($('#accountRpValue')) $('#accountRpValue').textContent=fmt(data.rewards?.balance||0)+' RP';
       if($('#accountBlankValue')) $('#accountBlankValue').textContent=String(data.entitlements?.blank_cassette||0);
@@ -85,8 +89,20 @@
       }
       const history=await api.rewardHistory();
       if($('#accountHistoryValue')) $('#accountHistoryValue').textContent=String(history.events?.length||0);
+      const renderDetails=(selector,items,format,empty)=>{
+        const list=$(selector);if(!list)return;
+        list.replaceChildren(...(items.length?items.map(item=>{
+          const row=document.createElement('div'),label=document.createElement('span'),value=document.createElement('b');
+          const details=format(item);label.textContent=details[0];value.textContent=details[1];row.append(label,value);return row;
+        }):[Object.assign(document.createElement('p'),{textContent:empty})]));
+      };
+      renderDetails('#accountHistoryList',[...(history.events||[])].reverse(),event=>[
+        event.event_type==='BETA_WELCOME_REWARD'?at('首次账号积分','Welcome balance'):String(event.event_type||'').replaceAll('_',' '),
+        (Number(event.amount)>0?'+':'')+fmt(Number(event.amount)||0)+' RP'
+      ],at('暂无积分记录。','No reward history yet.'));
       const [deviceData,cassetteData,creatorData]=await Promise.all([api.devices(),api.cassettes(),api.creatorWorks()]);
       const devices=deviceData.devices||[],projects=cassetteData.projects||[],works=creatorData.works||[];
+      renderDetails('#accountCreatorList',works,work=>[work.title||work.work_id,work.status],at('暂无作品。在桌面端完成设计后即可提交。','No works yet. Submit your design from the desktop app.'));
       $('#accountDeviceValue').textContent=String(devices.filter(item=>item.status==='ACTIVE').length);
       $('#accountCassetteValue').textContent=String(projects.length);$('#accountCreatorValue').textContent=String(works.length);
       const missing=projects.flatMap(project=>project.local_audio_status||[]).reduce((sum,row)=>sum+Number(row.missing_count||0),0);
@@ -101,7 +117,7 @@
       if(deviceList){deviceList.replaceChildren(...(devices.length?devices.map(device=>{
         const row=document.createElement('div'),label=document.createElement('span'),button=document.createElement('button');
         label.textContent=`${device.name} · ${device.platform} · ${device.status}`;button.type='button';button.textContent=device.status==='ACTIVE'?at('撤销授权','Revoke'):at('已撤销','Revoked');button.disabled=device.status!=='ACTIVE';
-        button.onclick=async()=>{button.disabled=true;await api.revokeDevice(device.device_id);await account()};row.append(label,button);return row;
+        button.onclick=async()=>{button.disabled=true;try{await api.revokeDevice(device.device_id);await account()}catch(error){button.disabled=false;const status=$('#accountDashboardStatus');if(status){status.hidden=false;status.textContent=at('撤销失败，请重试。','Unable to revoke device. Please try again.')}}};row.append(label,button);return row;
       }):[Object.assign(document.createElement('p'),{textContent:at('还没有已授权的桌面设备。','No authorized desktop devices.')})]));}
 
       const params=new URLSearchParams(location.search),authorizePanel=$('#desktopAuthorizePanel'),authorizeButton=$('#desktopAuthorizeButton'),authorizeStatus=$('#desktopAuthorizeStatus');
@@ -375,3 +391,5 @@
   $('#langSelect')?.addEventListener('change',()=>{account().catch(()=>{})});
   Promise.all([rewardsPolicy(),account(),activities(),shop(),gallery(),creator(),support()]).catch(()=>{});
 })()
+
+
