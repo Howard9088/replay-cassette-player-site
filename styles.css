@@ -39,12 +39,16 @@ button,a,select{font:inherit}button{cursor:pointer}a{color:inherit;text-decorati
 .skin-switch button,.scene-switch button,.showcase-controls button{color:#e9dbc8;border:0;background:transparent}
 .skin-switch button{padding:7px 15px;border-radius:999px;font-size:11px;letter-spacing:0}
 .skin-switch button[aria-pressed="true"]{background:#f4dbc1;color:#211811;font-weight:700}
-.player-shell{position:relative;width:100%;margin-inline:auto;filter:drop-shadow(0 19px 20px #000c)}
-.player-shell img{display:block;width:100%;height:auto;border-radius:8px}
-.player-shell canvas{position:absolute;left:15.2%;top:15.8%;width:36.3%;height:37%;object-fit:contain;filter:brightness(.82);pointer-events:none}
-.player-shell.skin-retro canvas{left:4.9%;top:7.9%;width:32.5%;height:39.8%;filter:brightness(.73)}
-.player-shell .player-cover-art{display:none;position:absolute;left:79.6%;top:24.8%;width:13.45%;height:39.5%;object-fit:fill;border-radius:2px;pointer-events:none}
-.player-shell.skin-retro .player-cover-art{display:block}
+.player-shell{position:relative;width:100%;aspect-ratio:1670/870;margin-inline:auto;filter:drop-shadow(0 19px 20px #000c)}
+.player-shell .player-skin-image{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:fill;border-radius:8px;transition:opacity .55s ease,filter .55s ease}
+.player-shell .tape-layer{position:absolute;object-fit:contain;pointer-events:none;transition:opacity .55s ease,filter .55s ease}
+.player-shell .tape-gold{left:15.2%;top:15.8%;width:36.3%;height:37%}
+.player-shell .tape-retro{left:4.9%;top:7.9%;width:32.5%;height:39.8%}
+.player-shell .player-cover-art{position:absolute;left:79.6%;top:24.8%;width:13.45%;height:39.5%;object-fit:fill;border-radius:2px;pointer-events:none;transition:opacity .55s ease,filter .55s ease}
+.player-shell.skin-gold .skin-retro-image,.player-shell.skin-gold .tape-retro,.player-shell.skin-gold .player-cover-art,.player-shell.skin-retro .skin-gold-image,.player-shell.skin-retro .tape-gold{opacity:0;filter:blur(10px)}
+.player-shell.skin-gold .skin-gold-image,.player-shell.skin-gold .tape-gold,.player-shell.skin-retro .skin-retro-image,.player-shell.skin-retro .tape-retro,.player-shell.skin-retro .player-cover-art{opacity:1;filter:blur(0)}
+.player-shell.skin-gold .tape-gold{filter:brightness(.82)}
+.player-shell.skin-retro .tape-retro{filter:brightness(.73)}
 .inner-main{min-height:calc(100vh - 100px)}
 .inner-main>.section{min-height:calc(100vh - 100px);padding-top:175px}
 .inner-page .main-nav a[href$="experience.html"]:is(:hover,:focus-visible),.inner-page .main-nav a[href$="shop.html"]:is(:hover,:focus-visible),.inner-page .main-nav a[href$="gallery.html"]:is(:hover,:focus-visible),.inner-page .main-nav a[href$="points.html"]:is(:hover,:focus-visible){text-decoration:underline;text-underline-offset:8px}

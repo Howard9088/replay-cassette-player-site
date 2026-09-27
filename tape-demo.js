@@ -2,9 +2,9 @@
 // as cassette_motion.js. It never reads the visitor's music or cassette library.
 (() => {
   'use strict';
-  const canvas = document.querySelector('#demoTape');
-  if (!canvas) return;
-  const context = canvas.getContext('2d');
+  const canvases = [document.querySelector('#demoTape'),document.querySelector('#demoTapeRetro')].filter(Boolean);
+  if (!canvases.length) return;
+  const surfaces = canvases.map(canvas => ({ canvas, context: canvas.getContext('2d') }));
   const image = new Image();
   image.src = 'assets/cassettes/metal-c90-v1.png';
   const source = { x: 48, y: 64, width: 1440, height: 876, hubs: [[450,438,270],[1087,438,270]] };
@@ -16,22 +16,25 @@
 
   function draw() {
     if (!image.complete || !image.naturalWidth) return;
-    context.clearRect(0,0,canvas.width,canvas.height);
-    context.drawImage(image,source.x,source.y,source.width,source.height,0,0,canvas.width,canvas.height);
-    source.hubs.forEach(([absoluteX,absoluteY,radius],index) => {
-      const x = absoluteX - source.x, y = absoluteY - source.y;
-      context.save();
-      context.beginPath();
-      context.arc(x,y,radius,0,Math.PI*2);
-      context.clip();
-      context.translate(x,y);
-      context.rotate(angles[index]);
-      context.translate(-x,-y);
-      context.drawImage(image,-source.x,-source.y);
-      context.restore();
+    surfaces.forEach(({canvas,context}) => {
+      context.clearRect(0,0,canvas.width,canvas.height);
+      context.drawImage(image,source.x,source.y,source.width,source.height,0,0,canvas.width,canvas.height);
+      source.hubs.forEach(([absoluteX,absoluteY,radius],index) => {
+        const x = absoluteX - source.x, y = absoluteY - source.y;
+        context.save();
+        context.beginPath();
+        context.arc(x,y,radius,0,Math.PI*2);
+        context.clip();
+        context.translate(x,y);
+        context.rotate(angles[index]);
+        context.translate(-x,-y);
+        context.drawImage(image,-source.x,-source.y);
+        context.restore();
+      });
     });
   }
   image.addEventListener('load',draw,{once:true});
+  if (image.complete && image.naturalWidth) draw();
   function frame(now) {
     const elapsed = previous ? Math.min((now-previous)/1000,.08) : 0;
     previous = now;
@@ -46,7 +49,10 @@
   requestAnimationFrame(frame);
 
   const shell = document.querySelector('#playerShell');
-  const playerImage = document.querySelector('#playerImage');
+  const skinLayers = {
+    gold:[document.querySelector('#playerImage'),document.querySelector('#demoTape')],
+    retro:[document.querySelector('#playerRetroImage'),document.querySelector('#demoTapeRetro'),document.querySelector('.player-cover-art')]
+  };
   const skinButtons = {
     gold:document.querySelector('#skinGold'),
     retro:document.querySelector('#skinRetro')
@@ -55,10 +61,9 @@
     if (!skinButtons[name]) return;
     shell.classList.toggle('skin-gold',name==='gold');
     shell.classList.toggle('skin-retro',name==='retro');
-    playerImage.src = `media/real-player-${name}.png`;
-    playerImage.alt = name==='gold'
-      ? 'Real Re:Play Gold player interface with a rotating Metal C90 in the cassette bay'
-      : 'Real Re:Play Retro player interface with a rotating Metal C90 in the cassette bay';
+    for (const [key,layers] of Object.entries(skinLayers)) {
+      for (const layer of layers) if (layer) layer.setAttribute('aria-hidden',String(key!==name));
+    }
     for (const [key,button] of Object.entries(skinButtons)) button.setAttribute('aria-pressed',String(key===name));
   }
   for (const [name,button] of Object.entries(skinButtons)) button.addEventListener('click',() => setSkin(name));
@@ -67,7 +72,7 @@
   function syncPlayButton() {
     playButton.setAttribute('aria-pressed',String(playing));
     playButton.dataset.i18n = playing ? 'demoPause' : 'demoPlay';
-    playButton.textContent = window.RePlaySiteText?.(playButton.dataset.i18n) || (playing ? 'Ⅱ Pause visual demo' : '▷ Play visual demo');
+    playButton.textContent = window.RePlaySiteText?.(playButton.dataset.i18n) || (playing ? '鈪?Pause visual demo' : '鈻?Play visual demo');
   }
   playButton.addEventListener('click',() => { playing=!playing;syncPlayButton(); });
   syncPlayButton();
