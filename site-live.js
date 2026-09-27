@@ -50,17 +50,6 @@
       if(status){status.dataset.i18n='accountUnavailable';status.textContent=window.RePlaySiteText?.('accountUnavailable')||at('线上账号服务尚未开放。','Online account service is not available yet.');}
       return;
     }
-    try {
-      const catalog=await api.catalog();
-      const inviteOnly=catalog.registration_invite_only===true;
-      const inviteField=$('#registerInviteField'),inviteInput=$('#registerInvite');
-      if(inviteField)inviteField.hidden=!inviteOnly;
-      if(inviteInput)inviteInput.required=inviteOnly;
-    } catch(error) {
-      const status=$('#accountAuthStatus');
-      if(status)status.textContent=at('账号服务暂时无法连接，请稍后再试。','Account service is temporarily unavailable. Please try again later.');
-      return;
-    }
     document.querySelectorAll('#accountLoginForm button[type="submit"],#accountRegisterForm button[type="submit"]').forEach(button=>{button.disabled=false});
     const authStatus=$('#accountAuthStatus');
     const setAuthStatus=(message,ok=false)=>{if(authStatus){delete authStatus.dataset.i18n;authStatus.textContent=message||'';authStatus.dataset.ok=ok?'true':'false'}};
@@ -74,7 +63,8 @@
           if(['shop.html','gallery.html'].includes(returnTo)){location.replace(returnTo);return}
           await account();
         }catch(error){setAuthStatus(error.code==='INVALID_CREDENTIALS'?at('邮箱或密码不正确。','Email or password is incorrect.'):
-          error.code==='INVALID_INVITE'?at('邀请码无效或已过期。','Invitation code is invalid or expired.'):
+          error.code==='REGISTRATION_FULL'?at('内测注册名额已满，请稍后关注开放消息。','Beta registration is full. Please check back later.'):
+          error.code==='ACCOUNT_EXISTS'?at('此邮箱已有账号，请直接登录。','This email already has an account. Please sign in.'):
           error.code||at('登录失败。','Sign in failed.'));}
         finally{button.disabled=false}
       });
