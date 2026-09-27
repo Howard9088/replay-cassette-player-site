@@ -43,6 +43,14 @@
           <article class="product-card" data-product="metal-c90"><div class="product-image"><img src="assets/cassettes/metal-c90-v1.png" alt="Metal C90" loading="lazy"></div><div class="product-name"><div><h3>Metal Edition</h3><div class="product-price-stack"><small data-i18n="futurePriceLabel">Future price</small><span data-cash-price="metal-c90">$2.99</span><strong data-price="metal-c90">1,200 RP</strong></div></div></div><p data-i18n="metalDescription">更丰富的音色；金属带不贴纸。</p><small data-i18n="betaAction">Redemption opens with account service</small><button class="reward-redeem" type="button" data-redeem-kind="official-cassette" data-redeem-asset="metal-c90" disabled>Redeem</button></article>
         </div>
         <p id="redeemStatus" class="redeem-status" role="status" aria-live="polite" hidden></p>
+        <dialog id="redeemConfirm" class="redeem-confirm" aria-labelledby="redeemConfirmTitle">
+          <form method="dialog">
+            <p class="eyebrow">RE:PLAY / REWARDS</p>
+            <h3 id="redeemConfirmTitle">Confirm redemption</h3>
+            <p data-redeem-summary></p>
+            <div class="redeem-confirm-actions"><button type="submit" value="cancel" data-redeem-cancel>Cancel</button><button type="submit" value="confirm" data-redeem-accept>Confirm redemption</button></div>
+          </form>
+        </dialog>
         <p class="section-fineprint" data-i18n="shopFineprint">Future USD prices are reference prices for the commercial release. Global Beta does not accept cash purchases; the active acquisition method is RP redemption.</p>
       </div>
     </section>
@@ -52,3 +60,4 @@
 
 </body>
 </html>
+
