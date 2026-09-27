@@ -18,6 +18,7 @@
         if($('#designRule')) $('#designRule').textContent=creatorTiers.map(fmt).join(' / ')+' RP';
         if($('#creatorRule')) $('#creatorRule').textContent=fmt(catalog.creator_reward_percent)+'%';
         if($('#pendingRule')) $('#pendingRule').textContent='+'+fmt(catalog.first_cassette_completed_reward_rp)+' RP';
+        for(const product of catalog.official_cassettes||[])document.querySelectorAll('[data-purchase-reward="'+product.product_id+'"]').forEach(node=>node.textContent=fmt(product.purchase_reward_rp)+' RP');
       }
       if(document.body.dataset.page==='creator'){
         for(const row of catalog.creator_asset_policy||[]){
@@ -285,7 +286,9 @@
           }finally{setTimeout(()=>{redeem.disabled=false},900)}
         });
 
-        card.append(art,meta,metrics,policy,redeem);
+        const report=document.createElement('a');report.href='support.html?category=Copyright&work_id='+encodeURIComponent(work.work_id);
+        report.textContent=document.documentElement.lang.startsWith('zh')?'举报版权问题':'Report a copyright concern';
+        card.append(art,meta,metrics,policy,redeem,report);
         grid.append(card);
       }
     }catch(error){
@@ -372,6 +375,12 @@
   async function support(){
     if(document.body.dataset.page!=='support'||!await api.isEnabled())return;
     const form=$('.support-form'); if(!form)return;
+    const category=form.querySelector('select');
+    if(!Array.from(category.options).some(option=>option.value==='Copyright'))category.add(new Option('Copyright / 版权','Copyright'));
+    const workLabel=document.createElement('label'),workInput=document.createElement('input');workInput.name='work_id';workInput.maxLength=200;
+    workLabel.textContent=document.documentElement.lang.startsWith('zh')?'作品 ID（版权举报 / 申诉必填）':'Work ID (required for copyright reports / appeals)';workLabel.append(workInput);form.append(workLabel);
+    const query=new URLSearchParams(location.search);if(query.get('category')==='Copyright')category.value='Copyright';workInput.value=query.get('work_id')||'';
+    const adjust=()=>{workInput.required=category.value==='Copyright';workLabel.hidden=!workInput.required};category.addEventListener('change',adjust);adjust();
     form.querySelectorAll('select,input,textarea,button').forEach(el=>el.disabled=false);
     $('#supportDisabled')?.setAttribute('hidden','');
     form.addEventListener('submit',async event=>{
@@ -379,7 +388,7 @@
       const select=form.querySelector('select'), input=form.querySelector('input'), textarea=form.querySelector('textarea'), button=form.querySelector('button');
       button.disabled=true;
       try{
-        await api.createTicket({category:select.value,subject:input.value,details:textarea.value});
+        await api.createTicket({category:select.value,subject:input.value,details:textarea.value,work_id:workInput.value});
         input.value='';textarea.value='';
         button.textContent=document.documentElement.lang.startsWith('zh')?'已提交':'Submitted';
       }catch(error){
