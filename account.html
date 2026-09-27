@@ -32,12 +32,13 @@
   <main id="main" class="inner-main">
     <section class="account-section section">
       <div class="page-width">
+        <div id="accountGuestView">
         <div class="account-hero">
           <p class="eyebrow" data-i18n="accountKicker">RE:PLAY ACCOUNT / GLOBAL BETA</p>
           <h2 data-i18n="accountTitle">One account for the website and desktop app.</h2>
           <p data-i18n="accountDescription">When the Beta account service goes live, this page will unify RP, blank cassettes, digital assets, Creator works and reward history.</p>
           <p data-i18n="accountIntroRp">New Beta accounts receive 2,000 RP once registration is complete. Your actual balance appears after sign-in.</p>
-          <span class="notice-chip" id="accountLiveStatus" data-i18n="accountPending">Account service in progress · this page shows the target structure</span>
+          <span class="notice-chip" data-i18n="accountPending">Account service in progress · this page shows the target structure</span>
         </div>
         <section id="accountAuthPanel" class="account-auth-panel">
           <div><p class="eyebrow">RE:PLAY ACCOUNT</p><h3 data-i18n="accountAuthTitle">Sign in or create your account</h3><p data-i18n="accountAuthDescription">Website, desktop and future mobile apps share the same Re:Play user ID. Private audio files stay on your own device.</p></div>
@@ -58,6 +59,13 @@
           </div>
           <p id="accountAuthStatus" role="status" aria-live="polite"></p>
         </section>
+        </div>
+        <div id="accountDashboard" hidden>
+        <div class="account-hero">
+          <p class="eyebrow" data-i18n="accountKicker">RE:PLAY ACCOUNT / GLOBAL BETA</p>
+          <h2 data-i18n="accountDashboardTitle">My account</h2>
+          <span class="notice-chip" id="accountLiveStatus">Re:Play</span>
+        </div>
         <section id="desktopAuthorizePanel" class="desktop-link-panel" hidden>
           <div><p class="eyebrow" data-i18n="accountDesktopKicker">SECURE DESKTOP AUTHORIZATION</p><h3 data-i18n="accountAuthorizeTitle">Authorize Re:Play Desktop</h3><p data-i18n="accountAuthorizeDescription">The desktop uses Authorization Code + PKCE. Your password is never sent to the desktop app.</p></div>
           <div class="desktop-link-actions"><button id="desktopAuthorizeButton" class="pill-button light" type="button" data-i18n="accountAuthorizeButton">Authorize this desktop</button><small id="desktopAuthorizeStatus" data-i18n="accountVerifyDevice">Verify the device name before continuing.</small></div>
@@ -85,6 +93,7 @@
           <div id="accountDeviceList" class="account-asset-list"><p data-i18n="accountDevicesPending">Sign in to manage devices.</p></div>
         </section>
         <div class="sync-panel"><strong data-i18n="accountSync">Website ↔ Desktop sync</strong><p>Website → Re:Play Backend → Desktop App</p><div class="architecture-actions"><button id="accountSignOut" class="pill-button outline" type="button" hidden data-i18n="accountSignOut">Sign out</button><a class="pill-button light" href="shop.html" data-i18n="navShop">Rewards Store</a><a class="pill-button outline" href="activities.html" data-i18n="navActivities">Activities</a><a class="pill-button outline" href="support.html" data-i18n="navSupport">Support</a><a class="pill-button outline" href="policies.html" data-i18n="navPolicies">Policies</a></div></div>
+        </div>
       </div>
     </section>
   </main>
