@@ -69,7 +69,10 @@
       form.addEventListener('submit',async event=>{
         event.preventDefault();const button=form.querySelector('button[type="submit"]');button.disabled=true;setAuthStatus(at('连接中…','Connecting…'));
         try{
-          await api[method](Object.fromEntries(new FormData(form).entries()));setAuthStatus(at('已登录','Signed in'),true);await account();
+          await api[method](Object.fromEntries(new FormData(form).entries()));setAuthStatus(at('已登录','Signed in'),true);
+          const returnTo=new URLSearchParams(location.search).get('return_to');
+          if(['shop.html','gallery.html'].includes(returnTo)){location.replace(returnTo);return}
+          await account();
         }catch(error){setAuthStatus(error.code==='INVALID_CREDENTIALS'?at('邮箱或密码不正确。','Email or password is incorrect.'):
           error.code==='INVALID_INVITE'?at('邀请码无效或已过期。','Invitation code is invalid or expired.'):
           error.code||at('登录失败。','Sign in failed.'));}
@@ -179,8 +182,10 @@
 
   async function shop(){
     if(document.body.dataset.page!=='shop'||!await api.isEnabled())return;
+    const at=(zh,en)=>document.documentElement.lang.startsWith('zh')?zh:en;
+    let catalog;
     try{
-      const catalog=await api.catalog();
+      catalog=await api.catalog();
       for(const product of catalog.official_cassettes||[]){
         document.querySelectorAll('[data-price="'+product.product_id+'"]').forEach(node=>{
           node.textContent=fmt(product.reward_price_rp)+' RP';
@@ -194,15 +199,39 @@
     }catch(error){
       // Static RP/USD values in HTML are the safe fallback. Never replace them with placeholders.
       document.body.dataset.catalogApiError=error.code||'API_ERROR';
+      return;
     }
 
     const buttons=[...document.querySelectorAll('.reward-redeem')];
     if(!buttons.length)return;
+    let signedIn=false;
+    try{await api.me();signedIn=true}
+    catch(error){if(error.code!=='UNAUTHORIZED'){document.body.dataset.accountApiError=error.code||'API_ERROR';return}}
+    document.querySelectorAll('[data-i18n="betaAction"]').forEach(node=>{
+      node.textContent=signedIn?at('使用账户 RP 兑换','Redeem with your account RP'):at('登录后可使用 RP 兑换','Sign in to redeem with RP');
+      node.removeAttribute('data-i18n');
+    });
+    const products=new Map((catalog.official_cassettes||[]).map(product=>[product.product_id,product]));
+    const dialog=document.querySelector('#redeemConfirm');
+    const confirmRedemption=(product)=>new Promise(resolve=>{
+      if(!dialog||typeof dialog.showModal!=='function'){resolve(false);return}
+      dialog.querySelector('h3').textContent=at('确认兑换','Confirm redemption');
+      dialog.querySelector('[data-redeem-summary]').textContent=at(
+        `确认使用 ${fmt(product.reward_price_rp)} RP 兑换 ${product.name}？`,
+        `Redeem ${product.name} for ${fmt(product.reward_price_rp)} RP?`);
+      dialog.querySelector('[data-redeem-accept]').textContent=at('确认兑换','Confirm redemption');
+      dialog.querySelector('[data-redeem-cancel]').textContent=at('取消','Cancel');
+      dialog.addEventListener('close',()=>resolve(dialog.returnValue==='confirm'),{once:true});
+      dialog.showModal();
+    });
     buttons.forEach(button=>{
       button.disabled=false;
-      button.textContent=window.RePlaySiteText?.('redeemAction')||'Redeem';
+      button.textContent=signedIn?(window.RePlaySiteText?.('redeemAction')||'Redeem'):at('登录后兑换','Sign in to redeem');
       button.addEventListener('click',async()=>{
         if(button.disabled)return;
+        if(!signedIn){location.href='account.html?return_to=shop.html';return}
+        const product=products.get(button.dataset.redeemAsset);
+        if(!product||!await confirmRedemption(product))return;
         button.disabled=true;
         button.textContent=window.RePlaySiteText?.('redeemWorking')||'Redeeming…';
         const status=document.querySelector('#redeemStatus');
@@ -219,6 +248,7 @@
           button.textContent=error.code==='UNAUTHORIZED'
             ?(window.RePlaySiteText?.('redeemSignIn')||'Sign in required')
             :(window.RePlaySiteText?.('redeemFailed')||'Redeem failed');
+          if(error.code==='UNAUTHORIZED'){location.href='account.html?return_to=shop.html';return}
           if(status){status.textContent=error.code||'API_ERROR';status.hidden=false}
         }finally{
           setTimeout(()=>{
