@@ -34,13 +34,17 @@
   async function account(){
     if(document.body.dataset.page!=='account')return;
     const at=(zh,en)=>document.documentElement.lang.startsWith('zh')?zh:en;
+    const guestView=$('#accountGuestView'),dashboard=$('#accountDashboard');
+    const showGuest=()=>{if(guestView)guestView.hidden=false;if(dashboard)dashboard.hidden=true;document.body.classList.remove('api-live')};
+    const showDashboard=()=>{if(guestView)guestView.hidden=true;if(dashboard)dashboard.hidden=false;document.body.classList.add('api-live')};
     if(!await api.isEnabled()){
+      showGuest();
       const status=$('#accountAuthStatus');
       if(status){status.dataset.i18n='accountUnavailable';status.textContent=window.RePlaySiteText?.('accountUnavailable')||at('线上账号服务尚未开放。','Online account service is not available yet.');}
       return;
     }
     document.querySelectorAll('#accountLoginForm button[type="submit"],#accountRegisterForm button[type="submit"]').forEach(button=>{button.disabled=false});
-    const authPanel=$('#accountAuthPanel'),authStatus=$('#accountAuthStatus');
+    const authStatus=$('#accountAuthStatus');
     const setAuthStatus=(message,ok=false)=>{if(authStatus){authStatus.textContent=message||'';authStatus.dataset.ok=ok?'true':'false'}};
     const bindAuthForm=(selector,method)=>{
       const form=$(selector);if(!form||form.dataset.bound)return;form.dataset.bound='true';
@@ -55,7 +59,7 @@
     bindAuthForm('#accountLoginForm','loginAccount');bindAuthForm('#accountRegisterForm','registerAccount');
     try{
       const data=await api.me();
-      authPanel?.classList.add('api-authenticated');
+      showDashboard();
       const signOut=$('#accountSignOut');if(signOut){signOut.hidden=false;if(!signOut.dataset.bound){signOut.dataset.bound='true';signOut.onclick=async()=>{await api.signOut();location.reload()}}}
       $('#accountLiveStatus')?.replaceChildren(document.createTextNode(data.user?.display_name||'Re:Play'));
       if($('#accountRpValue')) $('#accountRpValue').textContent=fmt(data.rewards?.balance||0)+' RP';
@@ -114,8 +118,11 @@
           }catch(error){authorizeStatus.textContent=error.code||at('授权失败','Authorization failed');authorizeButton.disabled=false}
         };
       }
-      document.body.classList.add('api-live');
-    }catch(error){document.body.dataset.apiError=error.code||'API_ERROR';if(error.code!=='UNAUTHORIZED')setAuthStatus(error.code||'API_ERROR')}
+    }catch(error){
+      document.body.dataset.apiError=error.code||'API_ERROR';
+      if(error.code==='UNAUTHORIZED')showGuest();
+      else setAuthStatus(error.code||'API_ERROR');
+    }
   }
 
   async function activities(){
