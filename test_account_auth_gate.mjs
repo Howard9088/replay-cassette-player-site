@@ -6,7 +6,7 @@ const html = readFileSync(new URL('./account.html', import.meta.url), 'utf8');
 const script = readFileSync(new URL('./site-live.js', import.meta.url), 'utf8');
 
 assert.match(html, /id="accountGuestView"/);
-assert.match(html, /id="accountDashboard" hidden/);
+assert.match(html, /id="accountDashboard"[^>]*\bhidden\b/);
 assert.ok(html.indexOf('id="accountGuestView"') < html.indexOf('id="accountDashboard"'));
 
 function element() {
@@ -68,4 +68,3 @@ await checkCase(false, false);
 await checkCase(true, false);
 await checkCase(true, true);
 console.log('account auth gate: disabled, guest, authenticated passed');
-
