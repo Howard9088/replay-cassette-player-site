@@ -44,6 +44,17 @@
       if(status){status.dataset.i18n='accountUnavailable';status.textContent=window.RePlaySiteText?.('accountUnavailable')||at('线上账号服务尚未开放。','Online account service is not available yet.');}
       return;
     }
+    try {
+      const catalog=await api.catalog();
+      const inviteOnly=catalog.registration_invite_only===true;
+      const inviteField=$('#registerInviteField'),inviteInput=$('#registerInvite');
+      if(inviteField)inviteField.hidden=!inviteOnly;
+      if(inviteInput)inviteInput.required=inviteOnly;
+    } catch(error) {
+      const status=$('#accountAuthStatus');
+      if(status)status.textContent=at('账号服务暂时无法连接，请稍后再试。','Account service is temporarily unavailable. Please try again later.');
+      return;
+    }
     document.querySelectorAll('#accountLoginForm button[type="submit"],#accountRegisterForm button[type="submit"]').forEach(button=>{button.disabled=false});
     const authStatus=$('#accountAuthStatus');
     const setAuthStatus=(message,ok=false)=>{if(authStatus){delete authStatus.dataset.i18n;authStatus.textContent=message||'';authStatus.dataset.ok=ok?'true':'false'}};
@@ -53,7 +64,9 @@
         event.preventDefault();const button=form.querySelector('button[type="submit"]');button.disabled=true;setAuthStatus(at('连接中…','Connecting…'));
         try{
           await api[method](Object.fromEntries(new FormData(form).entries()));setAuthStatus(at('已登录','Signed in'),true);await account();
-        }catch(error){setAuthStatus(error.code==='INVALID_CREDENTIALS'?at('邮箱或密码不正确。','Email or password is incorrect.'):error.code||at('登录失败。','Sign in failed.'));}
+        }catch(error){setAuthStatus(error.code==='INVALID_CREDENTIALS'?at('邮箱或密码不正确。','Email or password is incorrect.'):
+          error.code==='INVALID_INVITE'?at('邀请码无效或已过期。','Invitation code is invalid or expired.'):
+          error.code||at('登录失败。','Sign in failed.'));}
         finally{button.disabled=false}
       });
     };
@@ -400,5 +413,4 @@
   $('#langSelect')?.addEventListener('change',()=>{account().catch(()=>{})});
   Promise.all([rewardsPolicy(),account(),activities(),shop(),gallery(),creator(),support()]).catch(()=>{});
 })()
-
 
