@@ -39,51 +39,51 @@
           <span class="notice-chip" id="accountLiveStatus" data-i18n="accountPending">Account service in progress · this page shows the target structure</span>
         </div>
         <section id="accountAuthPanel" class="account-auth-panel">
-          <div><p class="eyebrow">RE:PLAY ACCOUNT</p><h3>Sign in or create your account</h3><p>Website, desktop and future mobile apps share the same Re:Play user ID. Private audio files stay on your own device.</p></div>
+          <div><p class="eyebrow">RE:PLAY ACCOUNT</p><h3 data-i18n="accountAuthTitle">Sign in or create your account</h3><p data-i18n="accountAuthDescription">Website, desktop and future mobile apps share the same Re:Play user ID. Private audio files stay on your own device.</p></div>
           <div class="account-auth-forms">
             <form id="accountLoginForm">
-              <strong>Sign in</strong>
-              <label>Email<input name="email" type="email" autocomplete="email" required maxlength="320"></label>
-              <label>Password<input name="password" type="password" autocomplete="current-password" required minlength="10" maxlength="200"></label>
-              <button class="pill-button light" type="submit" disabled>Sign in</button>
+              <strong data-i18n="accountSignIn">Sign in</strong>
+              <label><span data-i18n="accountEmail">Email</span><input name="email" type="email" autocomplete="email" required maxlength="320"></label>
+              <label><span data-i18n="accountPassword">Password</span><input name="password" type="password" autocomplete="current-password" required minlength="10" maxlength="200"></label>
+              <button class="pill-button light" type="submit" disabled data-i18n="accountSignIn">Sign in</button>
             </form>
             <form id="accountRegisterForm">
-              <strong>Register</strong>
-              <label>Display name<input name="display_name" autocomplete="name" required maxlength="200"></label>
-              <label>Email<input name="email" type="email" autocomplete="email" required maxlength="320"></label>
-              <label>Password<input name="password" type="password" autocomplete="new-password" required minlength="10" maxlength="200"></label>
-              <button class="pill-button outline" type="submit" disabled>Create account · +2,000 RP</button>
+              <strong data-i18n="accountRegister">Register</strong>
+              <label><span data-i18n="accountDisplayName">Display name</span><input name="display_name" autocomplete="name" required maxlength="200"></label>
+              <label><span data-i18n="accountEmail">Email</span><input name="email" type="email" autocomplete="email" required maxlength="320"></label>
+              <label><span data-i18n="accountPassword">Password</span><input name="password" type="password" autocomplete="new-password" required minlength="10" maxlength="200"></label>
+              <button class="pill-button outline" type="submit" disabled data-i18n="accountRegisterButton">Create account · +2,000 RP</button>
             </form>
           </div>
           <p id="accountAuthStatus" role="status" aria-live="polite"></p>
         </section>
         <section id="desktopAuthorizePanel" class="desktop-link-panel" hidden>
-          <div><p class="eyebrow">SECURE DESKTOP AUTHORIZATION</p><h3>Authorize Re:Play Desktop</h3><p>The desktop uses Authorization Code + PKCE. Your password is never sent to the desktop app.</p></div>
-          <div class="desktop-link-actions"><button id="desktopAuthorizeButton" class="pill-button light" type="button">Authorize this desktop</button><small id="desktopAuthorizeStatus">Verify the device name before continuing.</small></div>
+          <div><p class="eyebrow" data-i18n="accountDesktopKicker">SECURE DESKTOP AUTHORIZATION</p><h3 data-i18n="accountAuthorizeTitle">Authorize Re:Play Desktop</h3><p data-i18n="accountAuthorizeDescription">The desktop uses Authorization Code + PKCE. Your password is never sent to the desktop app.</p></div>
+          <div class="desktop-link-actions"><button id="desktopAuthorizeButton" class="pill-button light" type="button" data-i18n="accountAuthorizeButton">Authorize this desktop</button><small id="desktopAuthorizeStatus" data-i18n="accountVerifyDevice">Verify the device name before continuing.</small></div>
         </section>
         <div class="account-grid">
-          <article class="account-card"><span>RP</span><strong id="accountRpValue">2,000 RP</strong><p data-i18n="accountWelcome">Welcome reward</p><small data-i18n="accountNoFake">No simulated balance is shown. Real rewards and assets will come from the server Reward Ledger and Entitlements.</small></article>
-          <article class="account-card"><span>BLANK</span><strong id="accountBlankValue">—</strong><p data-i18n="accountBlank">Blank Cassette</p><small>Starting entitlement: 0 · redemption policy: 400 RP.</small></article>
-          <article class="account-card"><span>ASSETS</span><strong id="accountAssetValue">—</strong><p data-i18n="accountAssets">My Assets</p><small>Official cassettes, blank cassettes and Creator designs will live here.</small></article>
-          <article class="account-card"><span>LEDGER</span><strong id="accountHistoryValue">—</strong><p data-i18n="accountHistory">Reward History</p><small>Welcome, redemption burns, Creator rewards and Beta contributions remain auditable.</small></article>
-          <article class="account-card"><span>CASSETTES</span><strong id="accountCassetteValue">—</strong><p>My Cassettes</p><small>Cloud project index, A/B order and revision history.</small></article>
-          <article class="account-card"><span>DEVICES</span><strong id="accountDeviceValue">—</strong><p>Authorized devices</p><small>Revoke a lost or retired device at any time.</small></article>
-          <article class="account-card"><span>CREATOR</span><strong id="accountCreatorValue">—</strong><p>Creator Works</p><small>PENDING / PUBLISHED / REJECTED / REMOVED status is shared with Desktop.</small></article>
-          <article class="account-card"><span>MISSING LOCAL</span><strong id="accountMissingValue">—</strong><p>Missing Local Audio</p><small>Only availability counts sync. Paths and music files never leave the device.</small></article>
+          <article class="account-card"><span>RP</span><strong id="accountRpValue">—</strong><p data-i18n="accountWelcome">Welcome reward</p><small data-i18n="accountNoFake">No simulated balance is shown. Real rewards and assets will come from the server Reward Ledger and Entitlements.</small></article>
+          <article class="account-card"><span>BLANK</span><strong id="accountBlankValue">—</strong><p data-i18n="accountBlank">Blank Cassette</p><small data-i18n="accountBlankDetail">Starting entitlement: 0 · redemption policy: 400 RP.</small></article>
+          <article class="account-card"><span>ASSETS</span><strong id="accountAssetValue">—</strong><p data-i18n="accountAssets">My Assets</p><small data-i18n="accountAssetsDetail">Official cassettes, blank cassettes and Creator designs will live here.</small></article>
+          <article class="account-card"><span>LEDGER</span><strong id="accountHistoryValue">—</strong><p data-i18n="accountHistory">Reward History</p><small data-i18n="accountHistoryDetail">Welcome, redemption burns, Creator rewards and Beta contributions remain auditable.</small></article>
+          <article class="account-card"><span>CASSETTES</span><strong id="accountCassetteValue">—</strong><p data-i18n="accountCassetteLabel">My Cassettes</p><small data-i18n="accountCassetteDetail">Cloud project index, A/B order and revision history.</small></article>
+          <article class="account-card"><span>DEVICES</span><strong id="accountDeviceValue">—</strong><p data-i18n="accountDevicesLabel">Authorized devices</p><small data-i18n="accountDevicesDetail">Revoke a lost or retired device at any time.</small></article>
+          <article class="account-card"><span>CREATOR</span><strong id="accountCreatorValue">—</strong><p data-i18n="accountCreatorWorksLabel">Creator Works</p><small data-i18n="accountCreatorWorksDetail">PENDING / PUBLISHED / REJECTED / REMOVED status is shared with Desktop.</small></article>
+          <article class="account-card"><span>MISSING LOCAL</span><strong id="accountMissingValue">—</strong><p data-i18n="accountMissingLabel">Missing Local Audio</p><small data-i18n="accountMissingDetail">Only availability counts sync. Paths and music files never leave the device.</small></article>
         </div>
         <section class="account-assets-panel">
-          <div><p class="eyebrow">MY ASSETS</p><h3 data-i18n="accountAssetListTitle">Online assets</h3></div>
+          <div><p class="eyebrow" data-i18n="accountAssetsKicker">MY ASSETS</p><h3 data-i18n="accountAssetListTitle">Online assets</h3></div>
           <div id="accountAssetList" class="account-asset-list"><p data-i18n="accountAssetListPending">Connect your account to load assets.</p></div>
         </section>
         <section class="account-assets-panel">
-          <div><p class="eyebrow">MY CASSETTES</p><h3>Cloud cassette projects</h3></div>
-          <div id="accountCassetteList" class="account-asset-list"><p>Sign in to load cassette projects.</p></div>
+          <div><p class="eyebrow" data-i18n="accountCassetteKicker">MY CASSETTES</p><h3 data-i18n="accountCassetteTitle">Cloud cassette projects</h3></div>
+          <div id="accountCassetteList" class="account-asset-list"><p data-i18n="accountCassettePending">Sign in to load cassette projects.</p></div>
         </section>
         <section class="account-assets-panel">
-          <div><p class="eyebrow">DEVICES</p><h3>Authorized devices</h3></div>
-          <div id="accountDeviceList" class="account-asset-list"><p>Sign in to manage devices.</p></div>
+          <div><p class="eyebrow" data-i18n="accountDevicesKicker">DEVICES</p><h3 data-i18n="accountDevicesTitle">Authorized devices</h3></div>
+          <div id="accountDeviceList" class="account-asset-list"><p data-i18n="accountDevicesPending">Sign in to manage devices.</p></div>
         </section>
-        <div class="sync-panel"><strong data-i18n="accountSync">Website ↔ Desktop sync</strong><p>Website → Re:Play Backend → Desktop App</p><div class="architecture-actions"><button id="accountSignOut" class="pill-button outline" type="button" hidden>Sign out</button><a class="pill-button light" href="shop.html" data-i18n="navShop">Rewards Store</a><a class="pill-button outline" href="activities.html" data-i18n="navActivities">Activities</a><a class="pill-button outline" href="support.html" data-i18n="navSupport">Support</a><a class="pill-button outline" href="policies.html" data-i18n="navPolicies">Policies</a></div></div>
+        <div class="sync-panel"><strong data-i18n="accountSync">Website ↔ Desktop sync</strong><p>Website → Re:Play Backend → Desktop App</p><div class="architecture-actions"><button id="accountSignOut" class="pill-button outline" type="button" hidden data-i18n="accountSignOut">Sign out</button><a class="pill-button light" href="shop.html" data-i18n="navShop">Rewards Store</a><a class="pill-button outline" href="activities.html" data-i18n="navActivities">Activities</a><a class="pill-button outline" href="support.html" data-i18n="navSupport">Support</a><a class="pill-button outline" href="policies.html" data-i18n="navPolicies">Policies</a></div></div>
       </div>
     </section>
   </main>
