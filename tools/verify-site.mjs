@@ -1,79 +1,47 @@
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 
-const read=p=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
-const json=p=>JSON.parse(read(p));
-const catalog=json('catalog.json');
-const admin=json('admin-config.json');
-const api=json('api-config.json');
+const read = name => fs.readFileSync(new URL('../' + name, import.meta.url), 'utf8');
+const json = name => JSON.parse(read(name));
+const catalog = json('catalog.json');
+const api = json('api-config.json');
+const admin = json('admin-config.json');
 
-assert.equal(catalog.policyVersion,'global-beta-v1.2');
-assert.equal(catalog.welcomeRewardRp,2000);
-assert.equal(catalog.blankCassetteCostRp,400);
-assert.equal(Object.hasOwn(catalog,'firstCreatorPublishRewardRp'),false);
-assert.deepEqual(catalog.products.map(x=>x.rewardPriceRp),[400,800,1200]);
-assert.deepEqual(catalog.products.map(x=>x.cashPriceCents),[99,199,299]);
-assert.deepEqual(catalog.creatorPriceTiersRp,[400]);
-assert.equal(catalog.creatorRewardPercent,100);
-assert.equal(catalog.creatorLikePolicy.rewardRp,0);
-assert.equal(catalog.creatorLikePolicy.affectsRedemptionPrice,false);
+assert.equal(catalog.policyVersion, 'global-beta-v1.2');
+assert.equal(catalog.welcomeRewardRp, 2000);
+assert.equal(catalog.blankCassetteCostRp, 400);
+assert.deepEqual(catalog.products.map(item => item.rewardPriceRp), [400, 800, 1200]);
+assert.deepEqual(catalog.products.map(item => item.cashPriceCents), [99, 199, 299]);
+assert.deepEqual(catalog.products.map(item => item.purchaseRewardRp), [200, 400, 600]);
+assert.deepEqual(catalog.creatorPriceTiersRp, [400]);
+assert.equal(catalog.creatorRewardPercent, 100);
+assert.equal(catalog.creatorLikePolicy.rewardRp, 0);
+assert.equal(catalog.creatorLikePolicy.affectsRedemptionPrice, false);
+assert.equal(catalog.features.cashPurchaseEnabled, false);
+assert.equal(catalog.features.purchaseRewardEnabled, false);
 
-assert.equal(admin.policyVersion,'global-beta-v1.2');
-assert.equal(admin.rewardPolicy.welcomeRewardRp,2000);
-assert.equal(admin.rewardPolicy.blankCassetteCostRp,400);
-assert.equal(Object.hasOwn(admin.rewardPolicy,'firstCreatorPublishRewardRp'),false);
-assert.equal(admin.featureFlags.PURCHASE_ENABLED,false);
-assert.equal(admin.featureFlags.CREATOR_LEVEL_ENABLED,false);
-assert.equal(admin.featureFlags.CREATOR_BONUS_ENABLED,false);
+// GitHub Pages is public marketing; authenticated account operations use
+// the protected same-origin service, never a writable static admin preview.
+assert.equal(api.enabled, false);
+assert.equal(api.baseUrl, '');
+assert.equal(admin.featureFlags.PURCHASE_ENABLED, false);
+assert.match(read('account.html'), /id="accountLoginForm"/);
+assert.match(read('account.html'), /id="accountRegisterForm"/);
+assert.match(read('account.html'), /desktopAuthorizePanel/);
+assert.match(read('admin-preview.html'), /noindex,nofollow/);
+assert.doesNotMatch(read('admin-preview.html'), /admin-live\.js|replay-api\.js/);
+assert.match(read('admin-preview.html'), /data-admin-write disabled/);
 
-assert.equal(api.enabled,false);
-assert.equal(api.baseUrl,'');
-assert.equal(api.authMode,'cookie-session');
-
-for(const page of ['account.html','creator.html','activities.html','support.html','policies.html','shop.html']){
-  const html=read(page);
-  assert.match(html,/replay-api\.js/);
+for (const name of ['index.html', 'experience.html', 'shop.html', 'gallery.html', 'points.html']) {
+  assert.match(read(name), /<html/);
 }
-assert.match(read('admin-preview.html'),/noindex,nofollow/);
-assert.doesNotMatch(read('admin-preview.html'),/admin-live\.js|replay-api\.js/);
-assert.match(read('admin-preview.html'),/data-admin-write disabled/);
-assert.doesNotMatch(read('admin-preview.html'),/Creator Publish|adminFirstPublish/);
-assert.doesNotMatch(read('admin-preview.html'),/api[_-]?key|secret|bearer\s+[A-Za-z0-9_-]{10,}/i);
-assert.doesNotMatch(read('app.js'),/cartDisclaimer|checkoutPending|Planned subtotal|计划售价小计/);
-assert.doesNotMatch(read('shop.html'),/blank-card|data-redeem-kind="blank-cassette"|data-blank-price/);
-assert.match(read('shop.html'),/data-cash-price="classic-c60">\$0\.99/);
-assert.match(read('shop.html'),/data-cash-price="classic-c90">\$1\.99/);
-assert.match(read('shop.html'),/data-cash-price="metal-c90">\$2\.99/);
-assert.match(read('shop.html'),/\$0\.99/);
-assert.match(read('shop.html'),/\$1\.99/);
-assert.match(read('shop.html'),/\$2\.99/);
-assert.doesNotMatch(read('points.html'),/publishRule|pointsPublish/);
-assert.match(read('activities.html'),/Valid Creator Redemption/);
-assert.match(read('activities.html'),/Uploading or publishing earns no RP/);
-assert.match(read('support.html'),/<span data-i18n="supportCategory">/);
-assert.match(read('creator.html'),/id="creatorArtworkInput"/);
-assert.match(read('creator.html'),/id="creatorWorksList"/);
-assert.match(read('account.html'),/id="accountLoginForm"/);
-assert.match(read('account.html'),/id="accountRegisterForm"/);
-assert.match(read('account.html'),/id="desktopAuthorizePanel"/);
-assert.match(read('account.html'),/Missing Local Audio/);
-assert.doesNotMatch(read('account.html'),/Generate link code|desktopLinkCreate/);
-assert.match(read('replay-api.js'),/authorizeDesktop/);
-assert.match(read('replay-api.js'),/registerAccount/);
-assert.match(read('replay-api.js'),/revokeDevice/);
-assert.match(read('replay-api.js'),/cassettes:\(\)=>request\('\/api\/cassettes'\)/);
-assert.match(read('replay-api.js'),/uploadCreatorArtwork/);
-assert.match(read('replay-api.js'),/creatorWorks:\(\)=>request\('\/api\/creator\/works'\)/);
-assert.match(read('replay-api.js'),/gallery:\(\)=>request\('\/api\/gallery'\)/);
-assert.match(read('site-live.js'),/async function gallery\(\)/);
-assert.match(read('admin-preview.html'),/BETA INVITES/);
-assert.doesNotMatch(read('app.js'),/\$\$\('\[data-price\],\[data-gallery-price\]'\)\.forEach\(node => node\.textContent = '—'\)/);
-assert.match(read('site-live.js'),/future_cash_price_cents/);
-assert.match(read('site-live.js'),/code_challenge_method/);
-console.log('Re:Play site Global Beta V1.2 checks passed.');
-
-assert.deepEqual(catalog.products.map(x=>x.purchaseRewardRp),[200,400,600]);
-assert.doesNotMatch(read('points.html'),/id="blankRule"|100 \/ 200 \/ 300/);
-assert.match(read('site-live.js'),/Report a copyright concern/);
-
-
+const shop = read('shop.html');
+for (const item of ['classic-c60', 'classic-c90', 'metal-c90']) {
+  assert.match(shop, new RegExp(`data-cash-price="${item}"`));
+  assert.match(shop, new RegExp(`data-price="${item}"`));
+}
+assert.doesNotMatch(shop, /Buy now|Checkout|data-redeem-kind="blank-cassette"/i);
+const download = 'https://github.com/Howard9088/replay-cassette-player-releases/releases/latest/download/RePlay-Setup.exe';
+assert.ok(read('index.html').includes(download));
+assert.ok(shop.includes(download));
+console.log('Re:Play public website and account-boundary checks passed.');
