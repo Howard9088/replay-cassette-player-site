@@ -13,6 +13,9 @@
   "blankCassetteCostRp": 400,
   "coverRedemptionCostRp": 400,
   "creatorRewardOnCoverRedemptionRp": 400,
+  "creatorPriceTiersRp": [400],
+  "creatorRewardPercent": 100,
+  "creatorLikePolicy": { "rewardRp": 0, "affectsRedemptionPrice": false },
   "products": [
     { "id": "classic-c60", "name": "Classic C60", "cashPriceCents": 99, "purchaseRewardRp": 200, "rewardPriceRp": 400, "image": "classic-c60-v1.png" },
     { "id": "classic-c90", "name": "Classic C90", "cashPriceCents": 199, "purchaseRewardRp": 400, "rewardPriceRp": 800, "image": "classic-c90-v1.png" },
