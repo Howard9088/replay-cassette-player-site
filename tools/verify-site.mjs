@@ -34,7 +34,10 @@ assert.match(read('admin-preview.html'), /data-admin-write disabled/);
 
 for (const name of ['index.html', 'experience.html', 'shop.html', 'gallery.html', 'points.html']) {
   assert.match(read(name), /<html/);
+  assert.match(read(name), /class="header-account" data-account-entry href="https:\/\/167\.179\.117\.244:8443\/account\.html"/);
 }
+assert.equal(catalog.features.liveAccountServiceEnabled, true);
+assert.doesNotMatch(read('app.js'), /href = '\/account\/'/);
 const shop = read('shop.html');
 for (const item of ['classic-c60', 'classic-c90', 'metal-c90']) {
   assert.match(shop, new RegExp(`data-cash-price="${item}"`));

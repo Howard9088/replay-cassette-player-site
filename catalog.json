@@ -7,7 +7,7 @@
     "purchaseRewardEnabled": false,
     "rewardsEnabled": true,
     "redemptionPolicyEnabled": true,
-    "liveAccountServiceEnabled": false
+    "liveAccountServiceEnabled": true
   },
   "welcomeRewardRp": 2000,
   "blankCassetteCostRp": 400,
