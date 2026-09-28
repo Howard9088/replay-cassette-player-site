@@ -3,7 +3,16 @@
   if (document.body.dataset.page !== 'account') return;
   // GitHub Pages is the public entry point; authenticated pages stay on the API origin.
   if (location.hostname === 'howard9088.github.io') {
-    location.replace('https://167.179.117.244:8443/account.html' + location.search + location.hash);
+    const target = new URL('https://167.179.117.244:8443/account.html');
+    const current = new URLSearchParams(location.search);
+    for (const [key,value] of current) target.searchParams.append(key,value);
+    if (!target.searchParams.has('lang')) {
+      let language = 'en';
+      try { language = localStorage.getItem('replay-site-language-v3') === 'zh' ? 'zh' : 'en'; } catch {}
+      target.searchParams.set('lang',language);
+    }
+    target.hash = location.hash;
+    location.replace(target.href);
     return;
   }
   const $ = selector => document.querySelector(selector);

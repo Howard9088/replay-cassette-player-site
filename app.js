@@ -40,10 +40,21 @@
     get(key){try{return localStorage.getItem(key)}catch{return null}},
     set(key,value){try{localStorage.setItem(key,value)}catch{}}
   };
-  state.language = storage.get(LANG_KEY) === 'zh' ? 'zh' : 'en';
+  const urlLanguage = new URLSearchParams(location.search).get('lang');
+  const storedLanguage = storage.get(LANG_KEY);
+  state.language = urlLanguage === 'zh' || urlLanguage === 'en'
+    ? urlLanguage
+    : storedLanguage === 'zh' ? 'zh' : 'en';
+  storage.set(LANG_KEY,state.language);
+  const accountUrl = () => {
+    const url = new URL(ACCOUNT_URL);
+    url.searchParams.set('lang',state.language);
+    return url.href;
+  };
   const t = key => copy[state.language][key] || key;
   const points = amount => new Intl.NumberFormat(state.language === 'zh' ? 'zh-CN' : 'en-US').format(amount);
   window.RePlaySiteText = t;
+  window.RePlayLanguage = Object.freeze({get:()=>state.language});
   function translate(){
     document.documentElement.lang = state.language === 'zh' ? 'zh-CN' : 'en';
     const titles = {
@@ -64,17 +75,19 @@
     $$('[data-i18n-alt]').forEach(node => node.alt = t(node.dataset.i18nAlt));
     $('#langSelect').value = state.language;
     storage.set(LANG_KEY,state.language);
+    const accountLink = $('[data-account-entry]');
+    if (accountLink) accountLink.href = accountUrl();
     renderCatalog();
     if (state.accountOnline) applyAccountMode();
   }
   function applyAccountMode(){
     const accountLink = $('[data-account-entry]');
-    if (accountLink) accountLink.href = ACCOUNT_URL;
+    if (accountLink) accountLink.href = accountUrl();
     $$('.product-card').forEach(card => {
       let link = card.querySelector('[data-account-redeem]');
       if (!link) {
         link = document.createElement('a');
-        link.href = ACCOUNT_URL; link.className = 'account-redeem';
+        link.href = accountUrl(); link.className = 'account-redeem';
         link.dataset.accountRedeem = 'true'; card.append(link);
       }
       link.textContent = state.language === 'zh' ? '进入账号兑换 →' : 'Open account to redeem →';
