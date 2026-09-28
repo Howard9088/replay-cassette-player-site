@@ -72,7 +72,7 @@
   function syncPlayButton() {
     playButton.setAttribute('aria-pressed',String(playing));
     playButton.dataset.i18n = playing ? 'demoPause' : 'demoPlay';
-    playButton.textContent = window.RePlaySiteText?.(playButton.dataset.i18n) || (playing ? '鈪?Pause visual demo' : '鈻?Play visual demo');
+    playButton.textContent = window.RePlaySiteText?.(playButton.dataset.i18n) || (playing ? 'Ⅱ Pause visual demo' : '▷ Play visual demo');
   }
   playButton.addEventListener('click',() => { playing=!playing;syncPlayButton(); });
   syncPlayButton();

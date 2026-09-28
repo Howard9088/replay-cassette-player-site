@@ -4,13 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b0e0e">
-  <meta name="description" content="Explore the Re:Play global beta Rewards Store. Redeem digital cassettes with RP when account service opens.">
+  <meta name="description" content="Explore Re:Play digital cassettes, their planned USD prices, and global beta RP redemption tiers.">
   <title>Re:Play · Shop</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="styles.css">
   <script src="app.js" defer></script>
-  <script src="replay-api.js" defer></script>
-  <script src="site-live.js" defer></script>
 </head>
 <body class="inner-page" data-page="shop">
   <a class="skip-link" href="#main" data-i18n="skip">跳到内容</a>
@@ -24,8 +22,8 @@
     </nav>
     <div class="header-actions">
       <label class="language-control" for="langSelect"><span aria-hidden="true">◎</span><select id="langSelect" aria-label="Website language" data-i18n-aria-label="languageLabel"><option value="en">English</option><option value="zh">简体中文</option></select></label>
-      <a class="cart-button beta-header-link" href="account.html" data-i18n="navAccount">Beta Account</a>
-      <a class="header-download" href="https://github.com/Howard9088/replay-cassette-player-releases/releases/latest/download/RePlay-Setup.exe" rel="noopener noreferrer" data-i18n="downloadReplay">Get Re:Play</a>
+      <a class="cart-button beta-header-link" href="points.html" data-i18n="cart">Global Beta</a>
+      <a class="header-download" href="https://github.com/Howard9088/replay-cassette-player-releases/releases/latest/download/RePlay-Setup.exe" data-i18n="downloadReplay">Download for Windows</a>
     </div>
   </header>
 
@@ -33,31 +31,21 @@
     <section class="shop-section section" id="shop" aria-labelledby="shopTitle">
       <div class="page-width">
         <div class="shop-heading">
-          <div><p class="eyebrow" data-i18n="shopKicker">GLOBAL BETA / REWARDS STORE</p><h2 id="shopTitle" data-i18n="shopTitle">Start creating<br>with one tape.</h2><p data-i18n="shopDescription">The global beta uses RP for digital cassettes. New accounts receive 2,000 RP to choose how to begin.</p></div>
-          <span class="notice-chip" data-i18n="previewShop">Global beta · cash purchases closed</span>
+          <div><p class="eyebrow" data-i18n="shopKicker">CASSETTE STORE</p><h2 id="shopTitle" data-i18n="shopTitle">收藏属于你的磁带时光。</h2><p data-i18n="shopDescription">三款磁带保留正式售价；公测期用 RP 兑换，首次注册奖励 2,000 RP。</p></div>
+          <span class="notice-chip" data-i18n="previewShop">预览商城 · 尚未开放收款</span>
         </div>
-        <div class="beta-welcome"><div><span data-i18n="betaWelcomeLabel">New account welcome reward</span><strong>2,000 RP</strong><small data-i18n="betaWelcomeSub">Issued once by the server after first sign-in. Starting blank cassette balance is zero.</small></div><a href="points.html" data-i18n="navPoints">Rewards</a></div>
+        <div class="beta-welcome"><div><span data-i18n="betaWelcomeLabel">New account welcome reward</span><strong data-welcome-reward>—</strong><small data-i18n="betaWelcomeSub">Issued once by the server after first sign-in. Starting blank cassette balance is zero.</small></div><a href="points.html" data-i18n="navPoints">Rewards</a></div>
         <div class="products" id="products">
-          <article class="product-card" data-product="classic-c60"><div class="product-image"><img src="assets/cassettes/classic-c60-v1.png" alt="Classic C60" loading="lazy"></div><div class="product-name"><div><h3>Classic C60</h3><div class="product-price-stack"><small data-i18n="futurePriceLabel">Future price</small><span data-cash-price="classic-c60">$0.99</span><strong data-price="classic-c60">400 RP</strong></div></div></div><p data-i18n="c60Description">经典 60 分钟，简单纯粹。</p><small data-i18n="betaAction">Redemption opens with account service</small><button class="reward-redeem" type="button" data-redeem-kind="official-cassette" data-redeem-asset="classic-c60" disabled>Redeem</button></article>
-          <article class="product-card" data-product="classic-c90"><div class="product-image"><img src="assets/cassettes/classic-c90-v1.png" alt="Classic C90" loading="lazy"></div><div class="product-name"><div><h3>Classic C90</h3><div class="product-price-stack"><small data-i18n="futurePriceLabel">Future price</small><span data-cash-price="classic-c90">$1.99</span><strong data-price="classic-c90">800 RP</strong></div></div></div><p data-i18n="c90Description">更长的陪伴，更多的故事。</p><small data-i18n="betaAction">Redemption opens with account service</small><button class="reward-redeem" type="button" data-redeem-kind="official-cassette" data-redeem-asset="classic-c90" disabled>Redeem</button></article>
-          <article class="product-card" data-product="metal-c90"><div class="product-image"><img src="assets/cassettes/metal-c90-v1.png" alt="Metal C90" loading="lazy"></div><div class="product-name"><div><h3>Metal Edition</h3><div class="product-price-stack"><small data-i18n="futurePriceLabel">Future price</small><span data-cash-price="metal-c90">$2.99</span><strong data-price="metal-c90">1,200 RP</strong></div></div></div><p data-i18n="metalDescription">更丰富的音色；金属带不贴纸。</p><small data-i18n="betaAction">Redemption opens with account service</small><button class="reward-redeem" type="button" data-redeem-kind="official-cassette" data-redeem-asset="metal-c90" disabled>Redeem</button></article>
+          <article class="product-card" data-product="classic-c60"><div class="product-image"><img src="assets/cassettes/classic-c60-v1.png" alt="Classic C60" loading="lazy"></div><div class="product-name"><h3>Classic C60</h3><div class="product-prices"><strong data-cash-price="classic-c60">—</strong><span data-price="classic-c60">—</span></div></div><p data-i18n="c60Description">经典 60 分钟，简单纯粹。</p><small data-i18n="betaAction">Redemption opens with account service</small></article>
+          <article class="product-card" data-product="classic-c90"><div class="product-image"><img src="assets/cassettes/classic-c90-v1.png" alt="Classic C90" loading="lazy"></div><div class="product-name"><h3>Classic C90</h3><div class="product-prices"><strong data-cash-price="classic-c90">—</strong><span data-price="classic-c90">—</span></div></div><p data-i18n="c90Description">更长的陪伴，更多的故事。</p><small data-i18n="betaAction">Redemption opens with account service</small></article>
+          <article class="product-card" data-product="metal-c90"><div class="product-image"><img src="assets/cassettes/metal-c90-v1.png" alt="Metal C90" loading="lazy"></div><div class="product-name"><h3>Metal C90</h3><div class="product-prices"><strong data-cash-price="metal-c90">—</strong><span data-price="metal-c90">—</span></div></div><p data-i18n="metalDescription">更丰富的音色；金属带不贴纸。</p><small data-i18n="betaAction">Redemption opens with account service</small></article>
         </div>
-        <p id="redeemStatus" class="redeem-status" role="status" aria-live="polite" hidden></p>
-        <dialog id="redeemConfirm" class="redeem-confirm" aria-labelledby="redeemConfirmTitle">
-          <form method="dialog">
-            <p class="eyebrow">RE:PLAY / REWARDS</p>
-            <h3 id="redeemConfirmTitle">Confirm redemption</h3>
-            <p data-redeem-summary></p>
-            <div class="redeem-confirm-actions"><button type="submit" value="cancel" data-redeem-cancel>Cancel</button><button type="submit" value="confirm" data-redeem-accept>Confirm redemption</button></div>
-          </form>
-        </dialog>
-        <p class="section-fineprint" data-i18n="shopFineprint">Future USD prices are reference prices for the commercial release. Global Beta does not accept cash purchases; the active acquisition method is RP redemption.</p>
+        <p class="section-fineprint" data-i18n="shopFineprint">正式售价保留展示；全球公测阶段以 RP 兑换，现金结算尚未开放。积分余额与磁带权益以账号服务为准。</p>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer"><div class="page-width footer-inner"><a class="brand" href="index.html"><strong>Re:Play</strong><span>MUSIC LIVES LONGER</span></a><nav aria-label="Footer navigation" data-i18n-aria-label="footerNavLabel"><a href="experience.html" data-i18n="navExperience">Experience</a><a href="shop.html" data-i18n="navShop">Shop</a><a href="gallery.html" data-i18n="navGallery">Gallery</a><a href="points.html" data-i18n="navPoints">Rewards</a><a href="creator.html" data-i18n="navCreator">Creator</a><a href="activities.html" data-i18n="navActivities">Activities</a><a href="support.html" data-i18n="navSupport">Support</a><a href="policies.html" data-i18n="navPolicies">Policies</a></nav><p data-i18n="footerLine">Slow down and listen again.</p></div></footer>
+  <footer class="site-footer"><div class="page-width footer-inner"><a class="brand" href="index.html"><strong>Re:Play</strong><span>MUSIC LIVES LONGER</span></a><nav aria-label="Footer navigation" data-i18n-aria-label="footerNavLabel"><a href="experience.html" data-i18n="navExperience">Experience</a><a href="shop.html" data-i18n="navShop">Shop</a><a href="gallery.html" data-i18n="navGallery">Gallery</a><a href="points.html" data-i18n="navPoints">Points</a></nav><p data-i18n="footerLine">Slow down and listen again.</p></div></footer>
 
 </body>
 </html>
-
