@@ -7,7 +7,7 @@
   const copy = {
     zh: {
       skip:'跳到内容', navExperience:'体验', navShop:'商城', navGallery:'Gallery', navPoints:'奖励规则', navAccount:'登录 / 注册', cart:'全球公测', downloadReplay:'直接下载 Windows 版', languageLabel:'网站语言', skinLabel:'播放器外观', sceneGroupLabel:'场景背景', homeLabel:'Re:Play 首页', mainNavLabel:'网站导航', footerNavLabel:'页脚导航', tapeCanvasLabel:'装在播放器磁带舱内并转动卷轴的 Metal C90', chooseTape:'选择磁带', blankTitle:'空白磁带', blankDetail:'兑换后可开启一个新的磁带创作项目。', betaWelcomeLabel:'首次注册奖励', betaWelcomeSub:'注册后由服务端一次性发放；初始空白磁带为 0。', betaAction:'公测积分兑换',
-      heroKicker:'重新想象慢下来听歌', heroTitle:'歌没有变快，<br>只是我们变得太快了。', heroTagline:'十首歌。一盒磁带。一个属于自己的晚上。', heroDescription:'挑选真正喜欢的歌，做一盒自己的磁带。按下 PLAY，看卷轴转起来，认真听完。', freeDownload:'↓&nbsp; 直接下载 Windows 版', seeExperience:'▷&nbsp; 了解 Re:Play', platformNote:'Windows 版 v0.7.3', betaHome:'全球公测：首次注册奖励 2,000 RP →',
+      heroKicker:'重新想象慢下来听歌', heroTitle:'歌没有变快，<br>只是我们变得太快了。', heroTagline:'十首歌。一盒磁带。一个属于自己的晚上。', heroDescription:'挑选真正喜欢的歌，做一盒自己的磁带。按下 PLAY，看卷轴转起来，认真听完。', freeDownload:'↓&nbsp; 直接下载 Windows 版', seeExperience:'▷&nbsp; 了解 Re:Play', platformNote:'Windows 版 v0.7.2', betaHome:'全球公测：首次注册奖励 2,000 RP →',
       showcaseLabel:'真实的 RE:PLAY 播放器', skinGold:'黄金版', skinRetro:'复古版', demoPause:'Ⅱ 暂停画面演示', demoPlay:'▷ 播放画面演示', demoDisclaimer:'动态画面演示 · 无声音与个人磁带', demoCoverAlt:'原创「蓝色时刻」示范磁带封面', sceneLabel:'场景', sceneNight:'夜间书桌', sceneRain:'雨天', sceneWindow:'窗前', sceneSea:'海边', demoShelfKicker:'示范磁带架', demoShelfTitle:'等你的音乐住进来。', demoShelfNotice:'虚构展示磁带 · 不含用户作品',
       benefitTape:'真实的磁带体验', benefitTapeDetail:'复刻磁带的声音与质感。', benefitMusic:'属于你的音乐', benefitMusicDetail:'精选歌曲，记录心情。', benefitScene:'沉浸式场景', benefitSceneDetail:'不同的环境，不同的心情。', benefitRadio:'全球电台', benefitRadioDetail:'发现世界各地的好声音。', benefitQuote:'“有时候，美好的东西，<br>本来就不需要那么快。”',
       productKicker:'PRODUCT / RE:PLAY', productTitle:'经典外观。现代体验。', productDescription:'Re:Play 是一款有真实磁带气质的数字播放器。用自己的音乐，体验亲手挑歌、录带、翻面与收藏的乐趣。', exploreProduct:'了解产品 →',
@@ -21,7 +21,7 @@
     },
     en: {
       skip:'Skip to content', navExperience:'Experience', navShop:'Shop', navGallery:'Gallery', navPoints:'Rewards', navAccount:'Sign in / Sign up', cart:'Global Beta', downloadReplay:'Download for Windows', languageLabel:'Website language', skinLabel:'Player appearance', sceneGroupLabel:'Scene background', homeLabel:'Re:Play home', mainNavLabel:'Main navigation', footerNavLabel:'Footer navigation', tapeCanvasLabel:'Metal C90 mounted inside the player with rotating reels', chooseTape:'Choose a cassette', blankTitle:'Blank Cassette', blankDetail:'Redeem one to begin a new cassette creation project.', betaWelcomeLabel:'New account welcome reward', betaWelcomeSub:'Issued once by the server after registration. Starting blank cassette balance is zero.', betaAction:'Beta RP redemption',
-      heroKicker:'SLOW LISTENING, REIMAGINED', heroTitle:'Music did not<br>get faster.<br>We did.', heroTagline:'Ten songs. One tape. One evening.', heroDescription:'Choose the songs that matter. Make a tape of your own. Press PLAY, watch the reels turn, and give the music your full attention.', freeDownload:'↓&nbsp; Download for Windows', seeExperience:'▷&nbsp; Explore Re:Play', platformNote:'Windows version v0.7.3', betaHome:'Global beta: 2,000 RP welcome reward →',
+      heroKicker:'SLOW LISTENING, REIMAGINED', heroTitle:'Music did not<br>get faster.<br>We did.', heroTagline:'Ten songs. One tape. One evening.', heroDescription:'Choose the songs that matter. Make a tape of your own. Press PLAY, watch the reels turn, and give the music your full attention.', freeDownload:'↓&nbsp; Download for Windows', seeExperience:'▷&nbsp; Explore Re:Play', platformNote:'Windows version v0.7.2', betaHome:'Global beta: 2,000 RP welcome reward →',
       showcaseLabel:'THE REAL RE:PLAY PLAYER', skinGold:'Gold', skinRetro:'Retro', demoPause:'Ⅱ Pause visual demo', demoPlay:'▷ Play visual demo', demoDisclaimer:'Visual motion demo · no audio or personal tapes', demoCoverAlt:'Original Blue Hour sample cassette cover', sceneLabel:'SCENE', sceneNight:'Night desk', sceneRain:'Rain', sceneWindow:'Window', sceneSea:'Sea', demoShelfKicker:'DEMO COLLECTION', demoShelfTitle:'A shelf waiting for your songs.', demoShelfNotice:'Fictional display tapes · no user works',
       benefitTape:'A real tape experience', benefitTapeDetail:'Cassette sound and texture.', benefitMusic:'Music that is yours', benefitMusicDetail:'Choose songs, keep memories.', benefitScene:'Immersive scenes', benefitSceneDetail:'Different places and moods.', benefitRadio:'Global radio', benefitRadioDetail:'Sounds from around the world.', benefitQuote:'“Some good things<br>need a little time.”',
       productKicker:'PRODUCT / RE:PLAY', productTitle:'Classic look. Modern experience.', productDescription:'Re:Play is a digital player with the character of a cassette deck. Use your own music to choose songs, make tapes, turn them over and keep them.', exploreProduct:'Explore the product →',
@@ -35,7 +35,10 @@
     }
   };
   const ACCOUNT_URL = 'https://167.179.117.244:8443/account.html';
-  const state = {language:'en',catalog:null,accountOnline:false};
+  const RELEASE_API_URL = 'https://api.github.com/repos/Howard9088/replay-cassette-player-releases/releases/latest';
+  const RELEASE_CACHE_KEY = 'replay-latest-release-v1';
+  const RELEASE_CACHE_TTL_MS = 5 * 60 * 1000;
+  const state = {language:'en',catalog:null,accountOnline:false,releaseVersion:'v0.7.2'};
   const storage = {
     get(key){try{return localStorage.getItem(key)}catch{return null}},
     set(key,value){try{localStorage.setItem(key,value)}catch{}}
@@ -72,13 +75,57 @@
       else node.textContent = value;
     });
     $$('[data-i18n-aria-label]').forEach(node => node.setAttribute('aria-label',t(node.dataset.i18nAriaLabel)));
-    $$('[data-i18n-alt]').forEach(node => node.alt = t(node.dataset.i18nAlt));
+    $('[data-i18n-alt]').forEach(node => node.alt = t(node.dataset.i18nAlt));
+    renderReleaseVersion();
     $('#langSelect').value = state.language;
     storage.set(LANG_KEY,state.language);
     const accountLink = $('[data-account-entry]');
     if (accountLink) accountLink.href = accountUrl();
     renderCatalog();
     if (state.accountOnline) applyAccountMode();
+  }
+  function normalizeReleaseVersion(value){
+    const tag = String(value || '').trim();
+    if (!/^v?\d+\.\d+\.\d+$/.test(tag)) return null;
+    return tag.startsWith('v') ? tag : 'v' + tag;
+  }
+  function renderReleaseVersion(){
+    const version = state.releaseVersion || 'v0.7.2';
+    $('[data-i18n="platformNote"]').forEach(node => {
+      node.textContent = state.language === 'zh'
+        ? `Windows 版 ${version}`
+        : `Windows version ${version}`;
+    });
+  }
+  async function loadLatestReleaseVersion(){
+    if (!$('[data-i18n="platformNote"]')) return;
+    try {
+      const cached = JSON.parse(storage.get(RELEASE_CACHE_KEY) || 'null');
+      if (cached && cached.expiresAt > Date.now()) {
+        const version = normalizeReleaseVersion(cached.version);
+        if (version) {
+          state.releaseVersion = version;
+          renderReleaseVersion();
+        }
+      }
+    } catch {}
+    try {
+      const response = await fetch(RELEASE_API_URL,{
+        cache:'no-store',
+        headers:{Accept:'application/vnd.github+json'}
+      });
+      if (!response.ok) throw Error('RELEASE_API_UNAVAILABLE');
+      const release = await response.json();
+      if (release.draft || release.prerelease) throw Error('RELEASE_NOT_FORMAL');
+      const version = normalizeReleaseVersion(release.tag_name);
+      if (!version) throw Error('RELEASE_VERSION_INVALID');
+      state.releaseVersion = version;
+      storage.set(RELEASE_CACHE_KEY,JSON.stringify({
+        version,
+        expiresAt:Date.now() + RELEASE_CACHE_TTL_MS
+      }));
+      renderReleaseVersion();
+    } catch {}
   }
   function applyAccountMode(){
     const accountLink = $('[data-account-entry]');
@@ -153,6 +200,7 @@
   $('#langSelect')?.addEventListener('change',event => {state.language = event.target.value === 'zh' ? 'zh' : 'en';translate()});
   $('#pointsProduct')?.addEventListener('change',renderCatalog);
   translate();
+  loadLatestReleaseVersion();
   loadCatalog().catch(() => {
     const message = t('catalogUnavailable');
     $$('[data-price],[data-cash-price],[data-welcome-reward],[data-gallery-price]').forEach(node => node.textContent = '—');
