@@ -24,7 +24,11 @@ assert.deepEqual(sizes,[16,32,48,64,128,256]);
 let pages=0;
 for(const name of fs.readdirSync(root).filter(n=>n.endsWith('.html'))) {
   const html=fs.readFileSync(path.join(root,name),'utf8');
-  assert.ok(html.includes('favicon.ico?v=loop-20260930'),name);
+  // The approved homepage uses the champagne icon; other pages retain the loop icon.
+  const favicon=name==='index.html'
+    ? 'assets/brand/replay-square-champagne-20260930.ico'
+    : 'favicon.ico?v=loop-20260930';
+  assert.ok(html.includes(favicon),name);
   assert.doesNotMatch(html,/class="auth-symbol"[^>]*><svg/);
   assert.doesNotMatch(html,/class="auth-checking-mark"[^>]*>R</);
   for(const match of html.matchAll(/(?:src|href)="((?:assets\/brand\/|favicon\.ico)[^"]+)"/g))
