@@ -3,7 +3,7 @@
   if (document.body.dataset.page !== 'account') return;
   // GitHub Pages is the public entry point; authenticated pages stay on the API origin.
   if (location.hostname === 'howard9088.github.io') {
-    const target = new URL('https://167.179.117.244:8443/account.html');
+    const target = new URL('https://202.182.111.237:8443/account.html');
     const current = new URLSearchParams(location.search);
     for (const [key,value] of current) target.searchParams.append(key,value);
     if (!target.searchParams.has('lang')) {
