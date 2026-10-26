@@ -34,7 +34,7 @@
       subtotal:'Planned subtotal', cartDisclaimer:'Choices are stored only on this device. A future secure checkout will confirm the final price, points and tape assets.', checkoutPending:'Checkout in development', emptyCart:'Your cart is empty.', cartAdded:'Added to this device’s cart', catalogUnavailable:'Catalogue unavailable', storageUnavailable:'The cart could not be saved in this browser.'
     }
   };
-  const ACCOUNT_URL = 'https://167.179.117.244:8443/account.html';
+  const ACCOUNT_URL = 'https://202.182.111.237:8443/account.html';
   const state = {language:'en',catalog:null,accountOnline:false};
   const storage = {
     get(key){try{return localStorage.getItem(key)}catch{return null}},
