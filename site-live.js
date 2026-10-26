@@ -3,7 +3,7 @@
   // Keep all account-dependent actions on the same origin as the Beta API.
   const page=document.body.dataset.page;
   if(location.hostname==='howard9088.github.io'&&['shop','points','gallery','creator'].includes(page)){
-    const target=new URL('https://167.179.117.244:8443/'+page+'.html');
+    const target=new URL('https://202.182.111.237:8443/'+page+'.html');
     const current=new URLSearchParams(location.search);
     for(const [key,value] of current)target.searchParams.append(key,value);
     if(!target.searchParams.has('lang')){
